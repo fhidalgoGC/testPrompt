@@ -4,11 +4,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search, Mail, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useI18n } from "@/lib/i18n";
 
 interface BuyTicketDialogProps {
   raffleId: number;
@@ -26,10 +27,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [buyerName, setBuyerName] = useState("");
   const [searchNum, setSearchNum] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const { data: soldTickets = [], isLoading: loadingSold } = useSoldTickets(raffleId);
   const buyMutation = useBuyTickets();
   const { toast } = useToast();
+  const { t } = useI18n();
 
   const soldSet = useMemo(() => new Set(soldTickets), [soldTickets]);
 
@@ -56,13 +59,13 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const handleSearch = () => {
     const num = parseInt(searchNum, 10);
     if (isNaN(num) || num < 1 || num > totalTickets) {
-      toast({ variant: "destructive", title: "Numero invalido", description: `Ingresa un numero entre 1 y ${totalTickets}.` });
+      toast({ variant: "destructive", title: t.picker.invalidNumber, description: `${t.picker.invalidNumberDesc} ${totalTickets}.` });
       return;
     }
     const newStart = Math.floor((num - 1) / RANGE_SIZE) * RANGE_SIZE + 1;
     setRangeStart(newStart);
     if (soldSet.has(num)) {
-      toast({ title: "No disponible", description: `El numero ${num} ya fue vendido.` });
+      toast({ title: t.picker.notAvailable, description: t.picker.notAvailableDesc.replace("{num}", String(num)) });
     } else {
       setSelected(prev => {
         const next = new Set(prev);
@@ -86,9 +89,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     });
   };
 
-  const handleBuy = async () => {
+  const handleProceedToBuy = () => {
     if (selected.size === 0 || !buyerName.trim()) return;
+    setShowConfirm(true);
+  };
 
+  const handleConfirmBuy = async () => {
     try {
       await buyMutation.mutateAsync({
         id: raffleId,
@@ -96,6 +102,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         buyerName: buyerName.trim(),
       });
 
+      setShowConfirm(false);
       setShowSuccess(true);
 
       const duration = 3000;
@@ -120,8 +127,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       frame();
 
       toast({
-        title: "Numeros Asegurados",
-        description: `Compraste ${selected.size} numeros para ${title}.`,
+        title: t.picker.toastTitle,
+        description: t.picker.toastDesc.replace("{count}", String(selected.size)).replace("{title}", title),
       });
 
       setTimeout(() => {
@@ -135,8 +142,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error instanceof Error ? error.message : "No se pudieron comprar los numeros.",
+        title: t.picker.errorTitle,
+        description: error instanceof Error ? error.message : t.picker.errorDesc,
       });
     }
   };
@@ -148,6 +155,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       <AnimatePresence mode="wait">
         {showSuccess ? (
           <motion.div
+            key="success"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             className="flex flex-col items-center text-center space-y-4 py-8"
@@ -156,18 +164,84 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <CheckCircle2 className="h-8 w-8 text-primary" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-foreground">Compra Confirmada</h3>
-              <p className="text-sm text-muted-foreground mt-1">Tus numeros han sido registrados.</p>
+              <h3 className="text-xl font-bold text-foreground">{t.picker.successTitle}</h3>
+              <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
+            </div>
+          </motion.div>
+        ) : showConfirm ? (
+          <motion.div
+            key="confirm"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="space-y-5 py-4"
+          >
+            <div className="flex flex-col items-center text-center space-y-4">
+              <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                <Sparkles className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">
+                  {t.picker.confirmTitle}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-sm mx-auto">
+                  {t.picker.confirmDesc}
+                </p>
+              </div>
+            </div>
+
+            <div className="glass-gold rounded-lg p-3 space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">{t.picker.selected}</span>
+                <span className="text-primary font-display font-bold" data-testid="text-confirm-count">{selected.size}</span>
+              </div>
+              <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
+                {Array.from(selected).sort((a, b) => a - b).map(num => (
+                  <span key={num} className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium">
+                    {num}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                className="flex-1 border-white/10"
+                onClick={() => setShowConfirm(false)}
+                data-testid="button-back-to-picker"
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                {selected.size > 0 ? t.picker.selected.replace(":", "") : ""}
+              </Button>
+              <Button
+                className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+                onClick={handleConfirmBuy}
+                disabled={buyMutation.isPending}
+                data-testid="button-final-confirm"
+              >
+                {buyMutation.isPending ? (
+                  <span className="flex items-center gap-2">
+                    <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                    {t.picker.processing}
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
+                  </span>
+                )}
+              </Button>
             </div>
           </motion.div>
         ) : (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
+          <motion.div key="picker" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   type="number"
-                  placeholder="Buscar numero..."
+                  placeholder={t.picker.searchPlaceholder}
                   value={searchNum}
                   onChange={(e) => setSearchNum(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -178,7 +252,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 />
               </div>
               <Button variant="outline" onClick={handleSearch} className="border-white/10" data-testid="button-search">
-                Ir
+                {t.picker.go}
               </Button>
             </div>
 
@@ -199,7 +273,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   {rangeStart} - {rangeEnd}
                 </span>
                 <span className="text-muted-foreground text-xs ml-1">
-                  ({availableInRange} disp.)
+                  ({availableInRange} {t.picker.availableShort})
                 </span>
               </div>
 
@@ -273,15 +347,15 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             <div className="flex items-center gap-3 text-[10px] sm:text-xs text-muted-foreground flex-wrap">
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-sm bg-secondary/50 border border-white/5" />
-                <span>Disponible</span>
+                <span>{t.picker.legendAvailable}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-sm bg-primary" />
-                <span>Tu seleccion</span>
+                <span>{t.picker.legendSelected}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-sm bg-destructive/20" />
-                <span>Vendido</span>
+                <span>{t.picker.legendSold}</span>
               </div>
             </div>
 
@@ -292,7 +366,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 className="glass-gold rounded-lg p-3 space-y-3"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Seleccionados:</span>
+                  <span className="text-sm font-medium">{t.picker.selected}</span>
                   <span className="text-primary font-display font-bold text-lg" data-testid="text-selected-count">{selected.size}</span>
                 </div>
                 <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
@@ -309,7 +383,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 </div>
 
                 <Input
-                  placeholder="Tu nombre"
+                  placeholder={t.picker.namePlaceholder}
                   value={buyerName}
                   onChange={(e) => setBuyerName(e.target.value)}
                   className="bg-secondary/50 border-white/10"
@@ -318,21 +392,14 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
                 <Button
                   className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                  onClick={handleBuy}
-                  disabled={buyMutation.isPending || !buyerName.trim()}
+                  onClick={handleProceedToBuy}
+                  disabled={!buyerName.trim()}
                   data-testid="button-confirm-buy"
                 >
-                  {buyMutation.isPending ? (
-                    <span className="flex items-center gap-2">
-                      <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                      Procesando...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <Zap className="h-5 w-5" />
-                      Comprar {selected.size} {selected.size === 1 ? "numero" : "numeros"}
-                    </span>
-                  )}
+                  <span className="flex items-center gap-2">
+                    <Zap className="h-5 w-5" />
+                    {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
+                  </span>
                 </Button>
               </motion.div>
             )}
@@ -340,7 +407,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             {buyMutation.isError && (
               <div className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg">
                 <AlertCircle className="h-4 w-4 shrink-0" />
-                <p>{buyMutation.error instanceof Error ? buyMutation.error.message : "Error al procesar la compra."}</p>
+                <p>{buyMutation.error instanceof Error ? buyMutation.error.message : t.picker.errorGeneric}</p>
               </div>
             )}
           </motion.div>
@@ -352,6 +419,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
 export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose }: BuyTicketDialogProps) {
   const isMobile = useIsMobile();
+  const { t } = useI18n();
 
   if (isMobile) {
     return (
@@ -360,10 +428,10 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
           <DrawerHeader className="text-left px-4 pt-2 pb-0">
             <DrawerTitle className="font-display text-xl flex items-center gap-2" data-testid="text-dialog-title">
               <Ticket className="text-primary h-5 w-5" />
-              Escoge tus numeros
+              {t.picker.title}
             </DrawerTitle>
             <DrawerDescription className="text-muted-foreground text-sm" data-testid="text-dialog-description">
-              Selecciona los numeros para <strong className="text-foreground">{title}</strong>
+              {t.picker.subtitle} <strong className="text-foreground">{title}</strong>
             </DrawerDescription>
           </DrawerHeader>
           <div className="px-4 pb-6 pt-2 overflow-y-auto">
@@ -380,10 +448,10 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="font-display text-2xl flex items-center gap-2" data-testid="text-dialog-title">
             <Ticket className="text-primary h-6 w-6" />
-            Escoge tus numeros
+            {t.picker.title}
           </DialogTitle>
           <DialogDescription className="text-muted-foreground pt-2" data-testid="text-dialog-description">
-            Selecciona los numeros para <strong className="text-foreground">{title}</strong>
+            {t.picker.subtitle} <strong className="text-foreground">{title}</strong>
           </DialogDescription>
         </DialogHeader>
         <div className="p-6 pt-4">

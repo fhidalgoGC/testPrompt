@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { VisualProgress } from "./ui/visual-progress";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
 import { ChevronRight, ShieldCheck } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 interface Raffle {
   id: number;
@@ -22,6 +23,7 @@ interface RaffleCardProps {
 export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { t } = useI18n();
   
   const isComplete = raffle.soldTickets >= raffle.totalTickets;
 
@@ -37,22 +39,17 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
         onMouseLeave={() => setIsHovered(false)}
         layout
       >
-        {/* Image Section */}
         <div className={`relative overflow-hidden ${featured ? 'h-[200px] sm:h-full sm:min-h-[300px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
-          {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10 md:bg-gradient-to-r md:from-transparent md:to-card" />
           
           <motion.img 
             src={raffle.imageUrl} 
             alt={raffle.title}
             className="absolute inset-0 w-full h-full object-cover"
-            animate={{ 
-              scale: isHovered ? 1.05 : 1,
-            }}
+            animate={{ scale: isHovered ? 1.05 : 1 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           />
           
-          {/* Status Badge */}
           <div className="absolute top-4 left-4 z-20">
             <div className={`
               px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border
@@ -60,29 +57,28 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
                 ? 'bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]' 
                 : 'bg-black/50 text-white border-white/10'}
             `}>
-              {isComplete ? 'Awaiting Draw' : 'Active Campaign'}
+              {isComplete ? t.raffle.awaitingDraw : t.raffle.activeCampaign}
             </div>
           </div>
         </div>
 
-        {/* Content Section */}
         <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'md:p-10' : ''}`}>
           <div>
             <div className="flex items-center gap-2 mb-2 text-primary/80">
               <ShieldCheck className="w-4 h-4" />
-              <span className="text-xs font-medium uppercase tracking-widest">Verified Asset</span>
+              <span className="text-xs font-medium uppercase tracking-widest">{t.raffle.verifiedAsset}</span>
             </div>
             
             <h3 className={`font-display font-bold text-foreground mb-2 sm:mb-3 ${featured ? 'text-xl sm:text-3xl md:text-4xl' : 'text-lg sm:text-2xl'}`}>
               {raffle.title}
             </h3>
             
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-2">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-4 sm:mb-6 line-clamp-2">
               {raffle.description}
             </p>
           </div>
 
-          <div className="mt-auto space-y-6">
+          <div className="mt-auto space-y-4 sm:space-y-6">
             <VisualProgress 
               sold={raffle.soldTickets} 
               total={raffle.totalTickets} 
@@ -99,8 +95,9 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
               size={featured ? "lg" : "default"}
               onClick={() => !isComplete && setIsDialogOpen(true)}
               disabled={isComplete}
+              data-testid={`button-secure-entry-${raffle.id}`}
             >
-              {isComplete ? 'Allocation Full' : 'Secure Entry'}
+              {isComplete ? t.raffle.allocationFull : t.raffle.secureEntry}
               {!isComplete && (
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               )}
