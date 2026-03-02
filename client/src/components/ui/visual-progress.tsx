@@ -96,12 +96,6 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
           transition={{ duration: 1.5, ease: "easeOut" }}
         />
         <motion.div
-          className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400/60 via-white/40 to-green-400/60"
-          initial={{ opacity: 0 }}
-          animate={barFlashControls}
-        />
-        
-        <motion.div
           className={`absolute top-0 left-0 h-full rounded-full ${
             isComplete 
               ? 'bg-gradient-to-r from-primary via-yellow-300 to-primary' 
@@ -119,6 +113,12 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
             transition={{ repeat: Infinity, duration: 2.5, ease: "linear", repeatDelay: 1 }}
           />
         </motion.div>
+        <motion.div
+          className="absolute inset-0 z-10 rounded-full bg-white/70"
+          style={{ boxShadow: "0 0 12px 4px rgba(34,197,94,0.5)" }}
+          initial={{ opacity: 0 }}
+          animate={barFlashControls}
+        />
       </div>
       
       <div className="mt-3 text-xs text-muted-foreground/80">
