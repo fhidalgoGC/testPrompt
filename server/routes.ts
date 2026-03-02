@@ -98,7 +98,7 @@ export async function registerRoutes(
       const result = await storage.buyRandomTickets(
         id,
         input.quantity,
-        input.buyerName,
+        input.buyerEmail,
         input.buyerPhone,
         input.buyerEmail,
         input.buyerIdNumber,

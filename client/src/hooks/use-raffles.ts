@@ -29,10 +29,9 @@ export function useBuyTickets() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, quantity, buyerName, buyerPhone, buyerEmail, buyerIdNumber }: {
+    mutationFn: async ({ id, quantity, buyerPhone, buyerEmail, buyerIdNumber }: {
       id: number;
       quantity: number;
-      buyerName: string;
       buyerPhone: string;
       buyerEmail: string;
       buyerIdNumber: string;
@@ -41,7 +40,7 @@ export function useBuyTickets() {
       const res = await fetch(url, {
         method: api.raffles.buyTickets.method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity, buyerName, buyerPhone, buyerEmail, buyerIdNumber }),
+        body: JSON.stringify({ quantity, buyerPhone, buyerEmail, buyerIdNumber }),
         credentials: "include",
       });
 

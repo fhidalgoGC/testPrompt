@@ -36,7 +36,6 @@ export const api = {
       path: "/api/raffles/:id/buy" as const,
       input: z.object({
         quantity: z.number().min(1).max(100),
-        buyerName: z.string(),
         buyerPhone: z.string().min(8),
         buyerEmail: z.string().email(),
         buyerIdNumber: z.string(),

@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, User, CreditCard, ShieldCheck, Timer, Minus, Plus } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -32,7 +32,6 @@ function formatTime(seconds: number): string {
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const [quantity, setQuantity] = useState(1);
-  const [buyerName, setBuyerName] = useState("");
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
@@ -84,7 +83,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   }, [stopTimer, onClose]);
 
   const handleProceedToInfo = () => {
-    if (quantity < 1 || !buyerName.trim()) return;
+    if (quantity < 1 || !buyerEmail.trim()) return;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(buyerEmail.trim())) {
+      toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
+      return;
+    }
     setStep("info");
   };
 
@@ -140,7 +144,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       const result = await buyMutation.mutateAsync({
         id: raffleId,
         quantity,
-        buyerName: buyerName.trim(),
         buyerPhone: buyerPhone.trim(),
         buyerEmail: buyerEmail.trim(),
         buyerIdNumber: buyerIdNumber.trim(),
@@ -210,9 +213,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
               <p className="text-xs text-muted-foreground">{t.picker.randomAssignNote}</p>
               <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2"><User className="h-3 w-3" /> {buyerName}</div>
-                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {buyerPhone}</div>
                 <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
+                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {buyerPhone}</div>
                 {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>}
               </div>
             </div>
@@ -318,10 +320,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <Input type="tel" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-phone" />
               </div>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input type="email" placeholder={t.picker.emailPlaceholder} value={buyerEmail} onChange={(e) => setBuyerEmail(e.target.value)} className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-email" />
-              </div>
-              <div className="relative">
                 <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input placeholder={t.picker.idPlaceholder} value={buyerIdNumber} onChange={(e) => setBuyerIdNumber(e.target.value)} className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-id" />
               </div>
@@ -402,14 +400,14 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
             <div className="space-y-3 pt-2">
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input placeholder={t.picker.namePlaceholder} value={buyerName} onChange={(e) => setBuyerName(e.target.value)}
-                  className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-name" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input type="email" placeholder={t.picker.emailPlaceholder} value={buyerEmail} onChange={(e) => setBuyerEmail(e.target.value)}
+                  className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-email" />
               </div>
 
               <Button
                 className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleProceedToInfo} disabled={!buyerName.trim() || quantity < 1}
+                onClick={handleProceedToInfo} disabled={!buyerEmail.trim() || quantity < 1}
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
