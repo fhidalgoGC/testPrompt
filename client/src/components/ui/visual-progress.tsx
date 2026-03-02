@@ -10,13 +10,26 @@ interface VisualProgressProps {
 }
 
 export function VisualProgress({ sold, total, className = "", size = "md" }: VisualProgressProps) {
-  const [percentage, setPercentage] = useState(0);
   const { t } = useI18n();
-  
+  const basePercentage = Math.min(100, Math.max(0, (sold / total) * 100));
+  const [displayPercentage, setDisplayPercentage] = useState(basePercentage);
+
   useEffect(() => {
-    const target = Math.min(100, Math.max(0, (sold / total) * 100));
-    setPercentage(target);
-  }, [sold, total]);
+    setDisplayPercentage(basePercentage);
+  }, [basePercentage]);
+
+  useEffect(() => {
+    if (basePercentage >= 100) return;
+    const interval = setInterval(() => {
+      setDisplayPercentage(prev => {
+        const next = prev + 0.01;
+        return Math.min(next, basePercentage + 0.5);
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [basePercentage]);
+
+  const percentage = displayPercentage;
 
   const heights = {
     sm: "h-2",
@@ -40,7 +53,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
           )}
         </span>
         <span className={`font-display font-bold ${size === 'lg' ? 'text-3xl' : 'text-xl'} ${isAlmostComplete ? 'text-primary' : 'text-foreground'}`}>
-          {percentage.toFixed(1)}%
+          {percentage.toFixed(2)}%
         </span>
       </div>
       
