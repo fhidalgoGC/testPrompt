@@ -45,6 +45,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
 
   const prevPercentageRef = useRef(displayPercentage);
   const percentControls = useAnimation();
+  const barFlashControls = useAnimation();
 
   useEffect(() => {
     if (prevPercentageRef.current !== displayPercentage) {
@@ -53,6 +54,10 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
         scale: [1, 1.15, 1],
         color: ["#22c55e", "#22c55e", isAlmostComplete ? "#F59E0B" : "#ffffff"],
         transition: { duration: 0.6, ease: "easeOut" },
+      });
+      barFlashControls.start({
+        opacity: [0, 1, 0],
+        transition: { duration: 0.8, ease: "easeOut" },
       });
     }
   }, [displayPercentage]);
@@ -89,6 +94,11 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 1.5, ease: "easeOut" }}
+        />
+        <motion.div
+          className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400/60 via-white/40 to-green-400/60"
+          initial={{ opacity: 0 }}
+          animate={barFlashControls}
         />
         
         <motion.div
