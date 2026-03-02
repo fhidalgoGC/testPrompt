@@ -8,7 +8,8 @@ const otpStore = new Map<string, { code: string; expiresAt: number }>();
 const verifiedPhones = new Map<string, number>();
 
 function generateOtp(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  // TODO: Replace with random generation when connecting real SMS provider
+  return "123456";
 }
 
 export async function registerRoutes(

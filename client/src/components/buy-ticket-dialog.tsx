@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search, Mail, Sparkles, Phone, User, CreditCard, ShieldCheck } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search, Mail, Sparkles, Phone, User, CreditCard, ShieldCheck, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -21,23 +21,289 @@ interface BuyTicketDialogProps {
 
 const RANGE_SIZE = 100;
 
-type Step = "picker" | "verify" | "confirm" | "success";
+type PickerStep = "picker" | "confirm" | "success";
+type ModalStep = "info" | "otp";
+
+function VerificationModal({
+  isOpen,
+  onClose,
+  onVerified,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onVerified: (phone: string, email: string, idNumber: string) => void;
+}) {
+  const [modalStep, setModalStep] = useState<ModalStep>("info");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+
+  const sendOtpMutation = useSendOtp();
+  const verifyOtpMutation = useVerifyOtp();
+  const { toast } = useToast();
+  const { t } = useI18n();
+  const isMobile = useIsMobile();
+
+  const resetState = () => {
+    setModalStep("info");
+    setPhone("");
+    setEmail("");
+    setIdNumber("");
+    setOtpCode("");
+  };
+
+  const handleClose = () => {
+    resetState();
+    onClose();
+  };
+
+  const handleSendOtp = async () => {
+    if (!phone.trim() || !email.trim() || !idNumber.trim()) {
+      toast({ variant: "destructive", title: t.picker.fillAllFields, description: t.picker.fillAllFieldsDesc });
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
+      return;
+    }
+    try {
+      await sendOtpMutation.mutateAsync({ phone: phone.trim() });
+      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
+      setModalStep("otp");
+    } catch (error) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (otpCode.length !== 6) return;
+    try {
+      const result = await verifyOtpMutation.mutateAsync({ phone: phone.trim(), code: otpCode });
+      if (result.valid) {
+        onVerified(phone.trim(), email.trim(), idNumber.trim());
+        resetState();
+      } else {
+        toast({ variant: "destructive", title: t.picker.codeInvalid, description: t.picker.codeInvalidDesc });
+      }
+    } catch (error) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setOtpCode("");
+    try {
+      await sendOtpMutation.mutateAsync({ phone: phone.trim() });
+      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
+    } catch (error) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    }
+  };
+
+  const content = (
+    <AnimatePresence mode="wait">
+      {modalStep === "otp" ? (
+        <motion.div
+          key="otp"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          className="space-y-5 py-2"
+        >
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="h-14 w-14 rounded-full bg-accent/10 flex items-center justify-center">
+              <MessageSquare className="h-7 w-7 text-accent" />
+            </div>
+            <div>
+              <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-otp-title">
+                {t.picker.verifyTitle}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-xs mx-auto">
+                {t.picker.verifyDesc.replace("{phone}", phone)}
+              </p>
+            </div>
+          </div>
+
+          <Input
+            type="text"
+            inputMode="numeric"
+            maxLength={6}
+            placeholder={t.picker.otpPlaceholder}
+            value={otpCode}
+            onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+            className="bg-secondary/50 border-white/10 text-center text-2xl font-mono tracking-[0.5em] h-14"
+            data-testid="input-otp-code"
+          />
+
+          <Button
+            className="w-full font-bold h-12 bg-gradient-to-r from-accent to-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 active:scale-[0.98]"
+            onClick={handleVerifyOtp}
+            disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
+            data-testid="button-verify-otp"
+          >
+            {verifyOtpMutation.isPending ? (
+              <span className="flex items-center gap-2">
+                <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                {t.picker.verifying}
+              </span>
+            ) : (
+              <span className="flex items-center gap-2">
+                <ShieldCheck className="h-5 w-5" />
+                {t.picker.verifyCode}
+              </span>
+            )}
+          </Button>
+
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => { setModalStep("info"); setOtpCode(""); }}
+              className="text-muted-foreground"
+              data-testid="button-back-to-info"
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleResendOtp}
+              disabled={sendOtpMutation.isPending}
+              className="text-accent"
+              data-testid="button-resend-otp"
+            >
+              {sendOtpMutation.isPending ? t.picker.sendingCode : t.picker.resendCode}
+            </Button>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div
+          key="info"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          className="space-y-4 py-2"
+        >
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {t.picker.verifyInfoDesc}
+          </p>
+          <div className="space-y-3">
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="tel"
+                placeholder={t.picker.phonePlaceholder}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="bg-secondary/50 border-white/10 pl-10"
+                data-testid="input-buyer-phone"
+              />
+            </div>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="email"
+                placeholder={t.picker.emailPlaceholder}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-secondary/50 border-white/10 pl-10"
+                data-testid="input-buyer-email"
+              />
+            </div>
+            <div className="relative">
+              <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder={t.picker.idPlaceholder}
+                value={idNumber}
+                onChange={(e) => setIdNumber(e.target.value)}
+                className="bg-secondary/50 border-white/10 pl-10"
+                data-testid="input-buyer-id"
+              />
+            </div>
+          </div>
+
+          <div className="glass rounded-lg p-3 flex items-start gap-3">
+            <MessageSquare className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              {t.picker.smsExplanation}
+            </p>
+          </div>
+
+          <Button
+            className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+            onClick={handleSendOtp}
+            disabled={sendOtpMutation.isPending || !phone.trim() || !email.trim() || !idNumber.trim()}
+            data-testid="button-send-otp"
+          >
+            {sendOtpMutation.isPending ? (
+              <span className="flex items-center gap-2">
+                <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                {t.picker.sendingCode}
+              </span>
+            ) : (
+              <span className="flex items-center gap-2">
+                <Phone className="h-5 w-5" />
+                {t.picker.sendCode}
+              </span>
+            )}
+          </Button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+        <DrawerContent className="bg-card border-primary/20 max-h-[85dvh]">
+          <DrawerHeader className="text-left px-4 pt-2 pb-0">
+            <DrawerTitle className="font-display text-lg flex items-center gap-2" data-testid="text-verify-modal-title">
+              <ShieldCheck className="text-primary h-5 w-5" />
+              {t.picker.verifyModalTitle}
+            </DrawerTitle>
+            <DrawerDescription className="text-muted-foreground text-sm">
+              {t.picker.verifyModalSubtitle}
+            </DrawerDescription>
+          </DrawerHeader>
+          <div className="px-4 pb-6 pt-2">
+            {content}
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent className="sm:max-w-[420px] bg-card border-primary/20 shadow-2xl shadow-primary/10">
+        <DialogHeader>
+          <DialogTitle className="font-display text-xl flex items-center gap-2" data-testid="text-verify-modal-title">
+            <ShieldCheck className="text-primary h-5 w-5" />
+            {t.picker.verifyModalTitle}
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground">
+            {t.picker.verifyModalSubtitle}
+          </DialogDescription>
+        </DialogHeader>
+        {content}
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const [rangeStart, setRangeStart] = useState(1);
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [buyerName, setBuyerName] = useState("");
-  const [buyerPhone, setBuyerPhone] = useState("");
-  const [buyerEmail, setBuyerEmail] = useState("");
-  const [buyerIdNumber, setBuyerIdNumber] = useState("");
   const [searchNum, setSearchNum] = useState("");
-  const [otpCode, setOtpCode] = useState("");
-  const [step, setStep] = useState<Step>("picker");
+  const [step, setStep] = useState<PickerStep>("picker");
+  const [showVerifyModal, setShowVerifyModal] = useState(false);
+  const [verifiedData, setVerifiedData] = useState<{ phone: string; email: string; idNumber: string } | null>(null);
 
   const { data: soldTickets = [], isLoading: loadingSold } = useSoldTickets(raffleId);
   const buyMutation = useBuyTickets();
-  const sendOtpMutation = useSendOtp();
-  const verifyOtpMutation = useVerifyOtp();
   const { toast } = useToast();
   const { t } = useI18n();
 
@@ -96,59 +362,28 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     });
   };
 
-  const validateAndSendOtp = async () => {
-    if (!buyerName.trim() || !buyerPhone.trim() || !buyerEmail.trim() || !buyerIdNumber.trim()) {
-      toast({ variant: "destructive", title: t.picker.fillAllFields, description: t.picker.fillAllFieldsDesc });
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(buyerEmail.trim())) {
-      toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
-      return;
-    }
-    try {
-      await sendOtpMutation.mutateAsync({ phone: buyerPhone.trim() });
-      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
-      setStep("verify");
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
-    }
+  const handleProceedToVerify = () => {
+    if (selected.size === 0 || !buyerName.trim()) return;
+    setShowVerifyModal(true);
   };
 
-  const handleVerifyOtp = async () => {
-    if (otpCode.length !== 6) return;
-    try {
-      const result = await verifyOtpMutation.mutateAsync({ phone: buyerPhone.trim(), code: otpCode });
-      if (result.valid) {
-        setStep("confirm");
-      } else {
-        toast({ variant: "destructive", title: t.picker.codeInvalid, description: t.picker.codeInvalidDesc });
-      }
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
-    }
-  };
-
-  const handleResendOtp = async () => {
-    setOtpCode("");
-    try {
-      await sendOtpMutation.mutateAsync({ phone: buyerPhone.trim() });
-      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
-    }
+  const handleVerified = (phone: string, email: string, idNumber: string) => {
+    setVerifiedData({ phone, email, idNumber });
+    setShowVerifyModal(false);
+    setStep("confirm");
   };
 
   const handleConfirmBuy = async () => {
+    if (!verifiedData) return;
     try {
       await buyMutation.mutateAsync({
         id: raffleId,
         ticketNumbers: Array.from(selected),
         buyerName: buyerName.trim(),
-        buyerPhone: buyerPhone.trim(),
-        buyerEmail: buyerEmail.trim(),
-        buyerIdNumber: buyerIdNumber.trim(),
-        otpCode,
+        buyerPhone: verifiedData.phone,
+        buyerEmail: verifiedData.email,
+        buyerIdNumber: verifiedData.idNumber,
+        otpCode: "123456",
       });
 
       setStep("success");
@@ -170,11 +405,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       setTimeout(() => {
         setSelected(new Set());
         setBuyerName("");
-        setBuyerPhone("");
-        setBuyerEmail("");
-        setBuyerIdNumber("");
-        setOtpCode("");
         setStep("picker");
+        setVerifiedData(null);
         setRangeStart(1);
         buyMutation.reset();
         onClose();
@@ -191,319 +423,223 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const availableInRange = numbersInRange.filter(n => !soldSet.has(n)).length;
 
   return (
-    <div className="space-y-3">
-      <AnimatePresence mode="wait">
-        {step === "success" ? (
-          <motion.div
-            key="success"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center text-center space-y-4 py-8"
-          >
-            <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
-              <CheckCircle2 className="h-8 w-8 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
-            </div>
-          </motion.div>
-        ) : step === "confirm" ? (
-          <motion.div
-            key="confirm"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="space-y-5 py-4"
-          >
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
-                <Sparkles className="h-8 w-8 text-primary" />
+    <>
+      <div className="space-y-3">
+        <AnimatePresence mode="wait">
+          {step === "success" ? (
+            <motion.div
+              key="success"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="flex flex-col items-center text-center space-y-4 py-8"
+            >
+              <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
+                <CheckCircle2 className="h-8 w-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">
-                  {t.picker.confirmTitle}
-                </h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-sm mx-auto">
-                  {t.picker.confirmDesc}
-                </p>
+                <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
+                <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
               </div>
-            </div>
-
-            <div className="glass-gold rounded-lg p-3 space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t.picker.selected}</span>
-                <span className="text-primary font-display font-bold" data-testid="text-confirm-count">{selected.size}</span>
-              </div>
-              <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
-                {Array.from(selected).sort((a, b) => a - b).map(num => (
-                  <span key={num} className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium">
-                    {num}
-                  </span>
-                ))}
-              </div>
-              <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2"><User className="h-3 w-3" /> {buyerName}</div>
-                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {buyerPhone} <ShieldCheck className="h-3 w-3 text-green-500" /></div>
-                <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
-                <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="flex-1 border-white/10"
-                onClick={() => setStep("picker")}
-                data-testid="button-back-to-picker"
-              >
-                <ChevronLeft className="h-4 w-4 mr-1" />
-              </Button>
-              <Button
-                className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleConfirmBuy}
-                disabled={buyMutation.isPending}
-                data-testid="button-final-confirm"
-              >
-                {buyMutation.isPending ? (
-                  <span className="flex items-center gap-2">
-                    <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                    {t.picker.processing}
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
-                  </span>
-                )}
-              </Button>
-            </div>
-          </motion.div>
-        ) : step === "verify" ? (
-          <motion.div
-            key="verify"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="space-y-5 py-4"
-          >
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="h-16 w-16 rounded-full bg-accent/10 flex items-center justify-center">
-                <Phone className="h-8 w-8 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-verify-title">
-                  {t.picker.verifyTitle}
-                </h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-sm mx-auto">
-                  {t.picker.verifyDesc.replace("{phone}", buyerPhone)}
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <Input
-                type="text"
-                inputMode="numeric"
-                maxLength={6}
-                placeholder={t.picker.otpPlaceholder}
-                value={otpCode}
-                onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                className="bg-secondary/50 border-white/10 text-center text-2xl font-mono tracking-[0.5em] h-14"
-                data-testid="input-otp-code"
-              />
-
-              <Button
-                className="w-full font-bold h-12 bg-gradient-to-r from-accent to-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleVerifyOtp}
-                disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
-                data-testid="button-verify-otp"
-              >
-                {verifyOtpMutation.isPending ? (
-                  <span className="flex items-center gap-2">
-                    <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                    {t.picker.verifying}
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <ShieldCheck className="h-5 w-5" />
-                    {t.picker.verifyCode}
-                  </span>
-                )}
-              </Button>
-
-              <div className="flex items-center justify-between">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => { setStep("picker"); setOtpCode(""); }}
-                  className="text-muted-foreground"
-                  data-testid="button-back-from-verify"
-                >
-                  <ChevronLeft className="h-4 w-4 mr-1" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleResendOtp}
-                  disabled={sendOtpMutation.isPending}
-                  className="text-accent"
-                  data-testid="button-resend-otp"
-                >
-                  {sendOtpMutation.isPending ? t.picker.sendingCode : t.picker.resendCode}
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div key="picker" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  type="number"
-                  placeholder={t.picker.searchPlaceholder}
-                  value={searchNum}
-                  onChange={(e) => setSearchNum(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  className="pl-10 bg-secondary/50 border-white/10"
-                  min={1}
-                  max={totalTickets}
-                  data-testid="input-search-number"
-                />
-              </div>
-              <Button variant="outline" onClick={handleSearch} className="border-white/10" data-testid="button-search">
-                {t.picker.go}
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={goPrev}
-                disabled={currentRange <= 1}
-                className="border-white/10 shrink-0"
-                data-testid="button-prev-range"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-
-              <div className="flex-1 text-center min-w-0">
-                <span className="font-display font-bold text-base" data-testid="text-range-label">
-                  {rangeStart} - {rangeEnd}
-                </span>
-                <span className="text-muted-foreground text-xs ml-1">
-                  ({availableInRange} {t.picker.availableShort})
-                </span>
+            </motion.div>
+          ) : step === "confirm" ? (
+            <motion.div
+              key="confirm"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-5 py-4"
+            >
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Sparkles className="h-8 w-8 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">
+                    {t.picker.confirmTitle}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-sm mx-auto">
+                    {t.picker.confirmDesc}
+                  </p>
+                </div>
               </div>
 
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={goNext}
-                disabled={currentRange >= totalRanges}
-                className="border-white/10 shrink-0"
-                data-testid="button-next-range"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-thin">
-              {Array.from({ length: Math.min(totalRanges, 10) }, (_, i) => {
-                const pageIdx = totalRanges <= 10
-                  ? i
-                  : Math.max(0, Math.min(currentRange - 6, totalRanges - 10)) + i;
-                const start = pageIdx * RANGE_SIZE + 1;
-                const end = Math.min(start + RANGE_SIZE - 1, totalTickets);
-                const isActive = pageIdx === currentRange - 1;
-                return (
-                  <Button
-                    key={pageIdx}
-                    variant={isActive ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => goToRange(pageIdx)}
-                    className={`text-[10px] shrink-0 px-2 ${isActive ? "" : "border-white/10 text-muted-foreground"}`}
-                    data-testid={`button-range-${pageIdx}`}
-                  >
-                    {start}-{end}
-                  </Button>
-                );
-              })}
-            </div>
-
-            {loadingSold ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="h-8 w-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-5 sm:grid-cols-10 gap-[6px] sm:gap-1" data-testid="grid-numbers">
-                {numbersInRange.map((num) => {
-                  const isSold = soldSet.has(num);
-                  const isSelected = selected.has(num);
-                  return (
-                    <button
-                      key={num}
-                      onClick={() => toggleNumber(num)}
-                      disabled={isSold}
-                      className={`
-                        aspect-square rounded-md text-xs font-bold flex items-center justify-center transition-all duration-150 touch-manipulation
-                        ${isSold
-                          ? "bg-destructive/20 text-destructive/50 cursor-not-allowed line-through"
-                          : isSelected
-                          ? "bg-primary text-primary-foreground shadow-[0_0_10px_rgba(245,158,11,0.4)] scale-105"
-                          : "bg-secondary/50 text-muted-foreground border border-white/5 active:bg-primary/20 sm:hover:border-primary/40 sm:hover:bg-primary/10 sm:hover:text-foreground"
-                        }
-                      `}
-                      data-testid={`button-number-${num}`}
-                    >
-                      {num}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            <div className="flex items-center gap-3 text-[10px] sm:text-xs text-muted-foreground flex-wrap">
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-secondary/50 border border-white/5" />
-                <span>{t.picker.legendAvailable}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-primary" />
-                <span>{t.picker.legendSelected}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-destructive/20" />
-                <span>{t.picker.legendSold}</span>
-              </div>
-            </div>
-
-            {selected.size > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="glass-gold rounded-lg p-3 space-y-3"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">{t.picker.selected}</span>
-                  <span className="text-primary font-display font-bold text-lg" data-testid="text-selected-count">{selected.size}</span>
+              <div className="glass-gold rounded-lg p-3 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">{t.picker.selected}</span>
+                  <span className="text-primary font-display font-bold" data-testid="text-confirm-count">{selected.size}</span>
                 </div>
                 <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
                   {Array.from(selected).sort((a, b) => a - b).map(num => (
-                    <span
-                      key={num}
-                      className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium cursor-pointer active:bg-destructive/20 active:text-destructive sm:hover:bg-destructive/20 sm:hover:text-destructive transition-colors touch-manipulation"
-                      onClick={() => toggleNumber(num)}
-                      data-testid={`tag-selected-${num}`}
-                    >
+                    <span key={num} className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium">
                       {num}
                     </span>
                   ))}
                 </div>
+                {verifiedData && (
+                  <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2"><User className="h-3 w-3" /> {buyerName}</div>
+                    <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {verifiedData.phone} <ShieldCheck className="h-3 w-3 text-green-500" /></div>
+                    <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {verifiedData.email}</div>
+                    <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {verifiedData.idNumber}</div>
+                  </div>
+                )}
+              </div>
 
-                <div className="space-y-2">
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  className="flex-1 border-white/10"
+                  onClick={() => { setStep("picker"); setVerifiedData(null); }}
+                  data-testid="button-back-to-picker"
+                >
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                </Button>
+                <Button
+                  className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+                  onClick={handleConfirmBuy}
+                  disabled={buyMutation.isPending}
+                  data-testid="button-final-confirm"
+                >
+                  {buyMutation.isPending ? (
+                    <span className="flex items-center gap-2">
+                      <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      {t.picker.processing}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
+                    </span>
+                  )}
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div key="picker" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    type="number"
+                    placeholder={t.picker.searchPlaceholder}
+                    value={searchNum}
+                    onChange={(e) => setSearchNum(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                    className="pl-10 bg-secondary/50 border-white/10"
+                    min={1}
+                    max={totalTickets}
+                    data-testid="input-search-number"
+                  />
+                </div>
+                <Button variant="outline" onClick={handleSearch} className="border-white/10" data-testid="button-search">
+                  {t.picker.go}
+                </Button>
+              </div>
+
+              <div className="flex items-center justify-between gap-2">
+                <Button variant="outline" size="icon" onClick={goPrev} disabled={currentRange <= 1} className="border-white/10 shrink-0" data-testid="button-prev-range">
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <div className="flex-1 text-center min-w-0">
+                  <span className="font-display font-bold text-base" data-testid="text-range-label">{rangeStart} - {rangeEnd}</span>
+                  <span className="text-muted-foreground text-xs ml-1">({availableInRange} {t.picker.availableShort})</span>
+                </div>
+                <Button variant="outline" size="icon" onClick={goNext} disabled={currentRange >= totalRanges} className="border-white/10 shrink-0" data-testid="button-next-range">
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-thin">
+                {Array.from({ length: Math.min(totalRanges, 10) }, (_, i) => {
+                  const pageIdx = totalRanges <= 10 ? i : Math.max(0, Math.min(currentRange - 6, totalRanges - 10)) + i;
+                  const start = pageIdx * RANGE_SIZE + 1;
+                  const end = Math.min(start + RANGE_SIZE - 1, totalTickets);
+                  const isActive = pageIdx === currentRange - 1;
+                  return (
+                    <Button
+                      key={pageIdx}
+                      variant={isActive ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => goToRange(pageIdx)}
+                      className={`text-[10px] shrink-0 px-2 ${isActive ? "" : "border-white/10 text-muted-foreground"}`}
+                      data-testid={`button-range-${pageIdx}`}
+                    >
+                      {start}-{end}
+                    </Button>
+                  );
+                })}
+              </div>
+
+              {loadingSold ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="h-8 w-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                </div>
+              ) : (
+                <div className="grid grid-cols-5 sm:grid-cols-10 gap-[6px] sm:gap-1" data-testid="grid-numbers">
+                  {numbersInRange.map((num) => {
+                    const isSold = soldSet.has(num);
+                    const isSelected = selected.has(num);
+                    return (
+                      <button
+                        key={num}
+                        onClick={() => toggleNumber(num)}
+                        disabled={isSold}
+                        className={`
+                          aspect-square rounded-md text-xs font-bold flex items-center justify-center transition-all duration-150 touch-manipulation
+                          ${isSold
+                            ? "bg-destructive/20 text-destructive/50 cursor-not-allowed line-through"
+                            : isSelected
+                            ? "bg-primary text-primary-foreground shadow-[0_0_10px_rgba(245,158,11,0.4)] scale-105"
+                            : "bg-secondary/50 text-muted-foreground border border-white/5 active:bg-primary/20 sm:hover:border-primary/40 sm:hover:bg-primary/10 sm:hover:text-foreground"
+                          }
+                        `}
+                        data-testid={`button-number-${num}`}
+                      >
+                        {num}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="flex items-center gap-3 text-[10px] sm:text-xs text-muted-foreground flex-wrap">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-sm bg-secondary/50 border border-white/5" />
+                  <span>{t.picker.legendAvailable}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-sm bg-primary" />
+                  <span>{t.picker.legendSelected}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-sm bg-destructive/20" />
+                  <span>{t.picker.legendSold}</span>
+                </div>
+              </div>
+
+              {selected.size > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="glass-gold rounded-lg p-3 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">{t.picker.selected}</span>
+                    <span className="text-primary font-display font-bold text-lg" data-testid="text-selected-count">{selected.size}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
+                    {Array.from(selected).sort((a, b) => a - b).map(num => (
+                      <span
+                        key={num}
+                        className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium cursor-pointer active:bg-destructive/20 active:text-destructive sm:hover:bg-destructive/20 sm:hover:text-destructive transition-colors touch-manipulation"
+                        onClick={() => toggleNumber(num)}
+                        data-testid={`tag-selected-${num}`}
+                      >
+                        {num}
+                      </span>
+                    ))}
+                  </div>
+
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
@@ -514,71 +650,38 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                       data-testid="input-buyer-name"
                     />
                   </div>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      type="tel"
-                      placeholder={t.picker.phonePlaceholder}
-                      value={buyerPhone}
-                      onChange={(e) => setBuyerPhone(e.target.value)}
-                      className="bg-secondary/50 border-white/10 pl-10"
-                      data-testid="input-buyer-phone"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      type="email"
-                      placeholder={t.picker.emailPlaceholder}
-                      value={buyerEmail}
-                      onChange={(e) => setBuyerEmail(e.target.value)}
-                      className="bg-secondary/50 border-white/10 pl-10"
-                      data-testid="input-buyer-email"
-                    />
-                  </div>
-                  <div className="relative">
-                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      placeholder={t.picker.idPlaceholder}
-                      value={buyerIdNumber}
-                      onChange={(e) => setBuyerIdNumber(e.target.value)}
-                      className="bg-secondary/50 border-white/10 pl-10"
-                      data-testid="input-buyer-id"
-                    />
-                  </div>
+
+                  <Button
+                    className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+                    onClick={handleProceedToVerify}
+                    disabled={!buyerName.trim() || selected.size === 0}
+                    data-testid="button-proceed-verify"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Zap className="h-5 w-5" />
+                      {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
+                    </span>
+                  </Button>
+                </motion.div>
+              )}
+
+              {buyMutation.isError && (
+                <div className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  <p>{buyMutation.error instanceof Error ? buyMutation.error.message : t.picker.errorGeneric}</p>
                 </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-                <Button
-                  className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                  onClick={validateAndSendOtp}
-                  disabled={sendOtpMutation.isPending || !buyerName.trim() || !buyerPhone.trim() || !buyerEmail.trim() || !buyerIdNumber.trim()}
-                  data-testid="button-send-otp"
-                >
-                  {sendOtpMutation.isPending ? (
-                    <span className="flex items-center gap-2">
-                      <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                      {t.picker.sendingCode}
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <Phone className="h-5 w-5" />
-                      {t.picker.sendCode}
-                    </span>
-                  )}
-                </Button>
-              </motion.div>
-            )}
-
-            {buyMutation.isError && (
-              <div className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg">
-                <AlertCircle className="h-4 w-4 shrink-0" />
-                <p>{buyMutation.error instanceof Error ? buyMutation.error.message : t.picker.errorGeneric}</p>
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+      <VerificationModal
+        isOpen={showVerifyModal}
+        onClose={() => setShowVerifyModal(false)}
+        onVerified={handleVerified}
+      />
+    </>
   );
 }
 
