@@ -13,7 +13,7 @@ export interface IStorage {
   getRaffle(id: number): Promise<Raffle | undefined>;
   createRaffle(raffle: InsertRaffle): Promise<Raffle>;
   getSoldTicketNumbers(raffleId: number): Promise<number[]>;
-  buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<Raffle>;
+  buyRandomTickets(raffleId: number, quantity: number, buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<{ raffle: Raffle; assignedNumbers: number[] }>;
   seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void>;
 }
 
@@ -39,24 +39,31 @@ export class DatabaseStorage implements IStorage {
     return rows.map(r => r.ticketNumber);
   }
 
-  async buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<Raffle> {
+  async buyRandomTickets(raffleId: number, quantity: number, buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<{ raffle: Raffle; assignedNumbers: number[] }> {
     const raffle = await this.getRaffle(raffleId);
     if (!raffle) {
       throw new Error("Campaign not found");
     }
 
-    const existingSold = await this.getSoldTicketNumbers(raffleId);
-    const alreadySold = ticketNumbers.filter(n => existingSold.includes(n));
-    if (alreadySold.length > 0) {
-      throw new Error(`Numbers already sold: ${alreadySold.join(", ")}`);
+    const soldNumbers = await this.getSoldTicketNumbers(raffleId);
+    const soldSet = new Set(soldNumbers);
+
+    const available: number[] = [];
+    for (let i = 1; i <= raffle.totalTickets; i++) {
+      if (!soldSet.has(i)) available.push(i);
     }
 
-    const validNumbers = ticketNumbers.filter(n => n >= 1 && n <= raffle.totalTickets);
-    if (validNumbers.length !== ticketNumbers.length) {
-      throw new Error("Some ticket numbers are out of range");
+    if (available.length < quantity) {
+      throw new Error(`Solo quedan ${available.length} numeros disponibles`);
     }
 
-    const ticketValues = validNumbers.map(num => ({
+    for (let i = available.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [available[i], available[j]] = [available[j], available[i]];
+    }
+    const assignedNumbers = available.slice(0, quantity).sort((a, b) => a - b);
+
+    const ticketValues = assignedNumbers.map(num => ({
       raffleId,
       ticketNumber: num,
       buyerName,
@@ -67,13 +74,13 @@ export class DatabaseStorage implements IStorage {
 
     await db.insert(tickets).values(ticketValues);
 
-    const newSoldCount = Math.min(raffle.soldTickets + validNumbers.length, raffle.totalTickets);
+    const newSoldCount = Math.min(raffle.soldTickets + assignedNumbers.length, raffle.totalTickets);
     const [updated] = await db.update(raffles)
       .set({ soldTickets: newSoldCount })
       .where(eq(raffles.id, raffleId))
       .returning();
 
-    return updated;
+    return { raffle: updated, assignedNumbers };
   }
 
   async seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void> {

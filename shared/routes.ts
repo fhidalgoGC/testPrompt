@@ -35,7 +35,7 @@ export const api = {
       method: "POST" as const,
       path: "/api/raffles/:id/buy" as const,
       input: z.object({
-        ticketNumbers: z.array(z.number().min(1).max(9999)),
+        quantity: z.number().min(1).max(100),
         buyerName: z.string(),
         buyerPhone: z.string().min(8),
         buyerEmail: z.string().email(),
@@ -43,7 +43,10 @@ export const api = {
         otpCode: z.string().length(6).optional(),
       }),
       responses: {
-        200: z.custom<typeof raffles.$inferSelect>(),
+        200: z.object({
+          raffle: z.custom<typeof raffles.$inferSelect>(),
+          assignedNumbers: z.array(z.number()),
+        }),
         400: errorSchemas.validation,
         404: errorSchemas.notFound,
       },

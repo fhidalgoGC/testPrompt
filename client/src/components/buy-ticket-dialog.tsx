@@ -1,10 +1,10 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from "react";
-import { useSoldTickets, useBuyTickets, useSendOtp, useVerifyOtp } from "@/hooks/use-raffles";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useBuyTickets, useSendOtp, useVerifyOtp } from "@/hooks/use-raffles";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search, Mail, Sparkles, Phone, User, CreditCard, ShieldCheck, Timer } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, User, CreditCard, ShieldCheck, Timer, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -19,10 +19,10 @@ interface BuyTicketDialogProps {
   onClose: () => void;
 }
 
-const RANGE_SIZE = 100;
 const OTP_TIMEOUT_SECONDS = 300;
+const MAX_TICKETS = 100;
 
-type Step = "picker" | "info" | "otp" | "confirm" | "success";
+type Step = "quantity" | "info" | "otp" | "confirm" | "success";
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -31,56 +31,22 @@ function formatTime(seconds: number): string {
 }
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
-  const [rangeStart, setRangeStart] = useState(1);
-  const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [quantity, setQuantity] = useState(1);
   const [buyerName, setBuyerName] = useState("");
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
-  const [searchNum, setSearchNum] = useState("");
   const [otpCode, setOtpCode] = useState("");
-  const [step, setStep] = useState<Step>("picker");
+  const [step, setStep] = useState<Step>("quantity");
   const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT_SECONDS);
+  const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const { data: soldTickets = [], isLoading: loadingSold } = useSoldTickets(raffleId);
   const buyMutation = useBuyTickets();
   const sendOtpMutation = useSendOtp();
   const verifyOtpMutation = useVerifyOtp();
   const { toast } = useToast();
   const { t } = useI18n();
-
-  const resetAll = useCallback(() => {
-    setSelected(new Set());
-    setBuyerName("");
-    setBuyerPhone("");
-    setBuyerEmail("");
-    setBuyerIdNumber("");
-    setOtpCode("");
-    setSearchNum("");
-    setStep("picker");
-    setRangeStart(1);
-    setTimeLeft(OTP_TIMEOUT_SECONDS);
-    stopTimer();
-    buyMutation.reset();
-  }, [stopTimer]);
-
-  const handleClose = useCallback(() => {
-    resetAll();
-    onClose();
-  }, [resetAll, onClose]);
-
-  const soldSet = useMemo(() => new Set(soldTickets), [soldTickets]);
-
-  const rangeEnd = Math.min(rangeStart + RANGE_SIZE - 1, totalTickets);
-  const totalRanges = Math.ceil(totalTickets / RANGE_SIZE);
-  const currentRange = Math.floor((rangeStart - 1) / RANGE_SIZE) + 1;
-
-  const numbersInRange = useMemo(() => {
-    const nums: number[] = [];
-    for (let i = rangeStart; i <= rangeEnd; i++) nums.push(i);
-    return nums;
-  }, [rangeStart, rangeEnd]);
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) {
@@ -107,47 +73,18 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
   useEffect(() => {
     if (timeLeft === 0 && step === "otp") {
-      toast({
-        title: t.picker.timerExpiredTitle,
-        description: t.picker.timerExpiredDesc,
-      });
+      toast({ title: t.picker.timerExpiredTitle, description: t.picker.timerExpiredDesc });
       setStep("confirm");
     }
   }, [timeLeft, step]);
 
-  const goToRange = (zeroBasedIndex: number) => {
-    const clamped = Math.max(0, Math.min(zeroBasedIndex, totalRanges - 1));
-    setRangeStart(clamped * RANGE_SIZE + 1);
-  };
-  const goPrev = () => goToRange(currentRange - 2);
-  const goNext = () => goToRange(currentRange);
-
-  const handleSearch = () => {
-    const num = parseInt(searchNum, 10);
-    if (isNaN(num) || num < 1 || num > totalTickets) {
-      toast({ variant: "destructive", title: t.picker.invalidNumber, description: `${t.picker.invalidNumberDesc} ${totalTickets}.` });
-      return;
-    }
-    setRangeStart(Math.floor((num - 1) / RANGE_SIZE) * RANGE_SIZE + 1);
-    if (soldSet.has(num)) {
-      toast({ title: t.picker.notAvailable, description: t.picker.notAvailableDesc.replace("{num}", String(num)) });
-    } else {
-      setSelected(prev => new Set(prev).add(num));
-    }
-    setSearchNum("");
-  };
-
-  const toggleNumber = (num: number) => {
-    if (soldSet.has(num)) return;
-    setSelected(prev => {
-      const next = new Set(prev);
-      next.has(num) ? next.delete(num) : next.add(num);
-      return next;
-    });
-  };
+  const handleClose = useCallback(() => {
+    stopTimer();
+    onClose();
+  }, [stopTimer, onClose]);
 
   const handleProceedToInfo = () => {
-    if (selected.size === 0 || !buyerName.trim()) return;
+    if (quantity < 1 || !buyerName.trim()) return;
     setStep("info");
   };
 
@@ -200,14 +137,15 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
   const handleConfirmBuy = async () => {
     try {
-      await buyMutation.mutateAsync({
+      const result = await buyMutation.mutateAsync({
         id: raffleId,
-        ticketNumbers: Array.from(selected),
+        quantity,
         buyerName: buyerName.trim(),
         buyerPhone: buyerPhone.trim(),
         buyerEmail: buyerEmail.trim(),
         buyerIdNumber: buyerIdNumber.trim(),
       });
+      setAssignedNumbers(result.assignedNumbers);
       setStep("success");
       const duration = 3000;
       const end = Date.now() + duration;
@@ -217,24 +155,22 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         if (Date.now() < end) requestAnimationFrame(frame);
       };
       frame();
-      toast({ title: t.picker.toastTitle, description: t.picker.toastDesc.replace("{count}", String(selected.size)).replace("{title}", title) });
-      setTimeout(() => {
-        handleClose();
-      }, 2500);
+      toast({ title: t.picker.toastTitle, description: t.picker.toastDesc.replace("{count}", String(quantity)).replace("{title}", title) });
     } catch (error) {
       toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorDesc });
     }
   };
 
-  const availableInRange = numbersInRange.filter(n => !soldSet.has(n)).length;
   const timerPercent = (timeLeft / OTP_TIMEOUT_SECONDS) * 100;
   const timerUrgent = timeLeft <= 60;
+
+  const quickAmounts = [1, 2, 3, 5, 10, 25];
 
   return (
     <div className="space-y-3">
       <AnimatePresence mode="wait">
         {step === "success" ? (
-          <motion.div key="success" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center text-center space-y-4 py-8">
+          <motion.div key="success" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center text-center space-y-4 py-6">
             <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
               <CheckCircle2 className="h-8 w-8 text-primary" />
             </div>
@@ -242,6 +178,19 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
               <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
             </div>
+            {assignedNumbers.length > 0 && (
+              <div className="glass-gold rounded-lg p-4 w-full max-w-sm">
+                <p className="text-sm font-medium text-foreground mb-2">{t.picker.yourNumbers}</p>
+                <div className="flex flex-wrap gap-1.5 justify-center max-h-24 overflow-y-auto">
+                  {assignedNumbers.map(num => (
+                    <span key={num} className="px-2.5 py-1 text-sm bg-primary/20 text-primary rounded-md font-bold font-mono">{num}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <Button variant="outline" className="mt-2 border-white/10" onClick={handleClose} data-testid="button-close-success">
+              {t.picker.closeBtn}
+            </Button>
           </motion.div>
         ) : step === "confirm" ? (
           <motion.div key="confirm" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5 py-4">
@@ -256,14 +205,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
             <div className="glass-gold rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t.picker.selected}</span>
-                <span className="text-primary font-display font-bold" data-testid="text-confirm-count">{selected.size}</span>
+                <span className="text-muted-foreground">{t.picker.ticketCount}</span>
+                <span className="text-primary font-display font-bold text-lg" data-testid="text-confirm-count">{quantity}</span>
               </div>
-              <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
-                {Array.from(selected).sort((a, b) => a - b).map(num => (
-                  <span key={num} className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium">{num}</span>
-                ))}
-              </div>
+              <p className="text-xs text-muted-foreground">{t.picker.randomAssignNote}</p>
               <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
                 <div className="flex items-center gap-2"><User className="h-3 w-3" /> {buyerName}</div>
                 <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {buyerPhone}</div>
@@ -289,7 +234,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 ) : (
                   <span className="flex items-center gap-2">
                     <Zap className="h-4 w-4" />
-                    {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
+                    {t.picker.confirmBtn}
                   </span>
                 )}
               </Button>
@@ -325,20 +270,15 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
             <Input
-              type="text"
-              inputMode="numeric"
-              maxLength={6}
-              placeholder={t.picker.otpPlaceholder}
-              value={otpCode}
-              onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+              type="text" inputMode="numeric" maxLength={6} placeholder={t.picker.otpPlaceholder}
+              value={otpCode} onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
               className="bg-secondary/50 border-white/10 text-center text-2xl font-mono tracking-[0.5em] h-14"
               data-testid="input-otp-code"
             />
 
             <Button
               className="w-full font-bold h-12 bg-gradient-to-r from-accent to-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 active:scale-[0.98]"
-              onClick={handleVerifyOtp}
-              disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
+              onClick={handleVerifyOtp} disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
               data-testid="button-verify-otp"
             >
               {verifyOtpMutation.isPending ? (
@@ -347,10 +287,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   {t.picker.verifying}
                 </span>
               ) : (
-                <span className="flex items-center gap-2">
-                  <ShieldCheck className="h-5 w-5" />
-                  {t.picker.verifyCode}
-                </span>
+                <span className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />{t.picker.verifyCode}</span>
               )}
             </Button>
 
@@ -366,7 +303,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         ) : step === "info" ? (
           <motion.div key="info" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
             <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("picker")} className="text-muted-foreground -ml-2" data-testid="button-back-to-picker">
+              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <h3 className="text-lg font-display font-bold text-foreground flex items-center gap-2">
@@ -397,8 +334,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
             <Button
               className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-              onClick={handleSendCode}
-              disabled={sendOtpMutation.isPending || !buyerPhone.trim() || !buyerEmail.trim()}
+              onClick={handleSendCode} disabled={sendOtpMutation.isPending || !buyerPhone.trim() || !buyerEmail.trim()}
               data-testid="button-send-code"
             >
               {sendOtpMutation.isPending ? (
@@ -407,110 +343,81 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   {t.picker.sendingCode}
                 </span>
               ) : (
-                <span className="flex items-center gap-2">
-                  <Mail className="h-5 w-5" />
-                  {t.picker.sendCodeEmail}
-                </span>
+                <span className="flex items-center gap-2"><Mail className="h-5 w-5" />{t.picker.sendCodeEmail}</span>
               )}
             </Button>
           </motion.div>
         ) : (
-          <motion.div key="picker" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <motion.div key="quantity" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-5">
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
+                <Ticket className="h-7 w-7 text-primary" />
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">{t.picker.quantityDesc}</p>
+            </div>
+
+            <div className="flex items-center justify-center gap-4">
+              <Button
+                variant="outline" size="icon"
+                className="h-12 w-12 rounded-full border-white/10 text-foreground"
+                onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                disabled={quantity <= 1}
+                data-testid="button-decrease-qty"
+              >
+                <Minus className="h-5 w-5" />
+              </Button>
+              <div className="w-24 text-center">
                 <Input
-                  type="number" placeholder={t.picker.searchPlaceholder} value={searchNum}
-                  onChange={(e) => setSearchNum(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  className="pl-10 bg-secondary/50 border-white/10" min={1} max={totalTickets} data-testid="input-search-number"
+                  type="number" min={1} max={MAX_TICKETS} value={quantity}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (!isNaN(val) && val >= 1 && val <= MAX_TICKETS) setQuantity(val);
+                    else if (e.target.value === "") setQuantity(1);
+                  }}
+                  className="bg-secondary/50 border-white/10 text-center text-3xl font-display font-bold h-14 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  data-testid="input-quantity"
                 />
               </div>
-              <Button variant="outline" onClick={handleSearch} className="border-white/10" data-testid="button-search">{t.picker.go}</Button>
-            </div>
-
-            <div className="flex items-center justify-between gap-2">
-              <Button variant="outline" size="icon" onClick={goPrev} disabled={currentRange <= 1} className="border-white/10 shrink-0" data-testid="button-prev-range">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <div className="flex-1 text-center min-w-0">
-                <span className="font-display font-bold text-base" data-testid="text-range-label">{rangeStart} - {rangeEnd}</span>
-                <span className="text-muted-foreground text-xs ml-1">({availableInRange} {t.picker.availableShort})</span>
-              </div>
-              <Button variant="outline" size="icon" onClick={goNext} disabled={currentRange >= totalRanges} className="border-white/10 shrink-0" data-testid="button-next-range">
-                <ChevronRight className="h-4 w-4" />
+              <Button
+                variant="outline" size="icon"
+                className="h-12 w-12 rounded-full border-white/10 text-foreground"
+                onClick={() => setQuantity(q => Math.min(MAX_TICKETS, q + 1))}
+                disabled={quantity >= MAX_TICKETS}
+                data-testid="button-increase-qty"
+              >
+                <Plus className="h-5 w-5" />
               </Button>
             </div>
 
-            <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-thin">
-              {Array.from({ length: Math.min(totalRanges, 10) }, (_, i) => {
-                const pageIdx = totalRanges <= 10 ? i : Math.max(0, Math.min(currentRange - 6, totalRanges - 10)) + i;
-                const start = pageIdx * RANGE_SIZE + 1;
-                const end = Math.min(start + RANGE_SIZE - 1, totalTickets);
-                const isActive = pageIdx === currentRange - 1;
-                return (
-                  <Button key={pageIdx} variant={isActive ? "default" : "outline"} size="sm" onClick={() => goToRange(pageIdx)}
-                    className={`text-[10px] shrink-0 px-2 ${isActive ? "" : "border-white/10 text-muted-foreground"}`}
-                    data-testid={`button-range-${pageIdx}`}
-                  >{start}-{end}</Button>
-                );
-              })}
-            </div>
-
-            {loadingSold ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="h-8 w-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-5 sm:grid-cols-10 gap-[6px] sm:gap-1" data-testid="grid-numbers">
-                {numbersInRange.map((num) => {
-                  const isSold = soldSet.has(num);
-                  const isSelected = selected.has(num);
-                  return (
-                    <button key={num} onClick={() => toggleNumber(num)} disabled={isSold}
-                      className={`aspect-square rounded-md text-xs font-bold flex items-center justify-center transition-all duration-150 touch-manipulation
-                        ${isSold ? "bg-destructive/20 text-destructive/50 cursor-not-allowed line-through"
-                          : isSelected ? "bg-primary text-primary-foreground shadow-[0_0_10px_rgba(245,158,11,0.4)] scale-105"
-                          : "bg-secondary/50 text-muted-foreground border border-white/5 active:bg-primary/20 sm:hover:border-primary/40 sm:hover:bg-primary/10 sm:hover:text-foreground"}`}
-                      data-testid={`button-number-${num}`}
-                    >{num}</button>
-                  );
-                })}
-              </div>
-            )}
-
-            <div className="flex items-center gap-3 text-[10px] sm:text-xs text-muted-foreground flex-wrap">
-              <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-secondary/50 border border-white/5" /><span>{t.picker.legendAvailable}</span></div>
-              <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-primary" /><span>{t.picker.legendSelected}</span></div>
-              <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-destructive/20" /><span>{t.picker.legendSold}</span></div>
-            </div>
-
-            {selected.size > 0 && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="glass-gold rounded-lg p-3 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">{t.picker.selected}</span>
-                  <span className="text-primary font-display font-bold text-lg" data-testid="text-selected-count">{selected.size}</span>
-                </div>
-                <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto">
-                  {Array.from(selected).sort((a, b) => a - b).map(num => (
-                    <span key={num}
-                      className="px-2 py-0.5 text-xs bg-primary/20 text-primary rounded-md font-medium cursor-pointer active:bg-destructive/20 active:text-destructive sm:hover:bg-destructive/20 sm:hover:text-destructive transition-colors touch-manipulation"
-                      onClick={() => toggleNumber(num)} data-testid={`tag-selected-${num}`}
-                    >{num}</span>
-                  ))}
-                </div>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input placeholder={t.picker.namePlaceholder} value={buyerName} onChange={(e) => setBuyerName(e.target.value)}
-                    className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-name" />
-                </div>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {quickAmounts.map(amt => (
                 <Button
-                  className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                  onClick={handleProceedToInfo} disabled={!buyerName.trim() || selected.size === 0} data-testid="button-proceed-contact"
-                >
-                  <span className="flex items-center gap-2"><Zap className="h-5 w-5" />{selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}</span>
-                </Button>
-              </motion.div>
-            )}
+                  key={amt} variant={quantity === amt ? "default" : "outline"} size="sm"
+                  className={`min-w-[3rem] ${quantity === amt ? "" : "border-white/10 text-muted-foreground"}`}
+                  onClick={() => setQuantity(amt)}
+                  data-testid={`button-quick-${amt}`}
+                >{amt}</Button>
+              ))}
+            </div>
+
+            <div className="space-y-3 pt-2">
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input placeholder={t.picker.namePlaceholder} value={buyerName} onChange={(e) => setBuyerName(e.target.value)}
+                  className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-name" />
+              </div>
+
+              <Button
+                className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+                onClick={handleProceedToInfo} disabled={!buyerName.trim() || quantity < 1}
+                data-testid="button-proceed-contact"
+              >
+                <span className="flex items-center gap-2">
+                  <Zap className="h-5 w-5" />
+                  {quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
+                </span>
+              </Button>
+            </div>
 
             {buyMutation.isError && (
               <div className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg">
@@ -551,7 +458,7 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-card border-primary/20 shadow-2xl shadow-primary/10 p-0">
+      <DialogContent className="sm:max-w-[480px] max-h-[90vh] overflow-y-auto bg-card border-primary/20 shadow-2xl shadow-primary/10 p-0">
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="font-display text-2xl flex items-center gap-2" data-testid="text-dialog-title">
             <Ticket className="text-primary h-6 w-6" />{t.picker.title}

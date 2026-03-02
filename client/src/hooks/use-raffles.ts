@@ -29,20 +29,19 @@ export function useBuyTickets() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, ticketNumbers, buyerName, buyerPhone, buyerEmail, buyerIdNumber, otpCode }: {
+    mutationFn: async ({ id, quantity, buyerName, buyerPhone, buyerEmail, buyerIdNumber }: {
       id: number;
-      ticketNumbers: number[];
+      quantity: number;
       buyerName: string;
       buyerPhone: string;
       buyerEmail: string;
       buyerIdNumber: string;
-      otpCode: string;
     }) => {
       const url = buildUrl(api.raffles.buyTickets.path, { id });
       const res = await fetch(url, {
         method: api.raffles.buyTickets.method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ticketNumbers, buyerName, buyerPhone, buyerEmail, buyerIdNumber, otpCode }),
+        body: JSON.stringify({ quantity, buyerName, buyerPhone, buyerEmail, buyerIdNumber }),
         credentials: "include",
       });
 
@@ -51,7 +50,7 @@ export function useBuyTickets() {
         throw new Error(errorData.message || "Failed to buy tickets");
       }
 
-      return await res.json();
+      return await res.json() as { raffle: any; assignedNumbers: number[] };
     },
     onSettled: (_data, _err, variables) => {
       queryClient.invalidateQueries({ queryKey: [api.raffles.list.path] });

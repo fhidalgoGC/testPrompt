@@ -95,15 +95,15 @@ export async function registerRoutes(
         return res.status(404).json({ message: "Campaign not found" });
       }
 
-      const updated = await storage.buyTickets(
+      const result = await storage.buyRandomTickets(
         id,
-        input.ticketNumbers,
+        input.quantity,
         input.buyerName,
         input.buyerPhone,
         input.buyerEmail,
         input.buyerIdNumber,
       );
-      res.json(updated);
+      res.json(result);
     } catch (err) {
       if (err instanceof z.ZodError) {
         return res.status(400).json({
