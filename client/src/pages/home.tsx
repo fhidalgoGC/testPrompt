@@ -207,7 +207,7 @@ export default function Home() {
                 {t.raffle.priorityCampaign}
               </h2>
             </div>
-            <RaffleCard raffle={featuredRaffle} featured={true} />
+            <RaffleCard raffle={featuredRaffle} featured={true} badgeLabel={t.raffle.badgeLabels[0]} />
           </motion.div>
         )}
       </section>
@@ -237,7 +237,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
               >
-                <RaffleCard raffle={raffle} />
+                <RaffleCard raffle={raffle} badgeLabel={t.raffle.badgeLabels[(index + 1) % t.raffle.badgeLabels.length]} />
               </motion.div>
             ))}
           </div>

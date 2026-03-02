@@ -26,9 +26,9 @@ const translations = {
       verifiedAsset: "Vehiculo Verificado",
       secureEntry: "Sera mio",
       allocationFull: "Numeros Agotados",
-      activeCampaign: "Sorteo Activo",
       awaitingDraw: "Esperando Sorteo",
       almostFree: "Casi gratis",
+      badgeLabels: ["La mejor opcion", "Buenisimo", "No esta nada mal", "Increible", "Imperdible"] as readonly string[],
     },
     progress: {
       targetReached: "Meta Alcanzada",
@@ -164,9 +164,9 @@ const translations = {
       verifiedAsset: "Verified Vehicle",
       secureEntry: "It will be mine",
       allocationFull: "Sold Out",
-      activeCampaign: "Active Campaign",
       awaitingDraw: "Awaiting Draw",
       almostFree: "Almost free",
+      badgeLabels: ["Best choice", "Amazing", "Not bad at all", "Incredible", "Can't miss"] as readonly string[],
     },
     progress: {
       targetReached: "Target Reached",

@@ -18,9 +18,10 @@ interface Raffle {
 interface RaffleCardProps {
   raffle: Raffle;
   featured?: boolean;
+  badgeLabel?: string;
 }
 
-export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
+export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { t } = useI18n();
@@ -51,20 +52,23 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
           />
           
           <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-            <div className={`
-              px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border
-              ${isComplete 
-                ? 'bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]' 
-                : 'bg-black/50 text-white border-white/10'}
-            `}>
-              {isComplete ? t.raffle.awaitingDraw : t.raffle.activeCampaign}
-            </div>
-            {!isComplete && (
-              <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full backdrop-blur-md border bg-red-500/90 text-white border-red-400/50 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse" data-testid="badge-discount">
-                <Flame className="w-3.5 h-3.5" />
-                <span>99% OFF</span>
-                <span className="hidden sm:inline">· {t.raffle.almostFree}</span>
+            {isComplete ? (
+              <div className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+                {t.raffle.awaitingDraw}
               </div>
+            ) : (
+              <>
+                {badgeLabel && (
+                  <div className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]" data-testid="badge-label">
+                    {badgeLabel}
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full backdrop-blur-md border bg-red-500/90 text-white border-red-400/50 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse" data-testid="badge-discount">
+                  <Flame className="w-3.5 h-3.5" />
+                  <span>99% OFF</span>
+                  <span className="hidden sm:inline">· {t.raffle.almostFree}</span>
+                </div>
+              </>
             )}
           </div>
         </div>
