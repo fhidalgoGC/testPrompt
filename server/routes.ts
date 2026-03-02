@@ -118,6 +118,32 @@ export async function registerRoutes(
     }
   });
 
+  app.post("/api/coupons/redeem", async (req, res) => {
+    try {
+      const input = z.object({
+        code: z.string().min(1),
+        email: z.string().email(),
+      }).parse(req.body);
+
+      const result = await storage.redeemCoupon(input.code, input.email);
+      res.json(result);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
+      if (err instanceof Error) {
+        if (err.message === "INVALID_CODE") {
+          return res.status(404).json({ message: "INVALID_CODE" });
+        }
+        if (err.message === "ALREADY_USED") {
+          return res.status(400).json({ message: "ALREADY_USED" });
+        }
+        return res.status(400).json({ message: err.message });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   return httpServer;
 }
 
@@ -157,6 +183,10 @@ async function seedDatabase() {
 
       await storage.seedTickets(r1.id, randomTickets(420), 420);
       await storage.seedTickets(r2.id, randomTickets(890), 890);
+
+      await storage.createCoupon("APEX2024", 5);
+      await storage.createCoupon("DREAM100", 10);
+      await storage.createCoupon("WINNER50", 3);
 
       console.log("Database seeded successfully");
     }

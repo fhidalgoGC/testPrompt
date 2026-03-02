@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
@@ -57,6 +57,12 @@ export default function Home() {
                 <ShieldCheck className="h-3.5 w-3.5 text-accent" />
                 {t.nav.verifyOtp}
               </button>
+              <Link href="/redeem">
+                <span className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5" data-testid="link-redeem">
+                  <Sprout className="h-3.5 w-3.5 text-primary" />
+                  {t.nav.redeemSeeds}
+                </span>
+              </Link>
             </div>
             <Button
               variant="outline"
@@ -145,6 +151,16 @@ export default function Home() {
                 <ShieldCheck className="h-4 w-4" />
                 {t.nav.verifyOtp}
               </button>
+              <Link href="/redeem">
+                <span
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-primary hover:bg-white/5 transition-colors cursor-pointer"
+                  onClick={() => setMenuOpen(false)}
+                  data-testid="mobile-link-redeem"
+                >
+                  <Sprout className="h-4 w-4" />
+                  {t.nav.redeemSeeds}
+                </span>
+              </Link>
               <div className="border-t border-white/5 pt-2 mt-2">
                 <button
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-bold text-primary hover:bg-primary/10 transition-colors w-full"

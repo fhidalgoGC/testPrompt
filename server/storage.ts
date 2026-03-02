@@ -2,9 +2,11 @@ import { db } from "./db";
 import {
   raffles,
   tickets,
+  coupons,
   type Raffle,
   type InsertRaffle,
   type Ticket,
+  type Coupon,
 } from "@shared/schema";
 import { eq, and } from "drizzle-orm";
 
@@ -15,6 +17,8 @@ export interface IStorage {
   getSoldTicketNumbers(raffleId: number): Promise<number[]>;
   buyRandomTickets(raffleId: number, quantity: number, buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<{ raffle: Raffle; assignedNumbers: number[] }>;
   seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void>;
+  redeemCoupon(code: string, email: string): Promise<{ credits: number }>;
+  createCoupon(code: string, credits: number): Promise<Coupon>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -95,6 +99,25 @@ export class DatabaseStorage implements IStorage {
       await db.insert(tickets).values(values);
     }
     await db.update(raffles).set({ soldTickets: soldCount }).where(eq(raffles.id, raffleId));
+  }
+
+  async redeemCoupon(code: string, email: string): Promise<{ credits: number }> {
+    const [coupon] = await db.select().from(coupons).where(eq(coupons.code, code.toUpperCase()));
+    if (!coupon) {
+      throw new Error("INVALID_CODE");
+    }
+    if (coupon.used) {
+      throw new Error("ALREADY_USED");
+    }
+    await db.update(coupons)
+      .set({ used: true, usedByEmail: email })
+      .where(eq(coupons.id, coupon.id));
+    return { credits: coupon.credits };
+  }
+
+  async createCoupon(code: string, credits: number): Promise<Coupon> {
+    const [coupon] = await db.insert(coupons).values({ code: code.toUpperCase(), credits }).returning();
+    return coupon;
   }
 }
 

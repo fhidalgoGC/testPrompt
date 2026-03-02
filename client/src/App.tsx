@@ -7,12 +7,14 @@ import { I18nProvider } from "@/lib/i18n";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Terms from "@/pages/terms";
+import Redeem from "@/pages/redeem";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/terms" component={Terms} />
+      <Route path="/redeem" component={Redeem} />
       <Route component={NotFound} />
     </Switch>
   );

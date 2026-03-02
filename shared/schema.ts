@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, uniqueIndex, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -23,10 +23,21 @@ export const tickets = pgTable("tickets", {
   uniqueIndex("raffle_ticket_unique").on(table.raffleId, table.ticketNumber),
 ]);
 
+export const coupons = pgTable("coupons", {
+  id: serial("id").primaryKey(),
+  code: text("code").notNull().unique(),
+  credits: integer("credits").notNull(),
+  used: boolean("used").notNull().default(false),
+  usedByEmail: text("used_by_email"),
+});
+
 export const insertRaffleSchema = createInsertSchema(raffles).omit({ id: true });
 export const insertTicketSchema = createInsertSchema(tickets).omit({ id: true });
+export const insertCouponSchema = createInsertSchema(coupons).omit({ id: true });
 
 export type InsertRaffle = z.infer<typeof insertRaffleSchema>;
 export type Raffle = typeof raffles.$inferSelect;
 export type InsertTicket = z.infer<typeof insertTicketSchema>;
 export type Ticket = typeof tickets.$inferSelect;
+export type Coupon = typeof coupons.$inferSelect;
+export type InsertCoupon = z.infer<typeof insertCouponSchema>;
