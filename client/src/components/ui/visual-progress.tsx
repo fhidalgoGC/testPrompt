@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 
 interface VisualProgressProps {
@@ -30,15 +30,28 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
   }, [basePercentage]);
 
   const percentage = displayPercentage;
+  const isAlmostComplete = percentage >= 90;
+  const isComplete = percentage >= 100;
+
+  const prevPercentageRef = useRef(displayPercentage);
+  const percentControls = useAnimation();
+
+  useEffect(() => {
+    if (prevPercentageRef.current !== displayPercentage) {
+      prevPercentageRef.current = displayPercentage;
+      percentControls.start({
+        scale: [1, 1.15, 1],
+        color: ["#22c55e", "#22c55e", isAlmostComplete ? "#F59E0B" : "#ffffff"],
+        transition: { duration: 0.6, ease: "easeOut" },
+      });
+    }
+  }, [displayPercentage]);
 
   const heights = {
     sm: "h-2",
     md: "h-3",
     lg: "h-5"
   };
-
-  const isAlmostComplete = percentage >= 90;
-  const isComplete = percentage >= 100;
 
   return (
     <div className={`w-full ${className}`}>
@@ -52,9 +65,12 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
             <span>{t.progress.fundingProgress}</span>
           )}
         </span>
-        <span className={`font-display font-bold ${size === 'lg' ? 'text-3xl' : 'text-xl'} ${isAlmostComplete ? 'text-primary' : 'text-foreground'}`}>
+        <motion.span
+          className={`font-display font-bold ${size === 'lg' ? 'text-3xl' : 'text-xl'} ${isAlmostComplete ? 'text-primary' : 'text-foreground'}`}
+          animate={percentControls}
+        >
           {percentage.toFixed(2)}%
-        </span>
+        </motion.span>
       </div>
       
       <div className={`w-full bg-secondary/50 rounded-full overflow-hidden relative border border-white/5 backdrop-blur-sm ${heights[size]}`}>
