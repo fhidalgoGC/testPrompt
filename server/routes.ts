@@ -10,6 +10,10 @@ export async function registerRoutes(
 ): Promise<Server> {
   await seedDatabase();
 
+  app.get("/robots.txt", (req, res) => {
+    res.type("text/plain").send("User-agent: *\nDisallow: /\n");
+  });
+
   app.get(api.raffles.list.path, async (req, res) => {
     const allRaffles = await storage.getRaffles();
     res.json(allRaffles);
@@ -19,7 +23,7 @@ export async function registerRoutes(
     const id = Number(req.params.id);
     const raffle = await storage.getRaffle(id);
     if (!raffle) {
-      return res.status(404).json({ message: "Raffle not found" });
+      return res.status(404).json({ message: "Campaign not found" });
     }
     const soldNumbers = await storage.getSoldTicketNumbers(id);
     res.json(soldNumbers);
@@ -32,7 +36,7 @@ export async function registerRoutes(
 
       const raffle = await storage.getRaffle(id);
       if (!raffle) {
-        return res.status(404).json({ message: "Raffle not found" });
+        return res.status(404).json({ message: "Campaign not found" });
       }
 
       const updated = await storage.buyTickets(id, input.ticketNumbers, input.buyerName);

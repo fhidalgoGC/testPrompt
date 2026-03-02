@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
-import { motion } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
+import { Link } from "wouter";
 
 export default function Home() {
   const { data: raffles, isLoading } = useRaffles();
   const { t, locale, setLocale } = useI18n();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -40,11 +43,14 @@ export default function Home() {
               Apex<span className="text-primary">Draw</span>
             </span>
           </div>
-          <div className="flex items-center gap-4 sm:gap-8">
+          <div className="flex items-center gap-2 sm:gap-4">
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-              <a href="#" className="text-white hover:text-primary transition-colors" data-testid="link-raffles">{t.nav.raffles}</a>
+              <a href="#" className="text-white hover:text-primary transition-colors" data-testid="link-campaigns">{t.nav.campaigns}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-winners">{t.nav.winners}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
+              <Link href="/terms">
+                <span className="hover:text-white transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
+              </Link>
             </div>
             <Button
               variant="outline"
@@ -56,9 +62,89 @@ export default function Home() {
               <Globe className="h-3.5 w-3.5" />
               {t.langSwitch}
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden md:inline-flex border-primary/30 text-primary hover:bg-primary/10 gap-1.5"
+              data-testid="button-login-desktop"
+            >
+              <LogIn className="h-3.5 w-3.5" />
+              {t.nav.login}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden text-foreground"
+              onClick={() => setMenuOpen(!menuOpen)}
+              data-testid="button-menu-toggle"
+            >
+              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
           </div>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-[57px] left-0 right-0 z-40 glass border-b border-white/5 md:hidden"
+          >
+            <div className="px-4 py-4 space-y-1">
+              <a
+                href="#"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMenuOpen(false)}
+                data-testid="mobile-link-campaigns"
+              >
+                <Zap className="h-4 w-4 text-primary" />
+                {t.nav.campaigns}
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMenuOpen(false)}
+                data-testid="mobile-link-winners"
+              >
+                <Trophy className="h-4 w-4 text-primary/70" />
+                {t.nav.winners}
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMenuOpen(false)}
+                data-testid="mobile-link-how"
+              >
+                <HelpCircle className="h-4 w-4 text-primary/70" />
+                {t.nav.howItWorks}
+              </a>
+              <Link href="/terms">
+                <span
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                  onClick={() => setMenuOpen(false)}
+                  data-testid="mobile-link-terms"
+                >
+                  <FileText className="h-4 w-4 text-primary/70" />
+                  {t.nav.terms}
+                </span>
+              </Link>
+              <div className="border-t border-white/5 pt-2 mt-2">
+                <button
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-bold text-primary hover:bg-primary/10 transition-colors w-full"
+                  onClick={() => setMenuOpen(false)}
+                  data-testid="mobile-link-login"
+                >
+                  <LogIn className="h-4 w-4" />
+                  {t.nav.login}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <section className="pt-24 sm:pt-32 pb-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
         <div className="absolute top-40 left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />

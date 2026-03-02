@@ -42,7 +42,7 @@ export class DatabaseStorage implements IStorage {
   async buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string): Promise<Raffle> {
     const raffle = await this.getRaffle(raffleId);
     if (!raffle) {
-      throw new Error("Raffle not found");
+      throw new Error("Campaign not found");
     }
 
     const existingSold = await this.getSoldTicketNumbers(raffleId);
