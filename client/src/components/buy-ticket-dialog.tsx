@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -191,6 +191,13 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 </div>
               </div>
             )}
+            <div className="w-full max-w-sm rounded-lg border border-red-500/30 bg-red-500/10 p-4 space-y-2" data-testid="payment-warning">
+              <div className="flex items-center gap-2 text-red-400 font-bold text-sm">
+                <Clock className="h-4 w-4 shrink-0" />
+                {t.picker.paymentWarningTitle}
+              </div>
+              <p className="text-xs text-red-300/80 leading-relaxed">{t.picker.paymentWarningDesc}</p>
+            </div>
             <Button variant="outline" className="mt-2 border-white/10" onClick={handleClose} data-testid="button-close-success">
               {t.picker.closeBtn}
             </Button>

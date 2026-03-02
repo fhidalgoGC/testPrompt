@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { VisualProgress } from "./ui/visual-progress";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
-import { ChevronRight, ShieldCheck, Flame } from "lucide-react";
+import { ChevronRight, ShieldCheck, Flame, Eye } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 interface Raffle {
@@ -27,6 +27,24 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
   const { t } = useI18n();
   
   const isComplete = raffle.soldTickets >= raffle.totalTickets;
+
+  const baseViewers = useMemo(() => {
+    const seed = raffle.id * 7 + 137;
+    return 180 + (seed % 250);
+  }, [raffle.id]);
+
+  const [viewers, setViewers] = useState(baseViewers);
+
+  useEffect(() => {
+    if (isComplete) return;
+    const interval = setInterval(() => {
+      setViewers(prev => {
+        const delta = Math.floor(Math.random() * 21) - 10;
+        return Math.max(150, Math.min(500, prev + delta));
+      });
+    }, 4000 + Math.random() * 3000);
+    return () => clearInterval(interval);
+  }, [isComplete]);
 
   return (
     <>
@@ -84,9 +102,24 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               {raffle.title}
             </h3>
             
-            <p className="text-muted-foreground text-sm leading-relaxed mb-4 sm:mb-6 line-clamp-2">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2">
               {raffle.description}
             </p>
+            {!isComplete && (
+              <div className="flex items-center gap-2 mb-3 sm:mb-4" data-testid="viewers-counter">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  <Eye className="w-3.5 h-3.5 text-green-400" />
+                  <span className="text-xs font-bold text-green-400">{viewers}</span>
+                </div>
+                <span className="text-xs text-muted-foreground">
+                  {t.raffle.viewersWatching.replace("{count}", String(viewers))}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="mt-auto space-y-4 sm:space-y-6">
