@@ -4,6 +4,13 @@ import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
 
+const otpStore = new Map<string, { code: string; expiresAt: number }>();
+const verifiedPhones = new Map<string, number>();
+
+function generateOtp(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -29,17 +36,80 @@ export async function registerRoutes(
     res.json(soldNumbers);
   });
 
+  app.post(api.otp.send.path, async (req, res) => {
+    try {
+      const input = api.otp.send.input.parse(req.body);
+      const code = generateOtp();
+      const expiresAt = Date.now() + 5 * 60 * 1000;
+      otpStore.set(input.phone, { code, expiresAt });
+
+      // TODO: Replace with real SMS provider (Twilio, etc.)
+      console.log(`[SMS] Verification code for ${input.phone}: ${code}`);
+
+      res.json({ success: true });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post(api.otp.verify.path, async (req, res) => {
+    try {
+      const input = api.otp.verify.input.parse(req.body);
+      const stored = otpStore.get(input.phone);
+
+      if (!stored) {
+        return res.json({ valid: false });
+      }
+
+      if (Date.now() > stored.expiresAt) {
+        otpStore.delete(input.phone);
+        return res.json({ valid: false });
+      }
+
+      const valid = stored.code === input.code;
+      if (valid) {
+        otpStore.delete(input.phone);
+        verifiedPhones.set(input.phone, Date.now() + 10 * 60 * 1000);
+      }
+
+      res.json({ valid });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.post(api.raffles.buyTickets.path, async (req, res) => {
     try {
       const id = Number(req.params.id);
       const input = api.raffles.buyTickets.input.parse(req.body);
+
+      const verifiedUntil = verifiedPhones.get(input.buyerPhone);
+      if (!verifiedUntil || Date.now() > verifiedUntil) {
+        verifiedPhones.delete(input.buyerPhone);
+        return res.status(400).json({ message: "Phone not verified. Please verify your phone first." });
+      }
 
       const raffle = await storage.getRaffle(id);
       if (!raffle) {
         return res.status(404).json({ message: "Campaign not found" });
       }
 
-      const updated = await storage.buyTickets(id, input.ticketNumbers, input.buyerName);
+      verifiedPhones.delete(input.buyerPhone);
+
+      const updated = await storage.buyTickets(
+        id,
+        input.ticketNumbers,
+        input.buyerName,
+        input.buyerPhone,
+        input.buyerEmail,
+        input.buyerIdNumber,
+      );
       res.json(updated);
     } catch (err) {
       if (err instanceof z.ZodError) {

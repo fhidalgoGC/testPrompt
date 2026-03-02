@@ -37,11 +37,40 @@ export const api = {
       input: z.object({
         ticketNumbers: z.array(z.number().min(1).max(9999)),
         buyerName: z.string().min(1),
+        buyerPhone: z.string().min(7),
+        buyerEmail: z.string().email(),
+        buyerIdNumber: z.string().min(3),
+        otpCode: z.string().length(6),
       }),
       responses: {
         200: z.custom<typeof raffles.$inferSelect>(),
         400: errorSchemas.validation,
         404: errorSchemas.notFound,
+      },
+    },
+  },
+  otp: {
+    send: {
+      method: "POST" as const,
+      path: "/api/otp/send" as const,
+      input: z.object({
+        phone: z.string().min(7),
+      }),
+      responses: {
+        200: z.object({ success: z.boolean() }),
+        400: errorSchemas.validation,
+      },
+    },
+    verify: {
+      method: "POST" as const,
+      path: "/api/otp/verify" as const,
+      input: z.object({
+        phone: z.string().min(7),
+        code: z.string().length(6),
+      }),
+      responses: {
+        200: z.object({ valid: z.boolean() }),
+        400: errorSchemas.validation,
       },
     },
   },

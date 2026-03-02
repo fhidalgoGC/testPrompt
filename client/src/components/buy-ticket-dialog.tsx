@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
-import { useSoldTickets, useBuyTickets } from "@/hooks/use-raffles";
+import { useSoldTickets, useBuyTickets, useSendOtp, useVerifyOtp } from "@/hooks/use-raffles";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search, Mail, Sparkles } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Search, Mail, Sparkles, Phone, User, CreditCard, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -21,16 +21,23 @@ interface BuyTicketDialogProps {
 
 const RANGE_SIZE = 100;
 
+type Step = "picker" | "verify" | "confirm" | "success";
+
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const [rangeStart, setRangeStart] = useState(1);
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [buyerName, setBuyerName] = useState("");
+  const [buyerPhone, setBuyerPhone] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerIdNumber, setBuyerIdNumber] = useState("");
   const [searchNum, setSearchNum] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [step, setStep] = useState<Step>("picker");
 
   const { data: soldTickets = [], isLoading: loadingSold } = useSoldTickets(raffleId);
   const buyMutation = useBuyTickets();
+  const sendOtpMutation = useSendOtp();
+  const verifyOtpMutation = useVerifyOtp();
   const { toast } = useToast();
   const { t } = useI18n();
 
@@ -89,9 +96,47 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     });
   };
 
-  const handleProceedToBuy = () => {
-    if (selected.size === 0 || !buyerName.trim()) return;
-    setShowConfirm(true);
+  const validateAndSendOtp = async () => {
+    if (!buyerName.trim() || !buyerPhone.trim() || !buyerEmail.trim() || !buyerIdNumber.trim()) {
+      toast({ variant: "destructive", title: t.picker.fillAllFields, description: t.picker.fillAllFieldsDesc });
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(buyerEmail.trim())) {
+      toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
+      return;
+    }
+    try {
+      await sendOtpMutation.mutateAsync({ phone: buyerPhone.trim() });
+      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
+      setStep("verify");
+    } catch (error) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (otpCode.length !== 6) return;
+    try {
+      const result = await verifyOtpMutation.mutateAsync({ phone: buyerPhone.trim(), code: otpCode });
+      if (result.valid) {
+        setStep("confirm");
+      } else {
+        toast({ variant: "destructive", title: t.picker.codeInvalid, description: t.picker.codeInvalidDesc });
+      }
+    } catch (error) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setOtpCode("");
+    try {
+      await sendOtpMutation.mutateAsync({ phone: buyerPhone.trim() });
+      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
+    } catch (error) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    }
   };
 
   const handleConfirmBuy = async () => {
@@ -100,28 +145,19 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         id: raffleId,
         ticketNumbers: Array.from(selected),
         buyerName: buyerName.trim(),
+        buyerPhone: buyerPhone.trim(),
+        buyerEmail: buyerEmail.trim(),
+        buyerIdNumber: buyerIdNumber.trim(),
+        otpCode,
       });
 
-      setShowConfirm(false);
-      setShowSuccess(true);
+      setStep("success");
 
       const duration = 3000;
       const end = Date.now() + duration;
       const frame = () => {
-        confetti({
-          particleCount: 5,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ["#F59E0B", "#FBBF24", "#ffffff"],
-        });
-        confetti({
-          particleCount: 5,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ["#F59E0B", "#FBBF24", "#ffffff"],
-        });
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
         if (Date.now() < end) requestAnimationFrame(frame);
       };
       frame();
@@ -134,7 +170,11 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       setTimeout(() => {
         setSelected(new Set());
         setBuyerName("");
-        setShowSuccess(false);
+        setBuyerPhone("");
+        setBuyerEmail("");
+        setBuyerIdNumber("");
+        setOtpCode("");
+        setStep("picker");
         setRangeStart(1);
         buyMutation.reset();
         onClose();
@@ -153,7 +193,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   return (
     <div className="space-y-3">
       <AnimatePresence mode="wait">
-        {showSuccess ? (
+        {step === "success" ? (
           <motion.div
             key="success"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -164,11 +204,11 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <CheckCircle2 className="h-8 w-8 text-primary" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-foreground">{t.picker.successTitle}</h3>
+              <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
               <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
             </div>
           </motion.div>
-        ) : showConfirm ? (
+        ) : step === "confirm" ? (
           <motion.div
             key="confirm"
             initial={{ opacity: 0, y: 10 }}
@@ -202,17 +242,22 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   </span>
                 ))}
               </div>
+              <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2"><User className="h-3 w-3" /> {buyerName}</div>
+                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {buyerPhone} <ShieldCheck className="h-3 w-3 text-green-500" /></div>
+                <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
+                <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>
+              </div>
             </div>
 
             <div className="flex gap-3">
               <Button
                 variant="outline"
                 className="flex-1 border-white/10"
-                onClick={() => setShowConfirm(false)}
+                onClick={() => setStep("picker")}
                 data-testid="button-back-to-picker"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
-                {selected.size > 0 ? t.picker.selected.replace(":", "") : ""}
               </Button>
               <Button
                 className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
@@ -232,6 +277,82 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   </span>
                 )}
               </Button>
+            </div>
+          </motion.div>
+        ) : step === "verify" ? (
+          <motion.div
+            key="verify"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="space-y-5 py-4"
+          >
+            <div className="flex flex-col items-center text-center space-y-4">
+              <div className="h-16 w-16 rounded-full bg-accent/10 flex items-center justify-center">
+                <Phone className="h-8 w-8 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-verify-title">
+                  {t.picker.verifyTitle}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-sm mx-auto">
+                  {t.picker.verifyDesc.replace("{phone}", buyerPhone)}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <Input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder={t.picker.otpPlaceholder}
+                value={otpCode}
+                onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                className="bg-secondary/50 border-white/10 text-center text-2xl font-mono tracking-[0.5em] h-14"
+                data-testid="input-otp-code"
+              />
+
+              <Button
+                className="w-full font-bold h-12 bg-gradient-to-r from-accent to-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 active:scale-[0.98]"
+                onClick={handleVerifyOtp}
+                disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
+                data-testid="button-verify-otp"
+              >
+                {verifyOtpMutation.isPending ? (
+                  <span className="flex items-center gap-2">
+                    <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                    {t.picker.verifying}
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <ShieldCheck className="h-5 w-5" />
+                    {t.picker.verifyCode}
+                  </span>
+                )}
+              </Button>
+
+              <div className="flex items-center justify-between">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => { setStep("picker"); setOtpCode(""); }}
+                  className="text-muted-foreground"
+                  data-testid="button-back-from-verify"
+                >
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleResendOtp}
+                  disabled={sendOtpMutation.isPending}
+                  className="text-accent"
+                  data-testid="button-resend-otp"
+                >
+                  {sendOtpMutation.isPending ? t.picker.sendingCode : t.picker.resendCode}
+                </Button>
+              </div>
             </div>
           </motion.div>
         ) : (
@@ -382,24 +503,68 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   ))}
                 </div>
 
-                <Input
-                  placeholder={t.picker.namePlaceholder}
-                  value={buyerName}
-                  onChange={(e) => setBuyerName(e.target.value)}
-                  className="bg-secondary/50 border-white/10"
-                  data-testid="input-buyer-name"
-                />
+                <div className="space-y-2">
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      placeholder={t.picker.namePlaceholder}
+                      value={buyerName}
+                      onChange={(e) => setBuyerName(e.target.value)}
+                      className="bg-secondary/50 border-white/10 pl-10"
+                      data-testid="input-buyer-name"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      type="tel"
+                      placeholder={t.picker.phonePlaceholder}
+                      value={buyerPhone}
+                      onChange={(e) => setBuyerPhone(e.target.value)}
+                      className="bg-secondary/50 border-white/10 pl-10"
+                      data-testid="input-buyer-phone"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      type="email"
+                      placeholder={t.picker.emailPlaceholder}
+                      value={buyerEmail}
+                      onChange={(e) => setBuyerEmail(e.target.value)}
+                      className="bg-secondary/50 border-white/10 pl-10"
+                      data-testid="input-buyer-email"
+                    />
+                  </div>
+                  <div className="relative">
+                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      placeholder={t.picker.idPlaceholder}
+                      value={buyerIdNumber}
+                      onChange={(e) => setBuyerIdNumber(e.target.value)}
+                      className="bg-secondary/50 border-white/10 pl-10"
+                      data-testid="input-buyer-id"
+                    />
+                  </div>
+                </div>
 
                 <Button
                   className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                  onClick={handleProceedToBuy}
-                  disabled={!buyerName.trim()}
-                  data-testid="button-confirm-buy"
+                  onClick={validateAndSendOtp}
+                  disabled={sendOtpMutation.isPending || !buyerName.trim() || !buyerPhone.trim() || !buyerEmail.trim() || !buyerIdNumber.trim()}
+                  data-testid="button-send-otp"
                 >
-                  <span className="flex items-center gap-2">
-                    <Zap className="h-5 w-5" />
-                    {selected.size === 1 ? t.picker.buyButton : t.picker.buyButtonPlural}
-                  </span>
+                  {sendOtpMutation.isPending ? (
+                    <span className="flex items-center gap-2">
+                      <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      {t.picker.sendingCode}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Phone className="h-5 w-5" />
+                      {t.picker.sendCode}
+                    </span>
+                  )}
                 </Button>
               </motion.div>
             )}

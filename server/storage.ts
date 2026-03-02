@@ -13,7 +13,7 @@ export interface IStorage {
   getRaffle(id: number): Promise<Raffle | undefined>;
   createRaffle(raffle: InsertRaffle): Promise<Raffle>;
   getSoldTicketNumbers(raffleId: number): Promise<number[]>;
-  buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string): Promise<Raffle>;
+  buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<Raffle>;
   seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void>;
 }
 
@@ -39,7 +39,7 @@ export class DatabaseStorage implements IStorage {
     return rows.map(r => r.ticketNumber);
   }
 
-  async buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string): Promise<Raffle> {
+  async buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string, buyerPhone?: string, buyerEmail?: string, buyerIdNumber?: string): Promise<Raffle> {
     const raffle = await this.getRaffle(raffleId);
     if (!raffle) {
       throw new Error("Campaign not found");
@@ -60,6 +60,9 @@ export class DatabaseStorage implements IStorage {
       raffleId,
       ticketNumber: num,
       buyerName,
+      buyerPhone: buyerPhone || null,
+      buyerEmail: buyerEmail || null,
+      buyerIdNumber: buyerIdNumber || null,
     }));
 
     await db.insert(tickets).values(ticketValues);

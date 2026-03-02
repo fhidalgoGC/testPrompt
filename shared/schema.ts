@@ -16,6 +16,9 @@ export const tickets = pgTable("tickets", {
   raffleId: integer("raffle_id").notNull(),
   ticketNumber: integer("ticket_number").notNull(),
   buyerName: text("buyer_name").notNull(),
+  buyerPhone: text("buyer_phone"),
+  buyerEmail: text("buyer_email"),
+  buyerIdNumber: text("buyer_id_number"),
 }, (table) => [
   uniqueIndex("raffle_ticket_unique").on(table.raffleId, table.ticketNumber),
 ]);
