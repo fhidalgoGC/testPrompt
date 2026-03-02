@@ -27,7 +27,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
     let timeout: ReturnType<typeof setTimeout>;
 
     const tick = () => {
-      setDisplayPercentage(prev => Math.min(prev + 0.01, basePercentage + 0.5));
+      setDisplayPercentage(prev => Math.min(prev + 0.01, basePercentage + 2));
       const delay = delays[delayPatternRef.current % delays.length];
       delayPatternRef.current++;
       timeout = setTimeout(tick, delay);
