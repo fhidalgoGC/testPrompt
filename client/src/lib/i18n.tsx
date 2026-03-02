@@ -5,7 +5,7 @@ export type Locale = "es" | "en";
 const translations = {
   es: {
     nav: {
-      campaigns: "Sorteos",
+      campaigns: "Suenos",
       winners: "Ganadores",
       howItWorks: "Como funciona",
       terms: "Terminos y condiciones",
@@ -17,16 +17,16 @@ const translations = {
       title1: "Gana el",
       titleHighlight: "vehiculo",
       title2: "de tus suenos.",
-      subtitle: "Sorteos exclusivos de los vehiculos mas deseados del mundo. El sorteo se activa en el momento exacto en que se venden el 100% de los numeros.",
+      subtitle: "Oportunidades exclusivas de ganar los vehiculos mas deseados del mundo. Tu sueno se activa en el momento exacto en que se venden el 100% de los numeros.",
     },
     raffle: {
-      priorityCampaign: "Sorteo Principal",
-      activeAllocations: "Sorteos Activos",
+      priorityCampaign: "Sueno Principal",
+      activeAllocations: "Suenos Activos",
       searchAssets: "Buscar vehiculos...",
       verifiedAsset: "Vehiculo Verificado",
       secureEntry: "Sera mio",
       allocationFull: "Numeros Agotados",
-      awaitingDraw: "Esperando Sorteo",
+      awaitingDraw: "Sueno en camino",
       almostFree: "Casi gratis",
       badgeLabels: ["La mejor opcion", "Buenisimo", "No esta nada mal", "Increible", "Imperdible"] as readonly string[],
       viewersWatching: "{count} personas estan viendo este vehiculo",
@@ -34,7 +34,7 @@ const translations = {
     },
     progress: {
       targetReached: "Meta Alcanzada",
-      imminentDraw: "Sorteo Inminente",
+      imminentDraw: "Sueno Inminente",
       fundingProgress: "Progreso de Venta",
       drawTrigger: "Al completar el 100% se inicia el proceso.",
       drawUrgent: "Espera un poco, ya casi es tuyo",
@@ -42,7 +42,7 @@ const translations = {
     },
     picker: {
       title: "Compra tus tickets",
-      subtitle: "Participa en el sorteo de",
+      subtitle: "Participa por el sueno de",
       quantityDesc: "Selecciona cuantos tickets deseas. Los numeros se asignan al azar automaticamente.",
       namePlaceholder: "Tu nombre completo",
       phonePlaceholder: "Tu numero de telefono",
@@ -104,7 +104,7 @@ const translations = {
     },
     footer: {
       title: "Transparencia Total",
-      description: "Cada sorteo opera con una capacidad estricta. El sorteo permanece completamente inactivo hasta que el 100% de los numeros se vendan. Todos los participantes tienen la misma probabilidad de ganar por cada numero comprado.",
+      description: "Cada sueno opera con una capacidad estricta. El proceso permanece completamente inactivo hasta que el 100% de los numeros se vendan. Todos los participantes tienen la misma probabilidad de ganar por cada numero comprado.",
     },
     terms: {
       title: "Terminos y Condiciones",
@@ -116,19 +116,19 @@ const translations = {
         },
         {
           heading: "2. Descripcion del Servicio",
-          body: "ApexDraw es una plataforma de sorteos de vehiculos premium. Cada sorteo cuenta con una capacidad fija de 9,999 numeros. El sorteo se activa unicamente cuando el 100% de los numeros han sido adquiridos.",
+          body: "ApexDraw es una plataforma donde puedes cumplir el sueno de tener un vehiculo premium. Cada oportunidad cuenta con una capacidad fija de 9,999 numeros. El proceso se activa unicamente cuando el 100% de los numeros han sido adquiridos.",
         },
         {
           heading: "3. Participacion",
-          body: "Para participar, el usuario debe seleccionar uno o mas numeros disponibles y completar el proceso de adquisicion. Cada numero adquirido representa una oportunidad igual de ser seleccionado en el sorteo.",
+          body: "Para participar, el usuario debe seleccionar uno o mas numeros disponibles y completar el proceso de adquisicion. Cada numero adquirido representa una oportunidad igual de ser seleccionado.",
         },
         {
-          heading: "4. Proceso de Sorteo",
-          body: "El sorteo se realiza de manera aleatoria y transparente una vez que todos los numeros han sido adquiridos. El resultado sera comunicado a todos los participantes por correo electronico.",
+          heading: "4. Proceso de Seleccion",
+          body: "La seleccion se realiza de manera aleatoria y transparente una vez que todos los numeros han sido adquiridos. El resultado sera comunicado a todos los participantes por correo electronico.",
         },
         {
           heading: "5. Entrega del Premio",
-          body: "El ganador sera contactado dentro de las 48 horas siguientes al sorteo. La entrega del vehiculo se coordinara directamente con el ganador, incluyendo toda la documentacion legal necesaria.",
+          body: "El ganador sera contactado dentro de las 48 horas siguientes a la seleccion. La entrega del vehiculo se coordinara directamente con el ganador, incluyendo toda la documentacion legal necesaria.",
         },
         {
           heading: "6. Politica de Reembolsos",
@@ -136,7 +136,7 @@ const translations = {
         },
         {
           heading: "7. Privacidad",
-          body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del sorteo y la comunicacion con los participantes. No compartimos informacion con terceros.",
+          body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
           heading: "8. Modificaciones",
