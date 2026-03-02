@@ -72,9 +72,8 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
         </motion.div>
       </div>
       
-      <div className="mt-3 text-xs text-muted-foreground/80 flex justify-between">
+      <div className="mt-3 text-xs text-muted-foreground/80">
         <span>{t.progress.drawTrigger}</span>
-        <span>{total} {t.progress.totalCapacity}</span>
       </div>
     </div>
   );
