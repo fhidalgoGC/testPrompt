@@ -38,7 +38,7 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
         layout
       >
         {/* Image Section */}
-        <div className={`relative overflow-hidden ${featured ? 'h-full min-h-[300px]' : 'h-[240px] w-full'}`}>
+        <div className={`relative overflow-hidden ${featured ? 'h-[200px] sm:h-full sm:min-h-[300px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
           {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10 md:bg-gradient-to-r md:from-transparent md:to-card" />
           
@@ -66,14 +66,14 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
         </div>
 
         {/* Content Section */}
-        <div className={`relative z-20 flex flex-col justify-between p-6 ${featured ? 'md:p-10' : ''}`}>
+        <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'md:p-10' : ''}`}>
           <div>
             <div className="flex items-center gap-2 mb-2 text-primary/80">
               <ShieldCheck className="w-4 h-4" />
               <span className="text-xs font-medium uppercase tracking-widest">Verified Asset</span>
             </div>
             
-            <h3 className={`font-display font-bold text-foreground mb-3 ${featured ? 'text-3xl md:text-4xl' : 'text-2xl'}`}>
+            <h3 className={`font-display font-bold text-foreground mb-2 sm:mb-3 ${featured ? 'text-xl sm:text-3xl md:text-4xl' : 'text-lg sm:text-2xl'}`}>
               {raffle.title}
             </h3>
             
@@ -112,6 +112,7 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
       <BuyTicketDialog 
         raffleId={raffle.id}
         title={raffle.title}
+        totalTickets={raffle.totalTickets}
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
       />

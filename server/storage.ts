@@ -1,17 +1,20 @@
 import { db } from "./db";
 import {
   raffles,
+  tickets,
   type Raffle,
-  type InsertRaffle
+  type InsertRaffle,
+  type Ticket,
 } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
   getRaffles(): Promise<Raffle[]>;
   getRaffle(id: number): Promise<Raffle | undefined>;
   createRaffle(raffle: InsertRaffle): Promise<Raffle>;
-  updateRaffle(id: number, updates: Partial<InsertRaffle>): Promise<Raffle>;
-  buyTickets(id: number, amount: number): Promise<Raffle>;
+  getSoldTicketNumbers(raffleId: number): Promise<number[]>;
+  buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string): Promise<Raffle>;
+  seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -29,27 +32,59 @@ export class DatabaseStorage implements IStorage {
     return raffle;
   }
 
-  async updateRaffle(id: number, updates: Partial<InsertRaffle>): Promise<Raffle> {
-    const [updated] = await db.update(raffles)
-      .set(updates)
-      .where(eq(raffles.id, id))
-      .returning();
-    return updated;
+  async getSoldTicketNumbers(raffleId: number): Promise<number[]> {
+    const rows = await db.select({ ticketNumber: tickets.ticketNumber })
+      .from(tickets)
+      .where(eq(tickets.raffleId, raffleId));
+    return rows.map(r => r.ticketNumber);
   }
 
-  async buyTickets(id: number, amount: number): Promise<Raffle> {
-    const raffle = await this.getRaffle(id);
+  async buyTickets(raffleId: number, ticketNumbers: number[], buyerName: string): Promise<Raffle> {
+    const raffle = await this.getRaffle(raffleId);
     if (!raffle) {
       throw new Error("Raffle not found");
     }
-    
-    const newSoldTickets = Math.min(raffle.soldTickets + amount, raffle.totalTickets);
-    
+
+    const existingSold = await this.getSoldTicketNumbers(raffleId);
+    const alreadySold = ticketNumbers.filter(n => existingSold.includes(n));
+    if (alreadySold.length > 0) {
+      throw new Error(`Numbers already sold: ${alreadySold.join(", ")}`);
+    }
+
+    const validNumbers = ticketNumbers.filter(n => n >= 1 && n <= raffle.totalTickets);
+    if (validNumbers.length !== ticketNumbers.length) {
+      throw new Error("Some ticket numbers are out of range");
+    }
+
+    const ticketValues = validNumbers.map(num => ({
+      raffleId,
+      ticketNumber: num,
+      buyerName,
+    }));
+
+    await db.insert(tickets).values(ticketValues);
+
+    const newSoldCount = Math.min(raffle.soldTickets + validNumbers.length, raffle.totalTickets);
     const [updated] = await db.update(raffles)
-      .set({ soldTickets: newSoldTickets })
-      .where(eq(raffles.id, id))
+      .set({ soldTickets: newSoldCount })
+      .where(eq(raffles.id, raffleId))
       .returning();
+
     return updated;
+  }
+
+  async seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void> {
+    const batchSize = 500;
+    for (let i = 0; i < ticketNumbers.length; i += batchSize) {
+      const batch = ticketNumbers.slice(i, i + batchSize);
+      const values = batch.map(num => ({
+        raffleId,
+        ticketNumber: num,
+        buyerName: "Demo",
+      }));
+      await db.insert(tickets).values(values);
+    }
+    await db.update(raffles).set({ soldTickets: soldCount }).where(eq(raffles.id, raffleId));
   }
 }
 

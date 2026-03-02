@@ -33,34 +33,31 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
       {/* Premium Header/Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-6 py-4 transition-all duration-300">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-gradient-to-br from-primary to-yellow-600 rounded-sm flex items-center justify-center transform rotate-45">
-              <span className="font-display font-black text-black -rotate-45 text-lg">A</span>
+      <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="h-7 w-7 sm:h-8 sm:w-8 bg-gradient-to-br from-primary to-yellow-600 rounded-sm flex items-center justify-center transform rotate-45">
+              <span className="font-display font-black text-black -rotate-45 text-base sm:text-lg">A</span>
             </div>
-            <span className="font-display font-bold text-xl tracking-wider uppercase text-glow">
+            <span className="font-display font-bold text-lg sm:text-xl tracking-wider uppercase text-glow">
               Apex<span className="text-primary">Draw</span>
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-            <a href="#" className="text-white hover:text-primary transition-colors">Campaigns</a>
-            <a href="#" className="hover:text-white transition-colors">Previous Winners</a>
-            <a href="#" className="hover:text-white transition-colors">How it works</a>
+            <a href="#" className="text-white hover:text-primary transition-colors">Rifas</a>
+            <a href="#" className="hover:text-white transition-colors">Ganadores</a>
+            <a href="#" className="hover:text-white transition-colors">Como funciona</a>
           </div>
-          <button className="px-5 py-2 rounded-full border border-white/10 hover:border-primary/50 text-sm font-medium transition-all hover:bg-white/5">
-            Connect Wallet
-          </button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+      <section className="pt-24 sm:pt-32 pb-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
         {/* Background decorative elements */}
         <div className="absolute top-40 left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute top-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-6 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16 space-y-4 sm:space-y-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +69,7 @@ export default function Home() {
           </motion.div>
           
           <motion.h1 
-            className="text-5xl md:text-7xl font-black font-display tracking-tight leading-[1.1]"
+            className="text-3xl sm:text-5xl md:text-7xl font-black font-display tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -82,7 +79,7 @@ export default function Home() {
           </motion.h1>
           
           <motion.p 
-            className="text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto"
+            className="text-sm sm:text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto px-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}

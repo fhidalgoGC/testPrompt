@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { insertRaffleSchema, raffles } from "./schema";
+import { insertRaffleSchema, raffles, tickets } from "./schema";
 
 export const errorSchemas = {
   validation: z.object({
@@ -23,10 +23,21 @@ export const api = {
         200: z.array(z.custom<typeof raffles.$inferSelect>()),
       },
     },
+    soldTickets: {
+      method: "GET" as const,
+      path: "/api/raffles/:id/tickets" as const,
+      responses: {
+        200: z.array(z.number()),
+        404: errorSchemas.notFound,
+      },
+    },
     buyTickets: {
       method: "POST" as const,
       path: "/api/raffles/:id/buy" as const,
-      input: z.object({ amount: z.number().min(1).max(100) }),
+      input: z.object({
+        ticketNumbers: z.array(z.number().min(1).max(9999)),
+        buyerName: z.string().min(1),
+      }),
       responses: {
         200: z.custom<typeof raffles.$inferSelect>(),
         400: errorSchemas.validation,
