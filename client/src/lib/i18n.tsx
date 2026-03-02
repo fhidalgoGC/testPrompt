@@ -28,6 +28,7 @@ const translations = {
       allocationFull: "Numeros Agotados",
       activeCampaign: "Sorteo Activo",
       awaitingDraw: "Esperando Sorteo",
+      almostFree: "Casi gratis",
     },
     progress: {
       targetReached: "Meta Alcanzada",
@@ -165,6 +166,7 @@ const translations = {
       allocationFull: "Sold Out",
       activeCampaign: "Active Campaign",
       awaitingDraw: "Awaiting Draw",
+      almostFree: "Almost free",
     },
     progress: {
       targetReached: "Target Reached",

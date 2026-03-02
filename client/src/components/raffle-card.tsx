@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { VisualProgress } from "./ui/visual-progress";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
-import { ChevronRight, ShieldCheck } from "lucide-react";
+import { ChevronRight, ShieldCheck, Flame } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 interface Raffle {
@@ -50,7 +50,7 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
             transition={{ duration: 0.7, ease: "easeOut" }}
           />
           
-          <div className="absolute top-4 left-4 z-20">
+          <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
             <div className={`
               px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border
               ${isComplete 
@@ -59,6 +59,13 @@ export function RaffleCard({ raffle, featured = false }: RaffleCardProps) {
             `}>
               {isComplete ? t.raffle.awaitingDraw : t.raffle.activeCampaign}
             </div>
+            {!isComplete && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full backdrop-blur-md border bg-red-500/90 text-white border-red-400/50 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse" data-testid="badge-discount">
+                <Flame className="w-3.5 h-3.5" />
+                <span>99% OFF</span>
+                <span className="hidden sm:inline">· {t.raffle.almostFree}</span>
+              </div>
+            )}
           </div>
         </div>
 
