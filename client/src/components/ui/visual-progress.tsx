@@ -18,15 +18,22 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
     setDisplayPercentage(basePercentage);
   }, [basePercentage]);
 
+  const delayPatternRef = useRef(0);
+
   useEffect(() => {
     if (basePercentage >= 100) return;
-    const interval = setInterval(() => {
-      setDisplayPercentage(prev => {
-        const next = prev + 0.01;
-        return Math.min(next, basePercentage + 0.5);
-      });
-    }, 2000);
-    return () => clearInterval(interval);
+    const delays = [2000, 3000, 4000, 5000];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const tick = () => {
+      setDisplayPercentage(prev => Math.min(prev + 0.01, basePercentage + 0.5));
+      const delay = delays[delayPatternRef.current % delays.length];
+      delayPatternRef.current++;
+      timeout = setTimeout(tick, delay);
+    };
+
+    timeout = setTimeout(tick, delays[delayPatternRef.current % delays.length]);
+    return () => clearTimeout(timeout);
   }, [basePercentage]);
 
   const percentage = displayPercentage;
