@@ -36,7 +36,8 @@ const translations = {
       targetReached: "Meta Alcanzada",
       imminentDraw: "Sorteo Inminente",
       fundingProgress: "Progreso de Venta",
-      drawTrigger: "Al completar el 100% se inicia el proceso. Espera un poco, ya casi es tuyo",
+      drawTrigger: "Al completar el 100% se inicia el proceso.",
+      drawUrgent: "Espera un poco, ya casi es tuyo",
       totalCapacity: "Capacidad Total",
     },
     picker: {
@@ -178,7 +179,8 @@ const translations = {
       targetReached: "Target Reached",
       imminentDraw: "Imminent Draw",
       fundingProgress: "Sales Progress",
-      drawTrigger: "Once 100% is reached, the process begins. Hang tight, it's almost yours",
+      drawTrigger: "Once 100% is reached, the process begins.",
+      drawUrgent: "Hang tight, it's almost yours",
       totalCapacity: "Total Capacity",
     },
     picker: {
