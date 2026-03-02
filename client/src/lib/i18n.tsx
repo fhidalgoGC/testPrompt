@@ -13,8 +13,8 @@ const translations = {
       login: "Iniciar sesion",
     },
     hero: {
-      badge: "Cambia tu suerte",
-      title1: "Gana el",
+      badge: "Cambia tu destino",
+      title1: "Obten el",
       titleHighlight: "vehiculo",
       title2: "de tus suenos.",
       subtitle: "Oportunidades exclusivas de ganar los vehiculos mas deseados del mundo. Tu sueno se activa en el momento exacto en que se venden el 100% de los numeros.",
