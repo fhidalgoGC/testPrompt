@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { VisualProgress } from "./ui/visual-progress";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
-import { ChevronRight, ShieldCheck, Flame, Eye } from "lucide-react";
+import { ChevronRight, ChevronLeft, ShieldCheck, Flame, Eye } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 interface Raffle {
   id: number;
   title: string;
   description: string;
-  imageUrl: string;
+  imageUrls: string[];
   totalTickets: number;
   soldTickets: number;
 }

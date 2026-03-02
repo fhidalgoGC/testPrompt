@@ -6,7 +6,7 @@ export const raffles = pgTable("raffles", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  imageUrl: text("image_url").notNull(),
+  imageUrls: text("image_urls").array().notNull(),
   totalTickets: integer("total_tickets").notNull().default(9999),
   soldTickets: integer("sold_tickets").notNull().default(0),
 });

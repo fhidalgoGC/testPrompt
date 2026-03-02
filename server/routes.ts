@@ -128,14 +128,21 @@ async function seedDatabase() {
       const r1 = await storage.createRaffle({
         title: "2024 Porsche 911 GT3 RS",
         description: "Participa por la oportunidad de ganar este espectacular deportivo de alto rendimiento.",
-        imageUrl: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
+        imageUrls: [
+          "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=2000&auto=format&fit=crop",
+        ],
         totalTickets: 9999,
         soldTickets: 0,
       });
       const r2 = await storage.createRaffle({
         title: "Ducati Panigale V4 S",
-        description: "La moto definitiva, ahora puedes ganarla por solo unos pocos dolares.",
-        imageUrl: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop",
+        description: "La moto definitiva, ahora puedes obtenerla por solo unos pocos dolares.",
+        imageUrls: [
+          "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2000&auto=format&fit=crop",
+        ],
         totalTickets: 9999,
         soldTickets: 0,
       });
