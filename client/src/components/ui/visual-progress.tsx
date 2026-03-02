@@ -19,10 +19,11 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
   }, [basePercentage]);
 
   const delayPatternRef = useRef(0);
+  const isFirstTickRef = useRef(true);
 
   useEffect(() => {
     if (basePercentage >= 100) return;
-    const delays = [2000, 3000, 4000, 5000];
+    const delays = [3000, 5000, 8000, 2000, 4000, 7000];
     let timeout: ReturnType<typeof setTimeout>;
 
     const tick = () => {
@@ -32,7 +33,9 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       timeout = setTimeout(tick, delay);
     };
 
-    timeout = setTimeout(tick, delays[delayPatternRef.current % delays.length]);
+    const firstDelay = isFirstTickRef.current ? 15000 : delays[delayPatternRef.current % delays.length];
+    isFirstTickRef.current = false;
+    timeout = setTimeout(tick, firstDelay);
     return () => clearTimeout(timeout);
   }, [basePercentage]);
 
