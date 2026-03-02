@@ -36,10 +36,10 @@ export const api = {
       path: "/api/raffles/:id/buy" as const,
       input: z.object({
         ticketNumbers: z.array(z.number().min(1).max(9999)),
-        buyerName: z.string().min(1),
-        buyerPhone: z.string().min(7),
+        buyerName: z.string(),
+        buyerPhone: z.string().min(8),
         buyerEmail: z.string().email(),
-        buyerIdNumber: z.string().min(3),
+        buyerIdNumber: z.string(),
         otpCode: z.string().length(6).optional(),
       }),
       responses: {
@@ -54,7 +54,7 @@ export const api = {
       method: "POST" as const,
       path: "/api/otp/send" as const,
       input: z.object({
-        phone: z.string().min(7),
+        phone: z.string().min(8),
       }),
       responses: {
         200: z.object({ success: z.boolean() }),
@@ -65,7 +65,7 @@ export const api = {
       method: "POST" as const,
       path: "/api/otp/verify" as const,
       input: z.object({
-        phone: z.string().min(7),
+        phone: z.string().min(8),
         code: z.string().length(6),
       }),
       responses: {
