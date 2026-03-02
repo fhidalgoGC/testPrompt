@@ -40,7 +40,7 @@ export const api = {
         buyerPhone: z.string().min(7),
         buyerEmail: z.string().email(),
         buyerIdNumber: z.string().min(3),
-        otpCode: z.string().length(6),
+        otpCode: z.string().length(6).optional(),
       }),
       responses: {
         200: z.custom<typeof raffles.$inferSelect>(),

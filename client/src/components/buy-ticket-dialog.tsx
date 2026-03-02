@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useSoldTickets, useBuyTickets, useSendOtp, useVerifyOtp } from "@/hooks/use-raffles";
+import { useSoldTickets, useBuyTickets, useSendOtp } from "@/hooks/use-raffles";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
@@ -22,35 +22,29 @@ interface BuyTicketDialogProps {
 const RANGE_SIZE = 100;
 
 type PickerStep = "picker" | "confirm" | "success";
-type ModalStep = "info" | "otp";
 
-function VerificationModal({
+function ContactModal({
   isOpen,
   onClose,
-  onVerified,
+  onSubmitted,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onVerified: (phone: string, email: string, idNumber: string) => void;
+  onSubmitted: (phone: string, email: string, idNumber: string) => void;
 }) {
-  const [modalStep, setModalStep] = useState<ModalStep>("info");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [idNumber, setIdNumber] = useState("");
-  const [otpCode, setOtpCode] = useState("");
 
   const sendOtpMutation = useSendOtp();
-  const verifyOtpMutation = useVerifyOtp();
   const { toast } = useToast();
   const { t } = useI18n();
   const isMobile = useIsMobile();
 
   const resetState = () => {
-    setModalStep("info");
     setPhone("");
     setEmail("");
     setIdNumber("");
-    setOtpCode("");
   };
 
   const handleClose = () => {
@@ -58,7 +52,7 @@ function VerificationModal({
     onClose();
   };
 
-  const handleSendOtp = async () => {
+  const handleSubmit = async () => {
     if (!phone.trim() || !email.trim() || !idNumber.trim()) {
       toast({ variant: "destructive", title: t.picker.fillAllFields, description: t.picker.fillAllFieldsDesc });
       return;
@@ -71,187 +65,83 @@ function VerificationModal({
     try {
       await sendOtpMutation.mutateAsync({ phone: phone.trim() });
       toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
-      setModalStep("otp");
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+    } catch {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: t.picker.errorGeneric });
     }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (otpCode.length !== 6) return;
-    try {
-      const result = await verifyOtpMutation.mutateAsync({ phone: phone.trim(), code: otpCode });
-      if (result.valid) {
-        onVerified(phone.trim(), email.trim(), idNumber.trim());
-        resetState();
-      } else {
-        toast({ variant: "destructive", title: t.picker.codeInvalid, description: t.picker.codeInvalidDesc });
-      }
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
-    }
-  };
-
-  const handleResendOtp = async () => {
-    setOtpCode("");
-    try {
-      await sendOtpMutation.mutateAsync({ phone: phone.trim() });
-      toast({ title: t.picker.codeSent, description: t.picker.codeSentDesc });
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
-    }
+    onSubmitted(phone.trim(), email.trim(), idNumber.trim());
+    resetState();
   };
 
   const content = (
-    <AnimatePresence mode="wait">
-      {modalStep === "otp" ? (
-        <motion.div
-          key="otp"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          className="space-y-5 py-2"
-        >
-          <div className="flex flex-col items-center text-center space-y-3">
-            <div className="h-14 w-14 rounded-full bg-accent/10 flex items-center justify-center">
-              <MessageSquare className="h-7 w-7 text-accent" />
-            </div>
-            <div>
-              <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-otp-title">
-                {t.picker.verifyTitle}
-              </h3>
-              <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-xs mx-auto">
-                {t.picker.verifyDesc.replace("{phone}", phone)}
-              </p>
-            </div>
-          </div>
-
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="space-y-4 py-2"
+    >
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        {t.picker.verifyInfoDesc}
+      </p>
+      <div className="space-y-3">
+        <div className="relative">
+          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            type="text"
-            inputMode="numeric"
-            maxLength={6}
-            placeholder={t.picker.otpPlaceholder}
-            value={otpCode}
-            onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-            className="bg-secondary/50 border-white/10 text-center text-2xl font-mono tracking-[0.5em] h-14"
-            data-testid="input-otp-code"
+            type="tel"
+            placeholder={t.picker.phonePlaceholder}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="bg-secondary/50 border-white/10 pl-10"
+            data-testid="input-buyer-phone"
           />
+        </div>
+        <div className="relative">
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            type="email"
+            placeholder={t.picker.emailPlaceholder}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-secondary/50 border-white/10 pl-10"
+            data-testid="input-buyer-email"
+          />
+        </div>
+        <div className="relative">
+          <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder={t.picker.idPlaceholder}
+            value={idNumber}
+            onChange={(e) => setIdNumber(e.target.value)}
+            className="bg-secondary/50 border-white/10 pl-10"
+            data-testid="input-buyer-id"
+          />
+        </div>
+      </div>
 
-          <Button
-            className="w-full font-bold h-12 bg-gradient-to-r from-accent to-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 active:scale-[0.98]"
-            onClick={handleVerifyOtp}
-            disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
-            data-testid="button-verify-otp"
-          >
-            {verifyOtpMutation.isPending ? (
-              <span className="flex items-center gap-2">
-                <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                {t.picker.verifying}
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5" />
-                {t.picker.verifyCode}
-              </span>
-            )}
-          </Button>
+      <div className="glass rounded-lg p-3 flex items-start gap-3">
+        <MessageSquare className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          {t.picker.smsExplanation}
+        </p>
+      </div>
 
-          <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => { setModalStep("info"); setOtpCode(""); }}
-              className="text-muted-foreground"
-              data-testid="button-back-to-info"
-            >
-              <ChevronLeft className="h-4 w-4 mr-1" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleResendOtp}
-              disabled={sendOtpMutation.isPending}
-              className="text-accent"
-              data-testid="button-resend-otp"
-            >
-              {sendOtpMutation.isPending ? t.picker.sendingCode : t.picker.resendCode}
-            </Button>
-          </div>
-        </motion.div>
-      ) : (
-        <motion.div
-          key="info"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 20 }}
-          className="space-y-4 py-2"
-        >
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {t.picker.verifyInfoDesc}
-          </p>
-          <div className="space-y-3">
-            <div className="relative">
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="tel"
-                placeholder={t.picker.phonePlaceholder}
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="bg-secondary/50 border-white/10 pl-10"
-                data-testid="input-buyer-phone"
-              />
-            </div>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="email"
-                placeholder={t.picker.emailPlaceholder}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-secondary/50 border-white/10 pl-10"
-                data-testid="input-buyer-email"
-              />
-            </div>
-            <div className="relative">
-              <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder={t.picker.idPlaceholder}
-                value={idNumber}
-                onChange={(e) => setIdNumber(e.target.value)}
-                className="bg-secondary/50 border-white/10 pl-10"
-                data-testid="input-buyer-id"
-              />
-            </div>
-          </div>
-
-          <div className="glass rounded-lg p-3 flex items-start gap-3">
-            <MessageSquare className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              {t.picker.smsExplanation}
-            </p>
-          </div>
-
-          <Button
-            className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-            onClick={handleSendOtp}
-            disabled={sendOtpMutation.isPending || !phone.trim() || !email.trim() || !idNumber.trim()}
-            data-testid="button-send-otp"
-          >
-            {sendOtpMutation.isPending ? (
-              <span className="flex items-center gap-2">
-                <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                {t.picker.sendingCode}
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <Phone className="h-5 w-5" />
-                {t.picker.sendCode}
-              </span>
-            )}
-          </Button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      <Button
+        className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+        onClick={handleSubmit}
+        disabled={sendOtpMutation.isPending || !phone.trim() || !email.trim() || !idNumber.trim()}
+        data-testid="button-continue-purchase"
+      >
+        {sendOtpMutation.isPending ? (
+          <span className="flex items-center gap-2">
+            <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+            {t.picker.sendingCode}
+          </span>
+        ) : (
+          <span className="flex items-center gap-2">
+            <Zap className="h-5 w-5" />
+            {t.picker.continueBtn}
+          </span>
+        )}
+      </Button>
+    </motion.div>
   );
 
   if (isMobile) {
@@ -259,12 +149,12 @@ function VerificationModal({
       <Drawer open={isOpen} onOpenChange={(open) => !open && handleClose()}>
         <DrawerContent className="bg-card border-primary/20 max-h-[85dvh]">
           <DrawerHeader className="text-left px-4 pt-2 pb-0">
-            <DrawerTitle className="font-display text-lg flex items-center gap-2" data-testid="text-verify-modal-title">
+            <DrawerTitle className="font-display text-lg flex items-center gap-2" data-testid="text-contact-modal-title">
               <ShieldCheck className="text-primary h-5 w-5" />
-              {t.picker.verifyModalTitle}
+              {t.picker.contactModalTitle}
             </DrawerTitle>
             <DrawerDescription className="text-muted-foreground text-sm">
-              {t.picker.verifyModalSubtitle}
+              {t.picker.contactModalSubtitle}
             </DrawerDescription>
           </DrawerHeader>
           <div className="px-4 pb-6 pt-2">
@@ -279,12 +169,12 @@ function VerificationModal({
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="sm:max-w-[420px] bg-card border-primary/20 shadow-2xl shadow-primary/10">
         <DialogHeader>
-          <DialogTitle className="font-display text-xl flex items-center gap-2" data-testid="text-verify-modal-title">
+          <DialogTitle className="font-display text-xl flex items-center gap-2" data-testid="text-contact-modal-title">
             <ShieldCheck className="text-primary h-5 w-5" />
-            {t.picker.verifyModalTitle}
+            {t.picker.contactModalTitle}
           </DialogTitle>
           <DialogDescription className="text-muted-foreground">
-            {t.picker.verifyModalSubtitle}
+            {t.picker.contactModalSubtitle}
           </DialogDescription>
         </DialogHeader>
         {content}
@@ -299,8 +189,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [buyerName, setBuyerName] = useState("");
   const [searchNum, setSearchNum] = useState("");
   const [step, setStep] = useState<PickerStep>("picker");
-  const [showVerifyModal, setShowVerifyModal] = useState(false);
-  const [verifiedData, setVerifiedData] = useState<{ phone: string; email: string; idNumber: string } | null>(null);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [contactData, setContactData] = useState<{ phone: string; email: string; idNumber: string } | null>(null);
 
   const { data: soldTickets = [], isLoading: loadingSold } = useSoldTickets(raffleId);
   const buyMutation = useBuyTickets();
@@ -362,28 +252,27 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     });
   };
 
-  const handleProceedToVerify = () => {
+  const handleProceedToContact = () => {
     if (selected.size === 0 || !buyerName.trim()) return;
-    setShowVerifyModal(true);
+    setShowContactModal(true);
   };
 
-  const handleVerified = (phone: string, email: string, idNumber: string) => {
-    setVerifiedData({ phone, email, idNumber });
-    setShowVerifyModal(false);
+  const handleContactSubmitted = (phone: string, email: string, idNumber: string) => {
+    setContactData({ phone, email, idNumber });
+    setShowContactModal(false);
     setStep("confirm");
   };
 
   const handleConfirmBuy = async () => {
-    if (!verifiedData) return;
+    if (!contactData) return;
     try {
       await buyMutation.mutateAsync({
         id: raffleId,
         ticketNumbers: Array.from(selected),
         buyerName: buyerName.trim(),
-        buyerPhone: verifiedData.phone,
-        buyerEmail: verifiedData.email,
-        buyerIdNumber: verifiedData.idNumber,
-        otpCode: "123456",
+        buyerPhone: contactData.phone,
+        buyerEmail: contactData.email,
+        buyerIdNumber: contactData.idNumber,
       });
 
       setStep("success");
@@ -406,7 +295,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         setSelected(new Set());
         setBuyerName("");
         setStep("picker");
-        setVerifiedData(null);
+        setContactData(null);
         setRangeStart(1);
         buyMutation.reset();
         onClose();
@@ -439,6 +328,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <div>
                 <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
                 <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
+              </div>
+              <div className="glass rounded-lg p-3 flex items-start gap-3 max-w-sm">
+                <MessageSquare className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                <p className="text-xs text-muted-foreground leading-relaxed text-left">
+                  {t.picker.otpReminder}
+                </p>
               </div>
             </motion.div>
           ) : step === "confirm" ? (
@@ -475,12 +370,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     </span>
                   ))}
                 </div>
-                {verifiedData && (
+                {contactData && (
                   <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
                     <div className="flex items-center gap-2"><User className="h-3 w-3" /> {buyerName}</div>
-                    <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {verifiedData.phone} <ShieldCheck className="h-3 w-3 text-green-500" /></div>
-                    <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {verifiedData.email}</div>
-                    <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {verifiedData.idNumber}</div>
+                    <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {contactData.phone}</div>
+                    <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {contactData.email}</div>
+                    <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {contactData.idNumber}</div>
                   </div>
                 )}
               </div>
@@ -489,7 +384,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <Button
                   variant="outline"
                   className="flex-1 border-white/10"
-                  onClick={() => { setStep("picker"); setVerifiedData(null); }}
+                  onClick={() => { setStep("picker"); setContactData(null); }}
                   data-testid="button-back-to-picker"
                 >
                   <ChevronLeft className="h-4 w-4 mr-1" />
@@ -653,9 +548,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
                   <Button
                     className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                    onClick={handleProceedToVerify}
+                    onClick={handleProceedToContact}
                     disabled={!buyerName.trim() || selected.size === 0}
-                    data-testid="button-proceed-verify"
+                    data-testid="button-proceed-contact"
                   >
                     <span className="flex items-center gap-2">
                       <Zap className="h-5 w-5" />
@@ -676,10 +571,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         </AnimatePresence>
       </div>
 
-      <VerificationModal
-        isOpen={showVerifyModal}
-        onClose={() => setShowVerifyModal(false)}
-        onVerified={handleVerified}
+      <ContactModal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        onSubmitted={handleContactSubmitted}
       />
     </>
   );

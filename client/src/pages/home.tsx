@@ -2,16 +2,18 @@ import { useState } from "react";
 import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
 import { Link } from "wouter";
+import { VerifyOtpModal } from "@/components/verify-otp-modal";
 
 export default function Home() {
   const { data: raffles, isLoading } = useRaffles();
   const { t, locale, setLocale } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
 
   if (isLoading) {
     return (
@@ -51,6 +53,10 @@ export default function Home() {
               <Link href="/terms">
                 <span className="hover:text-white transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
               </Link>
+              <button onClick={() => setShowOtpModal(true)} className="hover:text-white transition-colors flex items-center gap-1.5" data-testid="link-verify-otp">
+                <ShieldCheck className="h-3.5 w-3.5 text-accent" />
+                {t.nav.verifyOtp}
+              </button>
             </div>
             <Button
               variant="outline"
@@ -131,6 +137,14 @@ export default function Home() {
                   {t.nav.terms}
                 </span>
               </Link>
+              <button
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-accent hover:bg-white/5 transition-colors w-full"
+                onClick={() => { setMenuOpen(false); setShowOtpModal(true); }}
+                data-testid="mobile-link-verify-otp"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                {t.nav.verifyOtp}
+              </button>
               <div className="border-t border-white/5 pt-2 mt-2">
                 <button
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-bold text-primary hover:bg-primary/10 transition-colors w-full"
@@ -239,6 +253,8 @@ export default function Home() {
           {t.footer.description}
         </p>
       </section>
+
+      <VerifyOtpModal isOpen={showOtpModal} onClose={() => setShowOtpModal(false)} />
     </div>
   );
 }

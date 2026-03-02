@@ -90,18 +90,10 @@ export async function registerRoutes(
       const id = Number(req.params.id);
       const input = api.raffles.buyTickets.input.parse(req.body);
 
-      const verifiedUntil = verifiedPhones.get(input.buyerPhone);
-      if (!verifiedUntil || Date.now() > verifiedUntil) {
-        verifiedPhones.delete(input.buyerPhone);
-        return res.status(400).json({ message: "Phone not verified. Please verify your phone first." });
-      }
-
       const raffle = await storage.getRaffle(id);
       if (!raffle) {
         return res.status(404).json({ message: "Campaign not found" });
       }
-
-      verifiedPhones.delete(input.buyerPhone);
 
       const updated = await storage.buyTickets(
         id,
