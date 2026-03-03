@@ -71,7 +71,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
   return (
     <div className={`w-full ${className}`}>
       <div className="flex justify-between items-end mb-2">
-        <span className="text-sm font-medium tracking-wider text-muted-foreground uppercase flex items-center gap-2">
+        <span className="text-sm font-medium tracking-wider text-muted-foreground flex items-center gap-2">
           {isComplete ? (
             <span className="text-primary font-bold text-glow">{t.progress.targetReached}</span>
           ) : isAlmostComplete ? (
