@@ -16,7 +16,7 @@ const translations = {
     hero: {
       badge: "Cambia tu destino",
       title1: "Obten el",
-      titleHighlight: "arbol de",
+      titleHighlight: "arbol",
       titleEmoji: "🤑🤑🤑",
       title2: "tus suenos.",
       subtitle: "Oportunidades exclusivas de vivir tus suenos mas deseados. Tu sueno se activa en el momento exacto en que se venden el 100% de las semillas.",
@@ -197,7 +197,7 @@ const translations = {
     hero: {
       badge: "Change your luck",
       title1: "Get the",
-      titleHighlight: "tree of",
+      titleHighlight: "tree",
       titleEmoji: "🤑🤑🤑",
       title2: "your dreams.",
       subtitle: "Exclusive draws for the world's most sought-after vehicles. The draw activates the exact moment 100% of the numbers are sold.",
