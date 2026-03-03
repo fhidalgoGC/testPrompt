@@ -226,7 +226,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {t.hero.title1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-200 to-primary text-glow">{t.hero.titleHighlight}</span>{" "}
+            {t.hero.title1} <span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.titleHighlight}</span>{" "}
+            <span className="not-italic">{t.hero.titleEmoji}</span>{" "}
             {t.hero.title2}
           </motion.h1>
           
