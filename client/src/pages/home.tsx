@@ -300,8 +300,7 @@ export default function Home() {
       )}
 
       <section className="mt-8 sm:mt-16 px-4 max-w-4xl mx-auto text-center border-t border-white/5 pt-8 sm:pt-16">
-        <h3 className="font-display text-xl font-bold mb-2">{t.footer.title}</h3>
-        <p className="text-muted-foreground text-sm mb-8">{t.footer.description}</p>
+        <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
           {(!country || country === "VE" ? [
             { name: "Loteria del Tachira", emoji: "🎰" },

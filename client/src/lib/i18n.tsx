@@ -140,8 +140,8 @@ const translations = {
       verifiedDesc: "Tu numero de telefono ha sido verificado exitosamente.",
     },
     footer: {
-      title: "Loterias",
-      description: "Siempre con respaldo oficial.",
+      title: "Siempre con respaldo oficial",
+      description: "",
     },
     terms: {
       title: "Terminos y Condiciones",
@@ -320,8 +320,8 @@ const translations = {
       verifiedDesc: "Your phone number has been verified successfully.",
     },
     footer: {
-      title: "Lotteries",
-      description: "Always with official backing.",
+      title: "Always with official backing",
+      description: "",
     },
     terms: {
       title: "Terms & Conditions",
