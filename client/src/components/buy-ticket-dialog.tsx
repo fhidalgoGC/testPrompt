@@ -22,7 +22,7 @@ interface BuyTicketDialogProps {
 const OTP_TIMEOUT_SECONDS = 300;
 const MAX_TICKETS = 100;
 
-type Step = "country" | "quantity" | "payment" | "info" | "otp" | "confirm" | "success";
+type Step = "country" | "quantity" | "payment" | "info" | "confirm" | "success";
 
 type Country = "VE" | "MX" | "CO";
 
@@ -370,66 +370,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </Button>
             </div>
           </motion.div>
-        ) : step === "otp" ? (
-          <motion.div key="otp" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div className="h-14 w-14 rounded-full bg-accent/10 flex items-center justify-center">
-                <Mail className="h-7 w-7 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-otp-title">{t.picker.verifyTitle}</h3>
-                <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-xs mx-auto">
-                  {t.picker.verifyDesc.replace("{phone}", buyerPhone)}
-                </p>
-              </div>
-            </div>
-
-            <div className="relative w-full h-2 bg-secondary/50 rounded-full overflow-hidden">
-              <motion.div
-                className={`absolute left-0 top-0 h-full rounded-full ${timerUrgent ? "bg-destructive" : "bg-accent"}`}
-                initial={{ width: "100%" }}
-                animate={{ width: `${timerPercent}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <Timer className={`h-4 w-4 ${timerUrgent ? "text-destructive animate-pulse" : "text-accent"}`} />
-              <span className={`font-mono text-lg font-bold ${timerUrgent ? "text-destructive" : "text-accent"}`} data-testid="text-timer">
-                {formatTime(timeLeft)}
-              </span>
-            </div>
-
-            <Input
-              type="text" inputMode="numeric" maxLength={6} placeholder={t.picker.otpPlaceholder}
-              value={otpCode} onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-              className="bg-secondary/50 border-white/10 text-center text-2xl font-mono tracking-[0.5em] h-14"
-              data-testid="input-otp-code"
-            />
-
-            <Button
-              className="w-full font-bold h-12 bg-gradient-to-r from-accent to-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 active:scale-[0.98]"
-              onClick={handleVerifyOtp} disabled={otpCode.length !== 6 || verifyOtpMutation.isPending}
-              data-testid="button-verify-otp"
-            >
-              {verifyOtpMutation.isPending ? (
-                <span className="flex items-center gap-2">
-                  <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                  {t.picker.verifying}
-                </span>
-              ) : (
-                <span className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />{t.picker.verifyCode}</span>
-              )}
-            </Button>
-
-            <div className="flex items-center justify-between">
-              <Button variant="ghost" size="sm" onClick={() => { stopTimer(); setStep("info"); setOtpCode(""); }} className="text-muted-foreground" data-testid="button-back-from-otp">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-              </Button>
-              <Button variant="ghost" size="sm" onClick={handleResendOtp} disabled={sendOtpMutation.isPending} className="text-accent" data-testid="button-resend-otp">
-                {sendOtpMutation.isPending ? t.picker.sendingCode : t.picker.resendCode}
-              </Button>
-            </div>
-          </motion.div>
         ) : step === "payment" ? (
           <motion.div key="payment" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
             <div className="flex items-center gap-2 mb-1">
@@ -615,24 +555,16 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             </div>
 
-            <div className="glass rounded-lg p-3 flex items-start gap-3">
-              <Mail className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-              <p className="text-xs text-muted-foreground leading-relaxed">{t.picker.emailCodeExplanation}</p>
-            </div>
-
             <Button
               className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-              onClick={handleSendCode} disabled={sendOtpMutation.isPending || !buyerPhone.trim() || !buyerEmail.trim()}
-              data-testid="button-send-code"
+              onClick={() => setStep("confirm")}
+              disabled={!buyerPhone.trim() || !buyerIdNumber.trim()}
+              data-testid="button-continue-to-confirm"
             >
-              {sendOtpMutation.isPending ? (
-                <span className="flex items-center gap-2">
-                  <div className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                  {t.picker.sendingCode}
-                </span>
-              ) : (
-                <span className="flex items-center gap-2"><Mail className="h-5 w-5" />{t.picker.sendCodeEmail}</span>
-              )}
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5" />
+                {t.picker.continueButton}
+              </span>
             </Button>
           </motion.div>
         ) : step === "quantity" ? (
