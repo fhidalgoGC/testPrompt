@@ -108,10 +108,10 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
   },
 };
 
-const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFlag: string })[] = [
+const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFlag: string; currency: string; price: number })[] = [
   {
     id: "binance", name: "Binance Pay", icon: "💰",
-    countryName: "Global", countryFlag: "🌎",
+    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
     details: [
       { label: "Binance ID", value: "123456789" },
       { label: "Titular", value: "GMare Global" },
@@ -120,7 +120,7 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
   },
   {
     id: "paypal", name: "PayPal", icon: "💳",
-    countryName: "Global", countryFlag: "🌎",
+    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
     details: [
       { label: "Email PayPal", value: "pagos@gmare.com" },
       { label: "Titular", value: "GMare Global" },
