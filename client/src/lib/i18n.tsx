@@ -367,10 +367,26 @@ const translations = {
 
 type Translations = typeof translations.es;
 
+export type AppCountry = "VE" | "MX" | "CO";
+
+export const COUNTRY_FLAGS: Record<AppCountry, string> = {
+  VE: "🇻🇪",
+  MX: "🇲🇽",
+  CO: "🇨🇴",
+};
+
+export const COUNTRY_NAMES: Record<AppCountry, string> = {
+  VE: "Venezuela",
+  MX: "México",
+  CO: "Colombia",
+};
+
 interface I18nContextType {
   locale: Locale;
   t: Translations;
   setLocale: (locale: Locale) => void;
+  country: AppCountry;
+  setCountry: (country: AppCountry) => void;
 }
 
 const I18nContext = createContext<I18nContextType | null>(null);
@@ -381,14 +397,23 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     return (saved === "en" || saved === "es") ? saved : "es";
   });
 
+  const [country, setCountry] = useState<AppCountry>(() => {
+    const saved = localStorage.getItem("country");
+    return (saved === "VE" || saved === "MX" || saved === "CO") ? saved : "VE";
+  });
+
   useEffect(() => {
     localStorage.setItem("locale", locale);
   }, [locale]);
 
+  useEffect(() => {
+    localStorage.setItem("country", country);
+  }, [country]);
+
   const t = translations[locale];
 
   return (
-    <I18nContext.Provider value={{ locale, t, setLocale }}>
+    <I18nContext.Provider value={{ locale, t, setLocale, country, setCountry }}>
       {children}
     </I18nContext.Provider>
   );

@@ -6,13 +6,13 @@ import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy,
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, COUNTRY_FLAGS, COUNTRY_NAMES, type AppCountry } from "@/lib/i18n";
 import { Link } from "wouter";
 import { VerifyOtpModal } from "@/components/verify-otp-modal";
 
 export default function Home() {
   const { data: raffles, isLoading } = useRaffles();
-  const { t, locale, setLocale } = useI18n();
+  const { t, locale, setLocale, country, setCountry } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
 
@@ -89,6 +89,28 @@ export default function Home() {
                 >
                   <span className="text-base">🇺🇸</span> English
                 </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center text-lg transition-colors shrink-0"
+                  data-testid="button-country-switch"
+                >
+                  {COUNTRY_FLAGS[country]}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[160px] bg-card border-white/10">
+                {(Object.keys(COUNTRY_FLAGS) as AppCountry[]).map((code) => (
+                  <DropdownMenuItem
+                    key={code}
+                    onClick={() => setCountry(code)}
+                    className={`gap-2 text-sm cursor-pointer ${country === code ? "text-primary font-bold" : ""}`}
+                    data-testid={`button-country-${code}`}
+                  >
+                    <span className="text-base">{COUNTRY_FLAGS[code]}</span> {COUNTRY_NAMES[code]}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
             <Button
