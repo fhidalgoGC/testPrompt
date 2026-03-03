@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -662,32 +662,26 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 }
 
 export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose }: BuyTicketDialogProps) {
-  const isMobile = useIsMobile();
   const { t } = useI18n();
 
-  if (isMobile) {
-    return (
-      <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-        <DrawerContent className="bg-card border-primary/20 max-h-[92dvh]">
-          <DrawerHeader className="text-left px-4 pt-2 pb-0">
-            <DrawerTitle className="font-display text-xl flex items-center gap-2" data-testid="text-dialog-title">
-              <Ticket className="text-primary h-5 w-5" />{t.picker.title}
-            </DrawerTitle>
-            <DrawerDescription className="text-muted-foreground text-sm" data-testid="text-dialog-description">
-              {t.picker.subtitle} <strong className="text-foreground">{title}</strong>
-            </DrawerDescription>
-          </DrawerHeader>
-          <div className="px-4 pb-6 pt-2 overflow-y-auto">
-            {isOpen && <TicketPickerContent raffleId={raffleId} title={title} totalTickets={totalTickets} onClose={onClose} />}
-          </div>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
-
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[480px] max-h-[90vh] overflow-y-auto bg-card border-primary/20 shadow-2xl shadow-primary/10 p-0">
+    <Dialog open={isOpen} onOpenChange={() => {}}>
+      <DialogContent
+        className="sm:max-w-[480px] max-h-[90vh] overflow-y-auto bg-card border-primary/20 shadow-2xl shadow-primary/10 p-0"
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+        onInteractOutside={(e) => e.preventDefault()}
+        hideClose
+      >
+        <div className="absolute right-4 top-4 z-50">
+          <button
+            onClick={onClose}
+            className="rounded-full p-1.5 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+            data-testid="button-close-dialog"
+          >
+            <X className="h-4 w-4 text-muted-foreground" />
+          </button>
+        </div>
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="font-display text-2xl flex items-center gap-2" data-testid="text-dialog-title">
             <Ticket className="text-primary h-6 w-6" />{t.picker.title}
