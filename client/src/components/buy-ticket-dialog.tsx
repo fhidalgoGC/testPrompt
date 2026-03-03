@@ -22,7 +22,7 @@ interface BuyTicketDialogProps {
 const OTP_TIMEOUT_SECONDS = 300;
 const MAX_TICKETS = 100;
 
-type Step = "country" | "quantity" | "payment" | "info" | "confirm" | "success";
+type Step = "quantity" | "payment" | "info" | "confirm" | "success";
 
 type Country = "VE" | "MX" | "CO";
 
@@ -115,7 +115,8 @@ function formatTime(seconds: number): string {
 }
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const { country: globalCountry } = useI18n();
+  const [selectedCountry] = useState<Country>(globalCountry as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<{ name: string; filename: string } | null>(null);
@@ -126,7 +127,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
   const [otpCode, setOtpCode] = useState("");
-  const [step, setStep] = useState<Step>("country");
+  const [step, setStep] = useState<Step>("quantity");
   const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT_SECONDS);
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
@@ -575,13 +576,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
           </motion.div>
         ) : step === "quantity" ? (
           <motion.div key="quantity" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
-            <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("country")} className="text-muted-foreground -ml-2" data-testid="button-back-to-country">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-              </Button>
-              <div className="flex flex-col items-start">
-                <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.quantityDesc}</p>
-              </div>
+            <div className="mb-1">
+              <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.quantityDesc}</p>
             </div>
 
             {selectedCountry && (
@@ -672,36 +668,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             )}
           </motion.div>
-        ) : (
-          <motion.div key="country" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6 py-4">
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
-                <Ticket className="h-7 w-7 text-primary" />
-              </div>
-              <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-country-title">{t.picker.selectCountry}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">{t.picker.selectCountryDesc}</p>
-            </div>
-
-            <div className="flex justify-center gap-6">
-              {(Object.keys(COUNTRY_CONFIG) as Country[]).map((code) => {
-                const country = COUNTRY_CONFIG[code];
-                return (
-                  <button
-                    key={code}
-                    onClick={() => { setSelectedCountry(code); setStep("quantity"); }}
-                    className="flex flex-col items-center gap-2 group"
-                    data-testid={`button-country-${code}`}
-                  >
-                    <div className="w-16 h-16 rounded-full border-2 border-white/10 group-hover:border-primary/50 transition-all flex items-center justify-center text-4xl bg-secondary/30 group-hover:bg-primary/10 group-hover:scale-110 duration-200">
-                      {country.flag}
-                    </div>
-                    <span className="text-xs font-medium text-muted-foreground group-hover:text-white transition-colors">{country.name}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );
