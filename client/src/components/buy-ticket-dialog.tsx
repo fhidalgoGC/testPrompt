@@ -452,10 +452,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             {selectedCountry && (
               <div className="space-y-3">
                 {COUNTRY_CONFIG[selectedCountry].paymentMethods.map((method) => (
-                  <div key={method.id} className="rounded-xl border border-white/10 overflow-hidden">
+                  <div key={method.id} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
                     <button
                       onClick={() => setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10 border-primary/30' : 'hover:bg-white/5'}`}
+                      className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10' : 'hover:bg-white/5'}`}
                       data-testid={`button-payment-${method.id}`}
                     >
                       <span className="text-2xl">{method.icon}</span>
