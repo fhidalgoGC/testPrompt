@@ -68,10 +68,10 @@ export default function Home() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
-                  className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center text-lg transition-colors shrink-0"
+                  className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center transition-colors shrink-0"
                   data-testid="button-lang-switch"
                 >
-                  {locale === "es" ? "🇪🇸" : "🇺🇸"}
+                  <Globe className="h-4 w-4 text-muted-foreground" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="min-w-[140px] bg-card border-white/10">
