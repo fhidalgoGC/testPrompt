@@ -18,7 +18,7 @@ const translations = {
       title1: "Obten el",
       titleHighlight: "vehiculo",
       title2: "de tus suenos.",
-      subtitle: "Oportunidades exclusivas de vivir tus suenos mas deseados. Tu sueno se activa en el momento exacto en que se venden el 100% de los numeros.",
+      subtitle: "Oportunidades exclusivas de vivir tus suenos mas deseados. Tu sueno se activa en el momento exacto en que se venden el 100% de las semillas.",
     },
     raffle: {
       priorityCampaign: "Sueno Principal",
@@ -153,7 +153,7 @@ const translations = {
         },
         {
           heading: "2. Descripcion del Servicio",
-          body: "GMare es una plataforma donde puedes cumplir el sueno de tener un vehiculo premium. Cada oportunidad cuenta con una capacidad fija de 9,999 numeros. El proceso se activa unicamente cuando el 100% de los numeros han sido adquiridos.",
+          body: "GMare es una plataforma donde puedes cumplir el sueno de tener un vehiculo premium. Cada oportunidad cuenta con una capacidad fija de 9,999 numeros. El proceso se activa unicamente cuando el 100% de las semillas han sido adquiridas.",
         },
         {
           heading: "3. Participacion",
