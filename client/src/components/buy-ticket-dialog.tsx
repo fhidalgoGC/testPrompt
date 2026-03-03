@@ -587,7 +587,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 {t.picker.contactModalTitle}
               </h3>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.verifyInfoDesc}</p>
+
+            <div className="glass-gold rounded-lg p-3 flex items-start gap-3">
+              <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.verifyInfoDesc}</p>
+            </div>
+
             <div className="space-y-3">
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -595,7 +600,18 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
               <div className="relative">
                 <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input placeholder={t.picker.idPlaceholder} value={buyerIdNumber} onChange={(e) => setBuyerIdNumber(e.target.value)} className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-id" />
+                <Input
+                  placeholder={
+                    selectedCountry === "VE" ? t.picker.idPlaceholderVE :
+                    selectedCountry === "MX" ? t.picker.idPlaceholderMX :
+                    selectedCountry === "CO" ? t.picker.idPlaceholderCO :
+                    t.picker.idPlaceholder
+                  }
+                  value={buyerIdNumber}
+                  onChange={(e) => setBuyerIdNumber(e.target.value)}
+                  className="bg-secondary/50 border-white/10 pl-10"
+                  data-testid="input-buyer-id"
+                />
               </div>
             </div>
 
