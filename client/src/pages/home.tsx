@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useI18n, COUNTRY_FLAGS, COUNTRY_NAMES, type AppCountry } from "@/lib/i18n";
 import { Link } from "wouter";
@@ -15,6 +16,9 @@ export default function Home() {
   const { t, locale, setLocale, country, setCountry } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
+  const [showCountryPicker, setShowCountryPicker] = useState(() => {
+    return !localStorage.getItem("country_selected");
+  });
 
   if (isLoading) {
     return (
@@ -330,6 +334,44 @@ export default function Home() {
       </section>
 
       <VerifyOtpModal isOpen={showOtpModal} onClose={() => setShowOtpModal(false)} />
+
+      <Dialog open={showCountryPicker} onOpenChange={() => {}}>
+        <DialogContent
+          className="sm:max-w-[400px] bg-card border-primary/20 shadow-2xl shadow-primary/10"
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+          hideClose
+        >
+          <DialogHeader className="text-center">
+            <DialogTitle className="font-display text-2xl" data-testid="text-country-picker-title">
+              {t.picker.selectCountry}
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground text-sm" data-testid="text-country-picker-desc">
+              {t.picker.selectCountryDesc}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center gap-8 py-6">
+            {(Object.keys(COUNTRY_FLAGS) as AppCountry[]).map((code) => (
+              <button
+                key={code}
+                onClick={() => {
+                  setCountry(code);
+                  localStorage.setItem("country_selected", "true");
+                  setShowCountryPicker(false);
+                }}
+                className="flex flex-col items-center gap-3 group"
+                data-testid={`button-initial-country-${code}`}
+              >
+                <div className="w-20 h-20 rounded-full border-2 border-white/10 group-hover:border-primary/50 transition-all flex items-center justify-center text-5xl bg-secondary/30 group-hover:bg-primary/10 group-hover:scale-110 duration-200">
+                  {COUNTRY_FLAGS[code]}
+                </div>
+                <span className="text-sm font-medium text-muted-foreground group-hover:text-white transition-colors">{COUNTRY_NAMES[code]}</span>
+              </button>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
