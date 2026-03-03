@@ -45,29 +45,11 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
           { label: "Banco", value: "Banesco" },
         ],
       },
-      {
-        id: "transferencia_ve", name: "Transferencia", icon: "🏦",
-        details: [
-          { label: "Banco", value: "Banesco" },
-          { label: "Cuenta", value: "0134-0001-23-4567890123" },
-          { label: "Titular", value: "GMare C.A." },
-          { label: "RIF", value: "J-12345678-9" },
-        ],
-      },
     ],
   },
   MX: {
     name: "México", flag: "🇲🇽", currency: "MXN", price: 18,
     paymentMethods: [
-      {
-        id: "spei", name: "Transferencia SPEI", icon: "🏦",
-        details: [
-          { label: "Banco", value: "BBVA México" },
-          { label: "CLABE", value: "012345678901234567" },
-          { label: "Titular", value: "GMare S.A. de C.V." },
-          { label: "Concepto", value: "Semillas GMare" },
-        ],
-      },
       {
         id: "oxxo", name: "OXXO Pay", icon: "🏪",
         details: [
@@ -85,13 +67,6 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         id: "nequi", name: "Nequi", icon: "💜",
         details: [
           { label: "Numero Nequi", value: "300-1234567" },
-          { label: "Titular", value: "GMare SAS" },
-        ],
-      },
-      {
-        id: "daviplata", name: "Daviplata", icon: "🔴",
-        details: [
-          { label: "Numero Daviplata", value: "310-7654321" },
           { label: "Titular", value: "GMare SAS" },
         ],
       },
@@ -116,14 +91,6 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
       { label: "Binance ID", value: "123456789" },
       { label: "Titular", value: "GMare Global" },
       { label: "Red", value: "USDT (TRC20)" },
-    ],
-  },
-  {
-    id: "paypal", name: "PayPal", icon: "💳",
-    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
-    details: [
-      { label: "Email PayPal", value: "pagos@gmare.com" },
-      { label: "Titular", value: "GMare Global" },
     ],
   },
 ];
