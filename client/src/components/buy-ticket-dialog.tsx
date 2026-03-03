@@ -673,15 +673,13 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
         onInteractOutside={(e) => e.preventDefault()}
         hideClose
       >
-        <div className="absolute right-4 top-4 z-50">
-          <button
-            onClick={onClose}
-            className="rounded-full p-1.5 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
-            data-testid="button-close-dialog"
-          >
-            <X className="h-4 w-4 text-muted-foreground" />
-          </button>
-        </div>
+        <button
+          onClick={onClose}
+          className="absolute right-3 top-3 z-50 rounded-sm p-1 opacity-70 hover:opacity-100 transition-opacity focus:outline-none"
+          data-testid="button-close-dialog"
+        >
+          <X className="h-5 w-5 text-muted-foreground" />
+        </button>
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="font-display text-2xl flex items-center gap-2" data-testid="text-dialog-title">
             <Ticket className="text-primary h-6 w-6" />{t.picker.title}
