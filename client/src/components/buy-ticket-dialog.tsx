@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -22,14 +22,90 @@ interface BuyTicketDialogProps {
 const OTP_TIMEOUT_SECONDS = 300;
 const MAX_TICKETS = 100;
 
-type Step = "country" | "quantity" | "info" | "otp" | "confirm" | "success";
+type Step = "country" | "quantity" | "payment" | "info" | "otp" | "confirm" | "success";
 
 type Country = "VE" | "MX" | "CO";
 
-const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: string; price: number }> = {
-  VE: { name: "Venezuela", flag: "🇻🇪", currency: "USD", price: 1 },
-  MX: { name: "México", flag: "🇲🇽", currency: "MXN", price: 18 },
-  CO: { name: "Colombia", flag: "🇨🇴", currency: "COP", price: 4200 },
+interface PaymentMethod {
+  id: string;
+  name: string;
+  icon: string;
+  details: { label: string; value: string }[];
+}
+
+const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: string; price: number; paymentMethods: PaymentMethod[] }> = {
+  VE: {
+    name: "Venezuela", flag: "🇻🇪", currency: "USD", price: 1,
+    paymentMethods: [
+      {
+        id: "pago_movil", name: "Pago Movil", icon: "📱",
+        details: [
+          { label: "Telefono", value: "0412-1234567" },
+          { label: "Cedula", value: "V-12345678" },
+          { label: "Banco", value: "Banesco" },
+        ],
+      },
+      {
+        id: "transferencia_ve", name: "Transferencia", icon: "🏦",
+        details: [
+          { label: "Banco", value: "Banesco" },
+          { label: "Cuenta", value: "0134-0001-23-4567890123" },
+          { label: "Titular", value: "ApexDraw C.A." },
+          { label: "RIF", value: "J-12345678-9" },
+        ],
+      },
+    ],
+  },
+  MX: {
+    name: "México", flag: "🇲🇽", currency: "MXN", price: 18,
+    paymentMethods: [
+      {
+        id: "spei", name: "Transferencia SPEI", icon: "🏦",
+        details: [
+          { label: "Banco", value: "BBVA México" },
+          { label: "CLABE", value: "012345678901234567" },
+          { label: "Titular", value: "ApexDraw S.A. de C.V." },
+          { label: "Concepto", value: "Semillas ApexDraw" },
+        ],
+      },
+      {
+        id: "oxxo", name: "OXXO Pay", icon: "🏪",
+        details: [
+          { label: "Referencia", value: "1234-5678-9012-3456" },
+          { label: "Monto exacto", value: "Segun tu compra" },
+          { label: "Vigencia", value: "1 hora" },
+        ],
+      },
+    ],
+  },
+  CO: {
+    name: "Colombia", flag: "🇨🇴", currency: "COP", price: 4200,
+    paymentMethods: [
+      {
+        id: "nequi", name: "Nequi", icon: "💜",
+        details: [
+          { label: "Numero Nequi", value: "300-1234567" },
+          { label: "Titular", value: "ApexDraw SAS" },
+        ],
+      },
+      {
+        id: "daviplata", name: "Daviplata", icon: "🔴",
+        details: [
+          { label: "Numero Daviplata", value: "310-7654321" },
+          { label: "Titular", value: "ApexDraw SAS" },
+        ],
+      },
+      {
+        id: "transferencia_co", name: "Transferencia", icon: "🏦",
+        details: [
+          { label: "Banco", value: "Bancolombia" },
+          { label: "Cuenta Ahorros", value: "123-456789-01" },
+          { label: "Titular", value: "ApexDraw SAS" },
+          { label: "NIT", value: "901.234.567-8" },
+        ],
+      },
+    ],
+  },
 };
 
 function formatTime(seconds: number): string {
@@ -40,6 +116,8 @@ function formatTime(seconds: number): string {
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
@@ -91,14 +169,21 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     onClose();
   }, [stopTimer, onClose]);
 
-  const handleProceedToInfo = () => {
+  const handleProceedToPayment = () => {
     if (quantity < 1 || !buyerEmail.trim()) return;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(buyerEmail.trim())) {
       toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
       return;
     }
-    setStep("info");
+    setSelectedPaymentMethod(null);
+    setStep("payment");
+  };
+
+  const handleCopyValue = (value: string, fieldId: string) => {
+    navigator.clipboard.writeText(value);
+    setCopiedField(fieldId);
+    setTimeout(() => setCopiedField(null), 2000);
   };
 
   const handleSendCode = async () => {
@@ -318,10 +403,91 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </Button>
             </div>
           </motion.div>
+        ) : step === "payment" ? (
+          <motion.div key="payment" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
+            <div className="flex items-center gap-2 mb-1">
+              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
+                <ChevronLeft className="h-4 w-4 mr-1" />
+              </Button>
+              <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-payment-title">{t.picker.paymentMethods}</h3>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.paymentMethodsDesc}</p>
+
+            {selectedCountry && (
+              <div className="glass-gold rounded-lg p-3 flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">{t.picker.totalToPay}</span>
+                <span className="text-xl font-display font-bold text-primary" data-testid="text-payment-total">
+                  {(quantity * COUNTRY_CONFIG[selectedCountry].price).toLocaleString()} {COUNTRY_CONFIG[selectedCountry].currency}
+                </span>
+              </div>
+            )}
+
+            {selectedCountry && (
+              <div className="space-y-3">
+                {COUNTRY_CONFIG[selectedCountry].paymentMethods.map((method) => (
+                  <div key={method.id} className="rounded-xl border border-white/10 overflow-hidden">
+                    <button
+                      onClick={() => setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id)}
+                      className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10 border-primary/30' : 'hover:bg-white/5'}`}
+                      data-testid={`button-payment-${method.id}`}
+                    >
+                      <span className="text-2xl">{method.icon}</span>
+                      <span className="font-medium text-foreground flex-1 text-left">{method.name}</span>
+                      <ChevronLeft className={`h-4 w-4 text-muted-foreground transition-transform ${selectedPaymentMethod === method.id ? '-rotate-90' : 'rotate-180'}`} />
+                    </button>
+                    <AnimatePresence>
+                      {selectedPaymentMethod === method.id && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-4 pb-4 pt-1 space-y-2 border-t border-white/5">
+                            {method.details.map((detail) => (
+                              <div key={detail.label} className="flex items-center justify-between gap-2 py-1.5">
+                                <span className="text-xs text-muted-foreground">{detail.label}</span>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-mono font-medium text-foreground" data-testid={`text-detail-${method.id}-${detail.label}`}>{detail.value}</span>
+                                  <button
+                                    onClick={() => handleCopyValue(detail.value, `${method.id}-${detail.label}`)}
+                                    className="p-1 rounded hover:bg-white/10 transition-colors"
+                                    data-testid={`button-copy-${method.id}-${detail.label}`}
+                                  >
+                                    {copiedField === `${method.id}-${detail.label}` ? (
+                                      <Check className="h-3.5 w-3.5 text-green-400" />
+                                    ) : (
+                                      <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                                    )}
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <Button
+              className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+              onClick={() => setStep("info")}
+              data-testid="button-payment-done"
+            >
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5" />
+                {t.picker.continueAfterPayment}
+              </span>
+            </Button>
+          </motion.div>
         ) : step === "info" ? (
           <motion.div key="info" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
             <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
+              <Button variant="ghost" size="sm" onClick={() => setStep("payment")} className="text-muted-foreground -ml-2" data-testid="button-back-to-payment">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <h3 className="text-lg font-display font-bold text-foreground flex items-center gap-2">
@@ -443,7 +609,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
               <Button
                 className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleProceedToInfo} disabled={!buyerEmail.trim() || quantity < 1}
+                onClick={handleProceedToPayment} disabled={!buyerEmail.trim() || quantity < 1}
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
