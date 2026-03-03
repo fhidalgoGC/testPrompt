@@ -227,7 +227,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {t.hero.title1} <span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.titleHighlight}</span>{" "}
-            <span className="text-green-500 font-black" style={{textShadow: '0 0 30px rgba(34,197,94,0.6), 0 0 60px rgba(34,197,94,0.3)'}}>{t.hero.titleEmoji}</span>{" "}
+            <span style={{fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif', fontSize: '0.85em'}}>{t.hero.titleEmoji}</span>{" "}
             {t.hero.title2}
           </motion.h1>
           
