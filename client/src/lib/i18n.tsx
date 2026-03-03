@@ -379,7 +379,7 @@ export const COUNTRY_FLAGS: Record<AppCountry, string> = {
 };
 
 export const COUNTRY_NAMES: Record<AppCountry, string> = {
-  OTHER: "Todos",
+  OTHER: "Global",
   VE: "Venezuela",
   MX: "México",
   CO: "Colombia",
