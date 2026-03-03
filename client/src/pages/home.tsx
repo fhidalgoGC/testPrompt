@@ -7,12 +7,12 @@ import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useI18n, COUNTRY_FLAGS, COUNTRY_NAMES, type AppCountry } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 import { Link } from "wouter";
 
 export default function Home() {
   const { data: raffles, isLoading } = useRaffles();
-  const { t, locale, setLocale, country, setCountry } = useI18n();
+  const { t, locale, setLocale } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
@@ -32,7 +32,6 @@ export default function Home() {
   }
 
   const featuredRaffle = raffles?.[0];
-  const gridRaffles = raffles?.slice(1) || [];
 
   return (
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
@@ -87,28 +86,12 @@ export default function Home() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center text-lg transition-colors shrink-0"
-                  data-testid="button-country-switch"
-                >
-                  {COUNTRY_FLAGS[country]}
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[160px] bg-card border-white/10">
-                {(Object.keys(COUNTRY_FLAGS) as AppCountry[]).map((code) => (
-                  <DropdownMenuItem
-                    key={code}
-                    onClick={() => setCountry(code)}
-                    className={`gap-2 text-sm cursor-pointer ${country === code ? "text-primary font-bold" : ""}`}
-                    data-testid={`button-country-${code}`}
-                  >
-                    <span className="text-base">{COUNTRY_FLAGS[code]}</span> {COUNTRY_NAMES[code]}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div
+              className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 flex items-center justify-center text-lg shrink-0"
+              data-testid="flag-venezuela"
+            >
+              🇻🇪
+            </div>
             <Button
               variant="outline"
               size="sm"
@@ -256,58 +239,15 @@ export default function Home() {
         )}
       </section>
 
-      {gridRaffles.length > 0 && (
-        <section className="py-8 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
-            <h2 className="text-xl sm:text-2xl font-display font-bold uppercase tracking-wider">
-              {t.raffle.activeAllocations}
-            </h2>
-            
-            <div className="relative w-full md:w-64 group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <Input 
-                placeholder={t.raffle.searchAssets}
-                className="pl-10 bg-secondary/50 border-white/10 focus-visible:border-primary/50 focus-visible:ring-primary/20 h-10"
-                data-testid="input-search-vehicles"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {gridRaffles.map((raffle, index) => (
-              <motion.div
-                key={raffle.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-              >
-                <RaffleCard raffle={raffle} badgeLabel={t.raffle.badgeLabels[(index + 1) % t.raffle.badgeLabels.length]} />
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <section className="mt-8 sm:mt-16 px-4 max-w-4xl mx-auto text-center border-t border-white/5 pt-8 sm:pt-16">
         <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
-          {(country === "VE" || country === "OTHER" ? [
+          {[
             { name: "Loteria del Tachira", emoji: "🎰" },
             { name: "Kino Tachira", emoji: "🎲" },
             { name: "Loteria del Zulia", emoji: "🎯" },
-          ] : []).concat(
-            country === "MX" || country === "OTHER" ? [
-              { name: "Loteria Nacional", emoji: "🏛️" },
-              { name: "Melate", emoji: "💰" },
-              { name: "Pronosticos", emoji: "⚽" },
-            ] : []
-          ).concat(
-            country === "CO" || country === "OTHER" ? [
-              { name: "Loteria de Bogota", emoji: "🎪" },
-              { name: "Baloto", emoji: "🌟" },
-              { name: "Loteria de Medellin", emoji: "🎭" },
-            ] : []
-          ).map((lottery) => (
+          ].map((lottery) => (
             <div key={lottery.name} className="flex flex-col items-center gap-2 group" data-testid={`lottery-${lottery.name}`}>
               <div className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
                 {lottery.emoji}
