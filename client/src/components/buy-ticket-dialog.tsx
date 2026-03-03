@@ -129,6 +129,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [step, setStep] = useState<Step>("country");
   const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT_SECONDS);
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
+  const [transactionId, setTransactionId] = useState("");
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const buyMutation = useBuyTickets();
@@ -270,6 +271,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         buyerIdNumber: buyerIdNumber.trim(),
       });
       setAssignedNumbers(result.assignedNumbers);
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let txId = "";
+      for (let i = 0; i < 8; i++) txId += chars[Math.floor(Math.random() * chars.length)];
+      setTransactionId(txId);
       setStep("success");
       const duration = 3000;
       const end = Date.now() + duration;
@@ -302,22 +307,23 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
               <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
             </div>
-            {assignedNumbers.length > 0 && (
-              <div className="glass-gold rounded-lg p-4 w-full max-w-sm">
-                <p className="text-sm font-medium text-foreground mb-2">{t.picker.yourNumbers}</p>
-                <div className="flex flex-wrap gap-1.5 justify-center max-h-24 overflow-y-auto">
-                  {assignedNumbers.map(num => (
-                    <span key={num} className="px-2.5 py-1 text-sm bg-primary/20 text-primary rounded-md font-bold font-mono">{num}</span>
-                  ))}
-                </div>
+            <div className="glass-gold rounded-lg p-4 w-full max-w-sm space-y-3">
+              <p className="text-sm text-muted-foreground">{t.picker.transactionLabel}</p>
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-2xl font-mono font-bold text-primary tracking-widest" data-testid="text-transaction-id">{transactionId}</span>
+                <button
+                  onClick={() => handleCopyValue(transactionId, "txid")}
+                  className="p-1.5 rounded hover:bg-white/10 transition-colors"
+                  data-testid="button-copy-transaction"
+                >
+                  {copiedField === "txid" ? (
+                    <Check className="h-4 w-4 text-green-400" />
+                  ) : (
+                    <Copy className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </button>
               </div>
-            )}
-            <div className="w-full max-w-sm rounded-lg border border-red-500/30 bg-red-500/10 p-4 space-y-2" data-testid="payment-warning">
-              <div className="flex items-center gap-2 text-red-400 font-bold text-sm">
-                <Clock className="h-4 w-4 shrink-0" />
-                {t.picker.paymentWarningTitle}
-              </div>
-              <p className="text-xs text-red-300/80 leading-relaxed">{t.picker.paymentWarningDesc}</p>
+              <p className="text-xs text-primary/80 font-medium">{t.picker.saveTransactionNote}</p>
             </div>
             <Button variant="outline" className="mt-2 border-white/10" onClick={handleClose} data-testid="button-close-success">
               {t.picker.closeBtn}
