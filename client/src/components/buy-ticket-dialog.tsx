@@ -93,6 +93,14 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
       { label: "Red", value: "USDT (TRC20)" },
     ],
   },
+  {
+    id: "zelle", name: "Zelle", icon: "💸",
+    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
+    details: [
+      { label: "Email Zelle", value: "pagos@gmare.com" },
+      { label: "Titular", value: "GMare Global" },
+    ],
+  },
 ];
 
 function formatTime(seconds: number): string {
