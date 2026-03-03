@@ -388,17 +388,26 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.paymentMethodsDesc}</p>
 
             <div className="space-y-3">
-              {(Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
-                const cfg = COUNTRY_CONFIG[countryCode];
-                return cfg.paymentMethods.map((method) => ({
-                  ...method,
-                  countryCode,
-                  countryName: cfg.name,
-                  countryFlag: cfg.flag,
-                  currency: cfg.currency,
-                  price: cfg.price,
-                }));
-              }).map((method) => (
+              {(Object.keys(COUNTRY_CONFIG) as Country[])
+                .sort((a, b) => {
+                  const preferred = globalCountry === "OTHER" ? null : globalCountry;
+                  if (preferred) {
+                    if (a === preferred && b !== preferred) return -1;
+                    if (b === preferred && a !== preferred) return 1;
+                  }
+                  return 0;
+                })
+                .flatMap((countryCode) => {
+                  const cfg = COUNTRY_CONFIG[countryCode];
+                  return cfg.paymentMethods.map((method) => ({
+                    ...method,
+                    countryCode,
+                    countryName: cfg.name,
+                    countryFlag: cfg.flag,
+                    currency: cfg.currency,
+                    price: cfg.price,
+                  }));
+                }).map((method) => (
                 <div key={method.id} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
                   <button
                     onClick={() => { setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id); setUploadedFile(null); }}
