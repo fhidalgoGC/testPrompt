@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle } from "lucide-react";
+import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -13,6 +14,7 @@ export default function Home() {
   const { data: raffles, isLoading } = useRaffles();
   const { t, locale, setLocale, country, setCountry } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -315,6 +317,48 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        <AnimatePresence>
+          {chatOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col gap-2 mb-2"
+            >
+              <a
+                href="https://wa.me/584121234567"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
+                data-testid="link-whatsapp"
+              >
+                <SiWhatsapp className="h-5 w-5" />
+                <span className="text-sm font-medium">WhatsApp</span>
+              </a>
+              <a
+                href="https://t.me/gmare_soporte"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
+                data-testid="link-telegram"
+              >
+                <SiTelegram className="h-5 w-5" />
+                <span className="text-sm font-medium">Telegram</span>
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button
+          onClick={() => setChatOpen(!chatOpen)}
+          className="h-14 w-14 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+          data-testid="button-chat-fab"
+        >
+          {chatOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+        </button>
+      </div>
 
     </div>
   );
