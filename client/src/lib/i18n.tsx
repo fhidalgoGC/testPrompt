@@ -18,7 +18,7 @@ const translations = {
       title1: "Obten el",
       titleHighlight: "Arbol",
       titleEmoji: "🤑🤑🤑",
-      title2: "tus suenos.",
+      title2: "y cumple tus suenos.",
       subtitle: "Oportunidades exclusivas de vivir tus suenos mas deseados. Tu sueno se activa en el momento exacto en que se venden el 100% de las semillas.",
     },
     raffle: {
