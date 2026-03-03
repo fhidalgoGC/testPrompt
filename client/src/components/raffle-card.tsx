@@ -152,7 +152,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
                   <span className="text-xs font-bold text-green-400">{viewers}</span>
                 </div>
                 <span className="text-xs text-muted-foreground">
-                  {t.raffle.viewersWatching.replace("{count}", String(viewers))}
+                  {t.raffle.viewersWatching}
                 </span>
               </div>
             )}

@@ -31,7 +31,7 @@ const translations = {
       awaitingDraw: "Sueno en camino",
       almostFree: "Casi gratis",
       badgeLabels: ["La mejor opcion", "Buenisimo", "No esta nada mal", "Increible", "Imperdible"] as readonly string[],
-      viewersWatching: "{count} personas estan viendo este vehiculo",
+      viewersWatching: "Personas estan viendo este item",
       dontMissOut: "No te pierdas la oportunidad",
     },
     progress: {
@@ -212,7 +212,7 @@ const translations = {
       awaitingDraw: "Awaiting Draw",
       almostFree: "Almost free",
       badgeLabels: ["Best choice", "Amazing", "Not bad at all", "Incredible", "Can't miss"] as readonly string[],
-      viewersWatching: "{count} people are viewing this vehicle",
+      viewersWatching: "People are viewing this item",
       dontMissOut: "Don't miss your chance",
     },
     progress: {
