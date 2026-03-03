@@ -500,72 +500,81 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             )}
 
-            <div className="space-y-3 pt-1">
-              <p className="text-sm font-medium text-foreground">{t.picker.uploadProof}</p>
-              <p className="text-xs text-muted-foreground">{t.picker.uploadProofDesc}</p>
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,.pdf"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleFileUpload(file);
-                  e.target.value = "";
-                }}
-                data-testid="input-file-upload"
-              />
-
-              {!uploadedFile ? (
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isUploading}
-                  className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-xl p-6 flex flex-col items-center gap-3 transition-all hover:bg-primary/5 disabled:opacity-50"
-                  data-testid="button-upload-area"
+            {selectedPaymentMethod && (
+              <AnimatePresence>
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="space-y-3 pt-1 overflow-hidden"
                 >
-                  {isUploading ? (
-                    <>
-                      <Loader2 className="h-8 w-8 text-primary animate-spin" />
-                      <span className="text-sm text-muted-foreground">{t.picker.uploading}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="h-8 w-8 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">{t.picker.uploadDragDrop}</span>
-                      <span className="text-xs text-muted-foreground/60">{t.picker.uploadFormats}</span>
-                    </>
-                  )}
-                </button>
-              ) : (
-                <div className="rounded-xl border border-green-500/30 bg-green-500/5 p-4 flex items-center gap-3">
-                  <FileCheck className="h-6 w-6 text-green-400 shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate" data-testid="text-uploaded-filename">{uploadedFile.name}</p>
-                    <p className="text-xs text-green-400">{t.picker.uploadSuccess}</p>
-                  </div>
-                  <button
-                    onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
-                    className="text-xs text-muted-foreground hover:text-foreground underline shrink-0"
-                    data-testid="button-change-file"
-                  >
-                    {t.picker.changeFile}
-                  </button>
-                </div>
-              )}
-            </div>
+                  <p className="text-sm font-medium text-foreground">{t.picker.uploadProof}</p>
+                  <p className="text-xs text-muted-foreground">{t.picker.uploadProofDesc}</p>
 
-            <Button
-              className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
-              onClick={() => setStep("info")}
-              disabled={!uploadedFile}
-              data-testid="button-payment-done"
-            >
-              <span className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5" />
-                {t.picker.continueAfterPayment}
-              </span>
-            </Button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,.pdf"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleFileUpload(file);
+                      e.target.value = "";
+                    }}
+                    data-testid="input-file-upload"
+                  />
+
+                  {!uploadedFile ? (
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploading}
+                      className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-xl p-6 flex flex-col items-center gap-3 transition-all hover:bg-primary/5 disabled:opacity-50"
+                      data-testid="button-upload-area"
+                    >
+                      {isUploading ? (
+                        <>
+                          <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                          <span className="text-sm text-muted-foreground">{t.picker.uploading}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="h-8 w-8 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">{t.picker.uploadDragDrop}</span>
+                          <span className="text-xs text-muted-foreground/60">{t.picker.uploadFormats}</span>
+                        </>
+                      )}
+                    </button>
+                  ) : (
+                    <div className="rounded-xl border border-green-500/30 bg-green-500/5 p-4 flex items-center gap-3">
+                      <FileCheck className="h-6 w-6 text-green-400 shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate" data-testid="text-uploaded-filename">{uploadedFile.name}</p>
+                        <p className="text-xs text-green-400">{t.picker.uploadSuccess}</p>
+                      </div>
+                      <button
+                        onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
+                        className="text-xs text-muted-foreground hover:text-foreground underline shrink-0"
+                        data-testid="button-change-file"
+                      >
+                        {t.picker.changeFile}
+                      </button>
+                    </div>
+                  )}
+
+                  <Button
+                    className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
+                    onClick={() => setStep("info")}
+                    disabled={!uploadedFile}
+                    data-testid="button-payment-done"
+                  >
+                    <span className="flex items-center gap-2">
+                      <CheckCircle2 className="h-5 w-5" />
+                      {t.picker.continueAfterPayment}
+                    </span>
+                  </Button>
+                </motion.div>
+              </AnimatePresence>
+            )}
           </motion.div>
         ) : step === "info" ? (
           <motion.div key="info" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
