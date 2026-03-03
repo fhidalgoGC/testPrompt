@@ -57,10 +57,10 @@ export default function Redeem() {
           </Link>
           <div className="flex items-center gap-2 ml-auto">
             <div className="h-7 w-7 bg-gradient-to-br from-primary to-yellow-600 rounded-sm flex items-center justify-center transform rotate-45">
-              <span className="font-display font-black text-black -rotate-45 text-base">A</span>
+              <span className="font-display font-black text-black -rotate-45 text-base">G</span>
             </div>
             <span className="font-display font-bold text-lg tracking-wider uppercase text-glow">
-              Apex<span className="text-primary">Draw</span>
+              G<span className="text-primary">Mare</span>
             </span>
           </div>
         </div>

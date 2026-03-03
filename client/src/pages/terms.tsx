@@ -14,10 +14,10 @@ export default function Terms() {
           <Link href="/">
             <div className="flex items-center gap-2 shrink-0 cursor-pointer" data-testid="link-home-logo">
               <div className="h-7 w-7 sm:h-8 sm:w-8 bg-gradient-to-br from-primary to-yellow-600 rounded-sm flex items-center justify-center transform rotate-45">
-                <span className="font-display font-black text-black -rotate-45 text-base sm:text-lg">A</span>
+                <span className="font-display font-black text-black -rotate-45 text-base sm:text-lg">G</span>
               </div>
               <span className="font-display font-bold text-lg sm:text-xl tracking-wider uppercase text-glow">
-                Apex<span className="text-primary">Draw</span>
+                G<span className="text-primary">Mare</span>
               </span>
             </div>
           </Link>
