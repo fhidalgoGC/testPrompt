@@ -300,13 +300,34 @@ export default function Home() {
       )}
 
       <section className="mt-8 sm:mt-16 px-4 max-w-4xl mx-auto text-center border-t border-white/5 pt-8 sm:pt-16">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/5 mb-6">
-          <Info className="w-6 h-6 text-muted-foreground" />
+        <h3 className="font-display text-xl font-bold mb-2">{t.footer.title}</h3>
+        <p className="text-muted-foreground text-sm mb-8">{t.footer.description}</p>
+        <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
+          {(!country || country === "VE" ? [
+            { name: "Loteria del Tachira", emoji: "🎰" },
+            { name: "Kino Tachira", emoji: "🎲" },
+            { name: "Loteria del Zulia", emoji: "🎯" },
+          ] : []).concat(
+            !country || country === "MX" ? [
+              { name: "Loteria Nacional", emoji: "🏛️" },
+              { name: "Melate", emoji: "💰" },
+              { name: "Pronosticos", emoji: "⚽" },
+            ] : []
+          ).concat(
+            !country || country === "CO" ? [
+              { name: "Loteria de Bogota", emoji: "🎪" },
+              { name: "Baloto", emoji: "🌟" },
+              { name: "Loteria de Medellin", emoji: "🎭" },
+            ] : []
+          ).map((lottery) => (
+            <div key={lottery.name} className="flex flex-col items-center gap-2 group" data-testid={`lottery-${lottery.name}`}>
+              <div className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
+                {lottery.emoji}
+              </div>
+              <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">{lottery.name}</span>
+            </div>
+          ))}
         </div>
-        <h3 className="font-display text-xl font-bold mb-4">{t.footer.title}</h3>
-        <p className="text-muted-foreground text-sm leading-loose">
-          {t.footer.description}
-        </p>
       </section>
 
       <VerifyOtpModal isOpen={showOtpModal} onClose={() => setShowOtpModal(false)} />

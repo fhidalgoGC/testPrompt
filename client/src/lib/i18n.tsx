@@ -140,8 +140,8 @@ const translations = {
       verifiedDesc: "Tu numero de telefono ha sido verificado exitosamente.",
     },
     footer: {
-      title: "Transparencia Total",
-      description: "Cada sueno opera con una capacidad estricta. El proceso permanece completamente inactivo hasta que el 100% de los numeros se vendan. Todos los participantes tienen la misma probabilidad de ganar por cada numero comprado.",
+      title: "Respaldados por las loterias oficiales",
+      description: "Nuestros procesos se realizan con los resultados oficiales de las loterias de cada pais.",
     },
     terms: {
       title: "Terminos y Condiciones",
@@ -320,8 +320,8 @@ const translations = {
       verifiedDesc: "Your phone number has been verified successfully.",
     },
     footer: {
-      title: "Full Transparency",
-      description: "Every campaign operates on a strict capacity constraint. The draw algorithm remains completely dormant until 100% of the allocation is secured. All participants have mathematically equal probability of selection per entry.",
+      title: "Backed by official lotteries",
+      description: "Our draws are conducted using the official results from each country's lotteries.",
     },
     terms: {
       title: "Terms & Conditions",
