@@ -726,13 +726,13 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
         >
           <X className="h-5 w-5 text-muted-foreground" />
         </button>
-        <DialogHeader className="px-6 pt-4 pb-0">
-          <DialogTitle className="font-display text-xl flex items-center gap-2" data-testid="text-dialog-title">
+        <DialogHeader className="px-6 pt-2 pb-0">
+          <DialogTitle className="font-display text-lg flex items-center gap-2" data-testid="text-dialog-title">
             <Ticket className="text-primary h-5 w-5" />{t.picker.title}
           </DialogTitle>
           <DialogDescription className="sr-only">{title}</DialogDescription>
         </DialogHeader>
-        <div className="px-6 pb-6 pt-2 min-h-[60vh]">
+        <div className="px-6 pb-6 pt-1 min-h-[60vh]">
           {isOpen && <TicketPickerContent raffleId={raffleId} title={title} totalTickets={totalTickets} onClose={onClose} />}
         </div>
       </DialogContent>
