@@ -44,7 +44,10 @@ const translations = {
     picker: {
       title: "Compra tus semillas",
       subtitle: "Participa por el sueno de",
+      selectCountry: "Selecciona tu pais",
+      selectCountryDesc: "Elige tu pais para ver los precios disponibles.",
       quantityDesc: "Selecciona cuantas semillas deseas. Los numeros se asignan al azar automaticamente.",
+      pricePerSeed: "Precio por semilla:",
       namePlaceholder: "Tu nombre completo",
       phonePlaceholder: "Tu numero de telefono",
       emailPlaceholder: "Tu correo electronico",
@@ -204,7 +207,10 @@ const translations = {
     picker: {
       title: "Buy your seeds",
       subtitle: "Enter the draw for",
+      selectCountry: "Select your country",
+      selectCountryDesc: "Choose your country to see available prices.",
       quantityDesc: "Choose how many seeds you want. Numbers are assigned randomly.",
+      pricePerSeed: "Price per seed:",
       namePlaceholder: "Your full name",
       phonePlaceholder: "Your phone number",
       emailPlaceholder: "Your email address",

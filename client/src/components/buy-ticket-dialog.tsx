@@ -22,7 +22,15 @@ interface BuyTicketDialogProps {
 const OTP_TIMEOUT_SECONDS = 300;
 const MAX_TICKETS = 100;
 
-type Step = "quantity" | "info" | "otp" | "confirm" | "success";
+type Step = "country" | "quantity" | "info" | "otp" | "confirm" | "success";
+
+type Country = "VE" | "MX" | "CO";
+
+const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: string; price: number }> = {
+  VE: { name: "Venezuela", flag: "🇻🇪", currency: "USD", price: 1 },
+  MX: { name: "México", flag: "🇲🇽", currency: "MXN", price: 18 },
+  CO: { name: "Colombia", flag: "🇨🇴", currency: "COP", price: 4200 },
+};
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -31,12 +39,13 @@ function formatTime(seconds: number): string {
 }
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
   const [otpCode, setOtpCode] = useState("");
-  const [step, setStep] = useState<Step>("quantity");
+  const [step, setStep] = useState<Step>("country");
   const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT_SECONDS);
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -352,14 +361,25 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               )}
             </Button>
           </motion.div>
-        ) : (
-          <motion.div key="quantity" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-5">
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
-                <Ticket className="h-7 w-7 text-primary" />
+        ) : step === "quantity" ? (
+          <motion.div key="quantity" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
+            <div className="flex items-center gap-2 mb-1">
+              <Button variant="ghost" size="sm" onClick={() => setStep("country")} className="text-muted-foreground -ml-2" data-testid="button-back-to-country">
+                <ChevronLeft className="h-4 w-4 mr-1" />
+              </Button>
+              <div className="flex flex-col items-start">
+                <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.quantityDesc}</p>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">{t.picker.quantityDesc}</p>
             </div>
+
+            {selectedCountry && (
+              <div className="glass-gold rounded-lg p-3 flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">{t.picker.pricePerSeed}</span>
+                <span className="text-lg font-display font-bold text-primary" data-testid="text-price">
+                  {COUNTRY_CONFIG[selectedCountry].price} {COUNTRY_CONFIG[selectedCountry].currency}
+                </span>
+              </div>
+            )}
 
             <div className="flex items-center justify-center gap-4">
               <Button
@@ -405,6 +425,15 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               ))}
             </div>
 
+            {selectedCountry && (
+              <div className="glass rounded-lg p-3 text-center">
+                <span className="text-sm text-muted-foreground">Total: </span>
+                <span className="text-xl font-display font-bold text-primary" data-testid="text-total-price">
+                  {(quantity * COUNTRY_CONFIG[selectedCountry].price).toLocaleString()} {COUNTRY_CONFIG[selectedCountry].currency}
+                </span>
+              </div>
+            )}
+
             <div className="space-y-3 pt-2">
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -430,6 +459,35 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <p>{buyMutation.error instanceof Error ? buyMutation.error.message : t.picker.errorGeneric}</p>
               </div>
             )}
+          </motion.div>
+        ) : (
+          <motion.div key="country" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6 py-4">
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
+                <Ticket className="h-7 w-7 text-primary" />
+              </div>
+              <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-country-title">{t.picker.selectCountry}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">{t.picker.selectCountryDesc}</p>
+            </div>
+
+            <div className="flex justify-center gap-6">
+              {(Object.keys(COUNTRY_CONFIG) as Country[]).map((code) => {
+                const country = COUNTRY_CONFIG[code];
+                return (
+                  <button
+                    key={code}
+                    onClick={() => { setSelectedCountry(code); setStep("quantity"); }}
+                    className="flex flex-col items-center gap-2 group"
+                    data-testid={`button-country-${code}`}
+                  >
+                    <div className="w-16 h-16 rounded-full border-2 border-white/10 group-hover:border-primary/50 transition-all flex items-center justify-center text-4xl bg-secondary/30 group-hover:bg-primary/10 group-hover:scale-110 duration-200">
+                      {country.flag}
+                    </div>
+                    <span className="text-xs font-medium text-muted-foreground group-hover:text-white transition-colors">{country.name}</span>
+                  </button>
+                );
+              })}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
