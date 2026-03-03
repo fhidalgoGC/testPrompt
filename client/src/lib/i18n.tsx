@@ -153,7 +153,7 @@ const translations = {
         },
         {
           heading: "2. Descripcion del Servicio",
-          body: "ApexDraw es una plataforma donde puedes cumplir el sueno de tener un vehiculo premium. Cada oportunidad cuenta con una capacidad fija de 9,999 numeros. El proceso se activa unicamente cuando el 100% de los numeros han sido adquiridos.",
+          body: "GMare es una plataforma donde puedes cumplir el sueno de tener un vehiculo premium. Cada oportunidad cuenta con una capacidad fija de 9,999 numeros. El proceso se activa unicamente cuando el 100% de los numeros han sido adquiridos.",
         },
         {
           heading: "3. Participacion",
@@ -333,7 +333,7 @@ const translations = {
         },
         {
           heading: "2. Service Description",
-          body: "ApexDraw is a premium vehicle draw platform. Each campaign has a fixed capacity of 9,999 numbers. The draw activates only when 100% of the numbers have been acquired.",
+          body: "GMare is a premium vehicle draw platform. Each campaign has a fixed capacity of 9,999 numbers. The draw activates only when 100% of the numbers have been acquired.",
         },
         {
           heading: "3. Participation",

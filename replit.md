@@ -1,4 +1,4 @@
-# ApexDraw
+# GMare
 
 ## Overview
 A premium vehicle draw/sorteo platform. Users can browse active campaigns, select specific ticket numbers from a grid navigator, and purchase them. The draw only activates once 100% of tickets (9999) are sold.

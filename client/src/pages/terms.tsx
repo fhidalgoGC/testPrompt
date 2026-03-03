@@ -38,7 +38,7 @@ export default function Terms() {
         <Link href="/">
           <span className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer mb-6" data-testid="link-back-home">
             <ChevronLeft className="h-4 w-4" />
-            ApexDraw
+            GMare
           </span>
         </Link>
 

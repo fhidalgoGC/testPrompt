@@ -50,7 +50,7 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         details: [
           { label: "Banco", value: "Banesco" },
           { label: "Cuenta", value: "0134-0001-23-4567890123" },
-          { label: "Titular", value: "ApexDraw C.A." },
+          { label: "Titular", value: "GMare C.A." },
           { label: "RIF", value: "J-12345678-9" },
         ],
       },
@@ -64,8 +64,8 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         details: [
           { label: "Banco", value: "BBVA México" },
           { label: "CLABE", value: "012345678901234567" },
-          { label: "Titular", value: "ApexDraw S.A. de C.V." },
-          { label: "Concepto", value: "Semillas ApexDraw" },
+          { label: "Titular", value: "GMare S.A. de C.V." },
+          { label: "Concepto", value: "Semillas GMare" },
         ],
       },
       {
@@ -85,14 +85,14 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         id: "nequi", name: "Nequi", icon: "💜",
         details: [
           { label: "Numero Nequi", value: "300-1234567" },
-          { label: "Titular", value: "ApexDraw SAS" },
+          { label: "Titular", value: "GMare SAS" },
         ],
       },
       {
         id: "daviplata", name: "Daviplata", icon: "🔴",
         details: [
           { label: "Numero Daviplata", value: "310-7654321" },
-          { label: "Titular", value: "ApexDraw SAS" },
+          { label: "Titular", value: "GMare SAS" },
         ],
       },
       {
@@ -100,7 +100,7 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         details: [
           { label: "Banco", value: "Bancolombia" },
           { label: "Cuenta Ahorros", value: "123-456789-01" },
-          { label: "Titular", value: "ApexDraw SAS" },
+          { label: "Titular", value: "GMare SAS" },
           { label: "NIT", value: "901.234.567-8" },
         ],
       },
