@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X, Upload, FileCheck, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -118,6 +118,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<{ name: string; filename: string } | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [quantity, setQuantity] = useState(1);
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
@@ -184,6 +187,30 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     navigator.clipboard.writeText(value);
     setCopiedField(fieldId);
     setTimeout(() => setCopiedField(null), 2000);
+  };
+
+  const handleFileUpload = async (file: File) => {
+    if (file.size > 10 * 1024 * 1024) {
+      toast({ variant: "destructive", title: t.picker.uploadError, description: "Max 10MB" });
+      return;
+    }
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("comprobante", file);
+      const res = await fetch("/api/upload-comprobante", { method: "POST", body: formData });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || "Upload failed");
+      }
+      const data = await res.json();
+      setUploadedFile({ name: file.name, filename: data.filename });
+      toast({ title: t.picker.uploadSuccess });
+    } catch (err) {
+      toast({ variant: "destructive", title: t.picker.uploadError, description: err instanceof Error ? err.message : "" });
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSendCode = async () => {
@@ -473,9 +500,65 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             )}
 
+            <div className="space-y-3 pt-1">
+              <p className="text-sm font-medium text-foreground">{t.picker.uploadProof}</p>
+              <p className="text-xs text-muted-foreground">{t.picker.uploadProofDesc}</p>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,.pdf"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleFileUpload(file);
+                  e.target.value = "";
+                }}
+                data-testid="input-file-upload"
+              />
+
+              {!uploadedFile ? (
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-xl p-6 flex flex-col items-center gap-3 transition-all hover:bg-primary/5 disabled:opacity-50"
+                  data-testid="button-upload-area"
+                >
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                      <span className="text-sm text-muted-foreground">{t.picker.uploading}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-8 w-8 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">{t.picker.uploadDragDrop}</span>
+                      <span className="text-xs text-muted-foreground/60">{t.picker.uploadFormats}</span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <div className="rounded-xl border border-green-500/30 bg-green-500/5 p-4 flex items-center gap-3">
+                  <FileCheck className="h-6 w-6 text-green-400 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate" data-testid="text-uploaded-filename">{uploadedFile.name}</p>
+                    <p className="text-xs text-green-400">{t.picker.uploadSuccess}</p>
+                  </div>
+                  <button
+                    onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
+                    className="text-xs text-muted-foreground hover:text-foreground underline shrink-0"
+                    data-testid="button-change-file"
+                  >
+                    {t.picker.changeFile}
+                  </button>
+                </div>
+              )}
+            </div>
+
             <Button
-              className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+              className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
               onClick={() => setStep("info")}
+              disabled={!uploadedFile}
               data-testid="button-payment-done"
             >
               <span className="flex items-center gap-2">
