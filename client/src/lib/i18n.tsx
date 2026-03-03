@@ -6,7 +6,7 @@ const translations = {
   es: {
     nav: {
       campaigns: "Suenos",
-      winners: "Ganadores",
+      winners: "Suenos cumplidos",
       howItWorks: "Como funciona",
       terms: "Terminos y condiciones",
       verifyOtp: "Verificar OTP",
@@ -87,7 +87,7 @@ const translations = {
       sendCodeEmail: "Enviar codigo al correo",
       timerExpiredTitle: "El codigo llegara pronto",
       timerExpiredDesc: "Tu codigo llegara en los proximos minutos. Verificalo desde la opcion 'Verificar OTP' en el menu.",
-      confirmTitle: "Estas a punto de cambiar tu suerte",
+      confirmTitle: "Estas a punto de cambiar tu destino",
       confirmDesc: "Al confirmar, te enviaremos un correo con las indicaciones y tus semillas. Revisa tu bandeja de entrada.",
       ticketCount: "Cantidad de semillas:",
       randomAssignNote: "Los numeros se asignaran al azar al confirmar.",
@@ -186,7 +186,7 @@ const translations = {
   en: {
     nav: {
       campaigns: "Draws",
-      winners: "Winners",
+      winners: "Dreams fulfilled",
       howItWorks: "How it works",
       terms: "Terms & Conditions",
       verifyOtp: "Verify OTP",
@@ -267,7 +267,7 @@ const translations = {
       sendCodeEmail: "Send code to email",
       timerExpiredTitle: "Your code will arrive soon",
       timerExpiredDesc: "Your code will arrive in the next few minutes. Verify it from the 'Verify OTP' option in the menu.",
-      confirmTitle: "You're about to change your luck",
+      confirmTitle: "You're about to change your destiny",
       confirmDesc: "Once confirmed, we'll send you an email with instructions and your seeds. Check your inbox.",
       ticketCount: "Number of seeds:",
       randomAssignNote: "Numbers will be randomly assigned upon confirmation.",
