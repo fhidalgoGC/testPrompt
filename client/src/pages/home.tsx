@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useI18n } from "@/lib/i18n";
 import { Link } from "wouter";
 import { VerifyOtpModal } from "@/components/verify-otp-modal";
@@ -64,16 +65,32 @@ export default function Home() {
                 </span>
               </Link>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setLocale(locale === "es" ? "en" : "es")}
-              className="border-white/10 text-xs font-bold gap-1.5 shrink-0"
-              data-testid="button-lang-switch"
-            >
-              <Globe className="h-3.5 w-3.5" />
-              {t.langSwitch}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center text-lg transition-colors shrink-0"
+                  data-testid="button-lang-switch"
+                >
+                  {locale === "es" ? "🇪🇸" : "🇺🇸"}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[140px] bg-card border-white/10">
+                <DropdownMenuItem
+                  onClick={() => setLocale("es")}
+                  className={`gap-2 text-sm cursor-pointer ${locale === "es" ? "text-primary font-bold" : ""}`}
+                  data-testid="button-lang-es"
+                >
+                  <span className="text-base">🇪🇸</span> Español
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setLocale("en")}
+                  className={`gap-2 text-sm cursor-pointer ${locale === "en" ? "text-primary font-bold" : ""}`}
+                  data-testid="button-lang-en"
+                >
+                  <span className="text-base">🇺🇸</span> English
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button
               variant="outline"
               size="sm"
