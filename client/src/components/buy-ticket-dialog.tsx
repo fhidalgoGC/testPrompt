@@ -108,6 +108,26 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
   },
 };
 
+const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFlag: string })[] = [
+  {
+    id: "binance", name: "Binance Pay", icon: "💰",
+    countryName: "Global", countryFlag: "🌎",
+    details: [
+      { label: "Binance ID", value: "123456789" },
+      { label: "Titular", value: "GMare Global" },
+      { label: "Red", value: "USDT (TRC20)" },
+    ],
+  },
+  {
+    id: "paypal", name: "PayPal", icon: "💳",
+    countryName: "Global", countryFlag: "🌎",
+    details: [
+      { label: "Email PayPal", value: "pagos@gmare.com" },
+      { label: "Titular", value: "GMare Global" },
+    ],
+  },
+];
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -407,7 +427,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     currency: cfg.currency,
                     price: cfg.price,
                   }));
-                }).map((method) => (
+                }).concat(GLOBAL_PAYMENT_METHODS).map((method) => (
                 <div key={method.id} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
                   <button
                     onClick={() => { setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id); setUploadedFile(null); }}
