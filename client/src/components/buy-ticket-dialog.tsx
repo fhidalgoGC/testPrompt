@@ -116,7 +116,7 @@ function formatTime(seconds: number): string {
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const { country: globalCountry } = useI18n();
-  const [selectedCountry] = useState<Country>(globalCountry as Country);
+  const [selectedCountry] = useState<Country>((globalCountry === "OTHER" ? "VE" : globalCountry) as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<{ name: string; filename: string } | null>(null);
@@ -387,28 +387,31 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.paymentMethodsDesc}</p>
 
-            {selectedCountry && (
-              <div className="glass-gold rounded-lg p-3 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">{t.picker.totalToPay}</span>
-                <span className="text-xl font-display font-bold text-primary" data-testid="text-payment-total">
-                  {(quantity * COUNTRY_CONFIG[selectedCountry].price).toLocaleString()} {COUNTRY_CONFIG[selectedCountry].currency}
-                </span>
-              </div>
-            )}
-
-            {selectedCountry && (
-              <div className="space-y-3">
-                {COUNTRY_CONFIG[selectedCountry].paymentMethods.map((method) => (
-                  <div key={method.id} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
-                    <button
-                      onClick={() => { setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id); setUploadedFile(null); }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10' : 'hover:bg-white/5'}`}
-                      data-testid={`button-payment-${method.id}`}
-                    >
-                      <span className="text-2xl">{method.icon}</span>
-                      <span className="font-medium text-foreground flex-1 text-left">{method.name}</span>
-                      <ChevronLeft className={`h-4 w-4 text-muted-foreground transition-transform ${selectedPaymentMethod === method.id ? '-rotate-90' : 'rotate-180'}`} />
-                    </button>
+            <div className="space-y-3">
+              {(Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
+                const cfg = COUNTRY_CONFIG[countryCode];
+                return cfg.paymentMethods.map((method) => ({
+                  ...method,
+                  countryCode,
+                  countryName: cfg.name,
+                  countryFlag: cfg.flag,
+                  currency: cfg.currency,
+                  price: cfg.price,
+                }));
+              }).map((method) => (
+                <div key={method.id} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
+                  <button
+                    onClick={() => { setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id); setUploadedFile(null); }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10' : 'hover:bg-white/5'}`}
+                    data-testid={`button-payment-${method.id}`}
+                  >
+                    <span className="text-lg">{method.countryFlag}</span>
+                    <div className="flex-1 text-left">
+                      <span className="font-medium text-foreground">{method.name}</span>
+                      <span className="text-xs text-muted-foreground ml-2">{method.countryName}</span>
+                    </div>
+                    <ChevronLeft className={`h-4 w-4 text-muted-foreground transition-transform ${selectedPaymentMethod === method.id ? '-rotate-90' : 'rotate-180'}`} />
+                  </button>
                     <AnimatePresence>
                       {selectedPaymentMethod === method.id && (
                         <motion.div
@@ -510,9 +513,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                       )}
                     </AnimatePresence>
                   </div>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
 
           </motion.div>
         ) : step === "info" ? (
@@ -572,14 +574,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.quantityDesc}</p>
             </div>
 
-            {selectedCountry && (
-              <div className="glass-gold rounded-lg p-3 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">{t.picker.pricePerSeed}</span>
-                <span className="text-lg font-display font-bold text-primary" data-testid="text-price">
-                  {COUNTRY_CONFIG[selectedCountry].price} {COUNTRY_CONFIG[selectedCountry].currency}
-                </span>
-              </div>
-            )}
 
             <div className="flex items-center justify-center gap-4">
               <Button
@@ -625,14 +619,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               ))}
             </div>
 
-            {selectedCountry && (
-              <div className="glass rounded-lg p-3 text-center">
-                <span className="text-sm text-muted-foreground">Total: </span>
-                <span className="text-xl font-display font-bold text-primary" data-testid="text-total-price">
-                  {(quantity * COUNTRY_CONFIG[selectedCountry].price).toLocaleString()} {COUNTRY_CONFIG[selectedCountry].currency}
-                </span>
-              </div>
-            )}
 
             <div className="space-y-3 pt-2">
               <div className="relative">

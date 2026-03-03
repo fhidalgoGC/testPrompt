@@ -369,15 +369,17 @@ const translations = {
 
 type Translations = typeof translations.es;
 
-export type AppCountry = "VE" | "MX" | "CO";
+export type AppCountry = "VE" | "MX" | "CO" | "OTHER";
 
 export const COUNTRY_FLAGS: Record<AppCountry, string> = {
+  OTHER: "🌎",
   VE: "🇻🇪",
   MX: "🇲🇽",
   CO: "🇨🇴",
 };
 
 export const COUNTRY_NAMES: Record<AppCountry, string> = {
+  OTHER: "Otros",
   VE: "Venezuela",
   MX: "México",
   CO: "Colombia",
@@ -401,7 +403,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const [country, setCountry] = useState<AppCountry>(() => {
     const saved = localStorage.getItem("country");
-    return (saved === "VE" || saved === "MX" || saved === "CO") ? saved : "VE";
+    return (saved === "VE" || saved === "MX" || saved === "CO" || saved === "OTHER") ? saved : "OTHER";
   });
 
   useEffect(() => {
