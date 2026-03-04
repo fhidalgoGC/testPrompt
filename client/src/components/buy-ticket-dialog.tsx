@@ -51,11 +51,12 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
     name: "México", flag: "🇲🇽", currency: "MXN", price: 18,
     paymentMethods: [
       {
-        id: "oxxo", name: "OXXO Pay", icon: "🏪",
+        id: "spei", name: "Transferencia SPEI", icon: "🏦",
         details: [
-          { label: "Referencia", value: "1234-5678-9012-3456" },
-          { label: "Monto exacto", value: "Segun tu compra" },
-          { label: "Vigencia", value: "1 hora" },
+          { label: "Banco", value: "BBVA México" },
+          { label: "CLABE", value: "012345678901234567" },
+          { label: "Titular", value: "GMare S.A. de C.V." },
+          { label: "Concepto", value: "Semillas GMare" },
         ],
       },
     ],
