@@ -104,6 +104,12 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
   },
 ];
 
+const PHONE_COUNTRIES: { code: Country; flag: string; dialCode: string; name: string }[] = [
+  { code: "VE", flag: "🇻🇪", dialCode: "+58", name: "Venezuela" },
+  { code: "CO", flag: "🇨🇴", dialCode: "+57", name: "Colombia" },
+  { code: "MX", flag: "🇲🇽", dialCode: "+52", name: "México" },
+];
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -119,6 +125,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [quantity, setQuantity] = useState(1);
+  const [phoneCountry, setPhoneCountry] = useState<Country>("VE");
+  const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
@@ -263,7 +271,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       const result = await buyMutation.mutateAsync({
         id: raffleId,
         quantity,
-        buyerPhone: buyerPhone.trim(),
+        buyerPhone: `${PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode}${buyerPhone.trim()}`,
         buyerEmail: buyerEmail.trim(),
         buyerIdNumber: buyerIdNumber.trim(),
       });
@@ -345,7 +353,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <p className="text-xs text-muted-foreground">{t.picker.randomAssignNote}</p>
               <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
                 <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
-                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {buyerPhone}</div>
+                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
                 {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>}
               </div>
             </div>
@@ -550,9 +558,36 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
             <div className="space-y-3">
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input type="tel" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-phone" />
+              <div className="relative flex gap-0">
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setPhoneDropdownOpen(!phoneDropdownOpen)}
+                    className="h-10 px-2.5 rounded-l-md border border-r-0 border-white/10 bg-secondary/50 flex items-center gap-1.5 hover:bg-white/10 transition-colors shrink-0"
+                    data-testid="button-phone-country"
+                  >
+                    <span className="text-base">{PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.flag}</span>
+                    <span className="text-xs text-muted-foreground font-mono">{PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode}</span>
+                    <ChevronLeft className="h-3 w-3 text-muted-foreground -rotate-90" />
+                  </button>
+                  {phoneDropdownOpen && (
+                    <div className="absolute top-full left-0 mt-1 z-50 bg-card border border-white/10 rounded-lg shadow-xl overflow-hidden min-w-[180px]">
+                      {PHONE_COUNTRIES.map((c) => (
+                        <button
+                          key={c.code}
+                          onClick={() => { setPhoneCountry(c.code); setPhoneDropdownOpen(false); }}
+                          className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-white/10 transition-colors ${phoneCountry === c.code ? "text-primary font-bold bg-primary/5" : "text-foreground"}`}
+                          data-testid={`button-phone-country-${c.code}`}
+                        >
+                          <span className="text-base">{c.flag}</span>
+                          <span>{c.name}</span>
+                          <span className="text-muted-foreground font-mono text-xs ml-auto">{c.dialCode}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <Input type="tel" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} className="bg-secondary/50 border-white/10 rounded-l-none flex-1" data-testid="input-buyer-phone" />
               </div>
               <div className="relative">
                 <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
