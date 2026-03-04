@@ -460,7 +460,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
                             <div className="border-t border-white/5 pt-3 mt-2 space-y-2">
                               <p className="text-xs font-medium text-foreground">{t.picker.uploadProof}</p>
-                              <p className="text-[11px] text-muted-foreground">{t.picker.uploadProofDesc}</p>
 
                               <input
                                 ref={fileInputRef}
