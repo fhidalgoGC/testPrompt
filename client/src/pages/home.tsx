@@ -269,7 +269,7 @@ export default function Home() {
               className="flex flex-col gap-2 mb-2"
             >
               <a
-                href="https://wa.me/584121234567"
+                href="https://wa.me/584226333703"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
@@ -279,7 +279,7 @@ export default function Home() {
                 <span className="text-sm font-medium">WhatsApp</span>
               </a>
               <a
-                href="https://t.me/gmare_soporte"
+                href="https://t.me/+584226333703"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
