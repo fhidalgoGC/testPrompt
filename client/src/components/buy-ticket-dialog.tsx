@@ -404,7 +404,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     price: cfg.price,
                   }));
                 }).concat(GLOBAL_PAYMENT_METHODS).map((method) => (
-                <div key={method.id} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
+                <div key={method.id} ref={(el) => { if (el && selectedPaymentMethod === method.id) { setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 250); } }} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
                   <button
                     onClick={() => { setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id); setUploadedFile(null); }}
                     className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10' : 'hover:bg-white/5'}`}
