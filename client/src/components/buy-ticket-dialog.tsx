@@ -558,12 +558,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
             <div className="space-y-3">
-              <div className="relative flex gap-0">
+              <div className="relative flex items-stretch rounded-md border border-white/10 bg-secondary/50 overflow-visible">
                 <div className="relative">
                   <button
                     type="button"
                     onClick={() => setPhoneDropdownOpen(!phoneDropdownOpen)}
-                    className="h-10 px-2.5 rounded-l-md border border-r-0 border-white/10 bg-secondary/50 flex items-center gap-1.5 hover:bg-white/10 transition-colors shrink-0"
+                    className="h-full px-3 flex items-center gap-1.5 hover:bg-white/10 transition-colors shrink-0 border-r border-white/10"
                     data-testid="button-phone-country"
                   >
                     <span className="text-base">{PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.flag}</span>
@@ -587,7 +587,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     </div>
                   )}
                 </div>
-                <Input type="tel" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} className="bg-secondary/50 border-white/10 rounded-l-none flex-1" data-testid="input-buyer-phone" />
+                <input type="tel" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} className="flex-1 bg-transparent h-10 px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none" data-testid="input-buyer-phone" />
               </div>
               <div className="relative">
                 <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
