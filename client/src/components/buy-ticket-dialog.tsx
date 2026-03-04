@@ -641,8 +641,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
           </motion.div>
         ) : step === "quantity" ? (
           <motion.div key="quantity" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
-            <div className="mb-1">
-              <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.quantityDesc}</p>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-500/10 border border-green-500/20 w-fit">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-xs text-green-400">Personas igual que tu estan comprando sus semillas</span>
             </div>
 
 
