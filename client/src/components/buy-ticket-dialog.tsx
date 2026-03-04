@@ -426,8 +426,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                           transition={{ duration: 0.2 }}
                           className="overflow-hidden"
                         >
-                          <div className="px-4 pb-4 pt-1 space-y-2 border-t border-white/5">
-                            <div className="py-2 px-3 rounded-lg bg-primary/10 border border-primary/20 space-y-1">
+                          <div className="px-4 pb-3 pt-1 space-y-1 border-t border-white/5">
+                            <div className="py-1.5 px-3 rounded-lg bg-primary/10 border border-primary/20 space-y-0.5">
                               <div className="flex items-center justify-between">
                                 <span className="text-xs text-primary/80">{quantity} semilla{quantity > 1 ? "s" : ""} x {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
                               </div>
@@ -439,7 +439,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                               </div>
                             </div>
                             {method.details.map((detail) => (
-                              <div key={detail.label} className="flex items-center justify-between gap-2 py-1.5">
+                              <div key={detail.label} className="flex items-center justify-between gap-2 py-0.5">
                                 <span className="text-xs text-muted-foreground">{detail.label}</span>
                                 <div className="flex items-center gap-2">
                                   <span className="text-sm font-mono font-medium text-foreground" data-testid={`text-detail-${method.id}-${detail.label}`}>{detail.value}</span>
