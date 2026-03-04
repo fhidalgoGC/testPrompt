@@ -104,10 +104,31 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
   },
 ];
 
-const PHONE_COUNTRIES: { code: Country; flag: string; dialCode: string; name: string }[] = [
+const PHONE_COUNTRIES: { code: string; flag: string; dialCode: string; name: string }[] = [
   { code: "VE", flag: "🇻🇪", dialCode: "+58", name: "Venezuela" },
   { code: "CO", flag: "🇨🇴", dialCode: "+57", name: "Colombia" },
   { code: "MX", flag: "🇲🇽", dialCode: "+52", name: "México" },
+  { code: "US", flag: "🇺🇸", dialCode: "+1", name: "Estados Unidos" },
+  { code: "CA", flag: "🇨🇦", dialCode: "+1", name: "Canadá" },
+  { code: "AR", flag: "🇦🇷", dialCode: "+54", name: "Argentina" },
+  { code: "BR", flag: "🇧🇷", dialCode: "+55", name: "Brasil" },
+  { code: "CL", flag: "🇨🇱", dialCode: "+56", name: "Chile" },
+  { code: "EC", flag: "🇪🇨", dialCode: "+593", name: "Ecuador" },
+  { code: "PE", flag: "🇵🇪", dialCode: "+51", name: "Perú" },
+  { code: "BO", flag: "🇧🇴", dialCode: "+591", name: "Bolivia" },
+  { code: "PY", flag: "🇵🇾", dialCode: "+595", name: "Paraguay" },
+  { code: "UY", flag: "🇺🇾", dialCode: "+598", name: "Uruguay" },
+  { code: "PA", flag: "🇵🇦", dialCode: "+507", name: "Panamá" },
+  { code: "CR", flag: "🇨🇷", dialCode: "+506", name: "Costa Rica" },
+  { code: "GT", flag: "🇬🇹", dialCode: "+502", name: "Guatemala" },
+  { code: "HN", flag: "🇭🇳", dialCode: "+504", name: "Honduras" },
+  { code: "SV", flag: "🇸🇻", dialCode: "+503", name: "El Salvador" },
+  { code: "NI", flag: "🇳🇮", dialCode: "+505", name: "Nicaragua" },
+  { code: "DO", flag: "🇩🇴", dialCode: "+1", name: "Rep. Dominicana" },
+  { code: "PR", flag: "🇵🇷", dialCode: "+1", name: "Puerto Rico" },
+  { code: "CU", flag: "🇨🇺", dialCode: "+53", name: "Cuba" },
+  { code: "TT", flag: "🇹🇹", dialCode: "+1", name: "Trinidad y Tobago" },
+  { code: "JM", flag: "🇯🇲", dialCode: "+1", name: "Jamaica" },
 ];
 
 function formatTime(seconds: number): string {
@@ -125,7 +146,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [quantity, setQuantity] = useState(1);
-  const [phoneCountry, setPhoneCountry] = useState<Country>("VE");
+  const [phoneCountry, setPhoneCountry] = useState("VE");
   const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
@@ -571,7 +592,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     <ChevronLeft className="h-3 w-3 text-muted-foreground -rotate-90" />
                   </button>
                   {phoneDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-1 z-50 bg-card border border-white/10 rounded-lg shadow-xl overflow-hidden min-w-[180px]">
+                    <div className="absolute top-full left-0 mt-1 z-50 bg-card border border-white/10 rounded-lg shadow-xl overflow-y-auto max-h-[200px] min-w-[200px]">
                       {PHONE_COUNTRIES.map((c) => (
                         <button
                           key={c.code}
