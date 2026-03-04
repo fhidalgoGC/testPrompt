@@ -427,6 +427,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                           className="overflow-hidden"
                         >
                           <div className="px-4 pb-4 pt-1 space-y-2 border-t border-white/5">
+                            <div className="flex items-center justify-between py-1.5 px-3 rounded-lg bg-primary/10 border border-primary/20">
+                              <span className="text-xs font-medium text-primary">Precio por semilla</span>
+                              <span className="text-sm font-bold text-primary" data-testid={`text-price-${method.id}`}>
+                                {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}
+                              </span>
+                            </div>
                             {method.details.map((detail) => (
                               <div key={detail.label} className="flex items-center justify-between gap-2 py-1.5">
                                 <span className="text-xs text-muted-foreground">{detail.label}</span>
