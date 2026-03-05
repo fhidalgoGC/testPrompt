@@ -214,8 +214,8 @@ export default function Home() {
             <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">CONALOT</span>
           </div>
           <div className="flex flex-col items-center gap-2 group" data-testid="lottery-Super Gana">
-            <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
-              <img src="/logos/supergana.png" alt="Super Gana" className="w-full h-full object-cover" />
+            <div className="w-24 h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
+              <img src="/logos/supergana.png" alt="Super Gana" className="w-full h-full object-contain" />
             </div>
             <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">Super Gana</span>
           </div>
