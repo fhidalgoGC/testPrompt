@@ -37,13 +37,14 @@ export default function Home() {
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
+          <div className="flex items-center gap-2.5 shrink-0">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
               <Smile className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
             </div>
-            <span className="font-display font-bold text-lg sm:text-xl tracking-wider uppercase text-glow">
-              G<span className="text-primary">Mare</span>
-            </span>
+            <div className="leading-tight">
+              <span className="font-display font-bold text-sm sm:text-base tracking-wide text-foreground block">Gana Con Mare</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">@ganarconmare</span>
+            </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
