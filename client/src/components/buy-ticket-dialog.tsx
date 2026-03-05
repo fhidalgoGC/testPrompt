@@ -22,7 +22,7 @@ interface BuyTicketDialogProps {
 const OTP_TIMEOUT_SECONDS = 300;
 const MAX_TICKETS = 100;
 
-type Step = "quantity" | "payment" | "info" | "confirm" | "success";
+type Step = "payment" | "quantity" | "payment-details" | "info" | "confirm" | "success";
 
 type Country = "VE" | "MX" | "CO";
 
@@ -152,7 +152,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
   const [otpCode, setOtpCode] = useState("");
-  const [step, setStep] = useState<Step>("quantity");
+  const [step, setStep] = useState<Step>("payment");
   const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT_SECONDS);
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
@@ -199,15 +199,14 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     onClose();
   }, [stopTimer, onClose]);
 
-  const handleProceedToPayment = () => {
+  const handleProceedToPaymentDetails = () => {
     if (quantity < 1 || !buyerEmail.trim()) return;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(buyerEmail.trim())) {
       toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
       return;
     }
-    setSelectedPaymentMethod(null);
-    setStep("payment");
+    setStep("payment-details");
   };
 
   const handleCopyValue = (value: string, fieldId: string) => {
@@ -404,12 +403,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
           </motion.div>
         ) : step === "payment" ? (
           <motion.div key="payment" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
-            <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-              </Button>
-              <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-payment-title">{t.picker.paymentMethods}</h3>
-            </div>
+            <h3 className="text-lg font-display font-bold text-foreground" data-testid="text-payment-title">{t.picker.paymentMethods}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.paymentMethodsDesc}</p>
 
             <div className="space-y-3">
@@ -433,134 +427,163 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     price: cfg.price,
                   }));
                 }).concat(GLOBAL_PAYMENT_METHODS).map((method) => (
-                <div key={method.id} ref={(el) => { if (el && selectedPaymentMethod === method.id) { setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 250); } }} className={`rounded-xl border-2 overflow-hidden transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10'}`}>
-                  <button
-                    onClick={() => { setSelectedPaymentMethod(selectedPaymentMethod === method.id ? null : method.id); setUploadedFile(null); }}
-                    className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10' : 'hover:bg-white/5'}`}
-                    data-testid={`button-payment-${method.id}`}
-                  >
-                    <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
-                    <div className="flex-1 text-left">
-                      <span className="font-medium text-foreground">{method.name}</span>
-                      <span className="block text-xs text-muted-foreground">Precio por semilla: {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
-                    </div>
-                    <ChevronLeft className={`h-4 w-4 text-muted-foreground transition-transform ${selectedPaymentMethod === method.id ? '-rotate-90' : 'rotate-180'}`} />
-                  </button>
-                    <AnimatePresence>
-                      {selectedPaymentMethod === method.id && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-4 pb-3 pt-1 space-y-1 border-t border-white/5">
-                            {method.details.map((detail) => (
-                              <div key={detail.label} className="flex items-center justify-between gap-2 py-0.5">
-                                <span className="text-xs text-muted-foreground">{detail.label}</span>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-sm font-mono font-medium text-foreground" data-testid={`text-detail-${method.id}-${detail.label}`}>{detail.value}</span>
-                                  <button
-                                    onClick={() => handleCopyValue(detail.value, `${method.id}-${detail.label}`)}
-                                    className="p-1 rounded hover:bg-white/10 transition-colors"
-                                    data-testid={`button-copy-${method.id}-${detail.label}`}
-                                  >
-                                    {copiedField === `${method.id}-${detail.label}` ? (
-                                      <Check className="h-3.5 w-3.5 text-green-400" />
-                                    ) : (
-                                      <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
-
-                            <div className="flex items-center justify-between gap-2 py-1.5 px-3 mt-1 rounded-lg bg-primary/10 border border-primary/20">
-                              <span className="text-xs font-medium text-primary">Total a pagar</span>
-                              <span className="text-sm font-bold text-primary" data-testid={`text-price-${method.id}`}>
-                                {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
-                              </span>
-                            </div>
-
-                            <div className="border-t border-white/5 pt-3 mt-2 space-y-2">
-                              <p className="text-xs font-medium text-foreground">{t.picker.uploadProof}</p>
-
-                              <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/jpeg,image/png,image/webp,.pdf"
-                                className="hidden"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) handleFileUpload(file);
-                                  e.target.value = "";
-                                }}
-                                data-testid="input-file-upload"
-                              />
-
-                              {!uploadedFile ? (
-                                <button
-                                  onClick={() => fileInputRef.current?.click()}
-                                  disabled={isUploading}
-                                  className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all hover:bg-primary/5 disabled:opacity-50"
-                                  data-testid="button-upload-area"
-                                >
-                                  {isUploading ? (
-                                    <>
-                                      <Loader2 className="h-6 w-6 text-primary animate-spin" />
-                                      <span className="text-xs text-muted-foreground">{t.picker.uploading}</span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Upload className="h-6 w-6 text-muted-foreground" />
-                                      <span className="text-xs text-muted-foreground">{t.picker.uploadDragDrop}</span>
-                                      <span className="text-[10px] text-muted-foreground/60">{t.picker.uploadFormats}</span>
-                                    </>
-                                  )}
-                                </button>
-                              ) : (
-                                <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-3 flex items-center gap-2">
-                                  <FileCheck className="h-5 w-5 text-green-400 shrink-0" />
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-xs font-medium text-foreground truncate" data-testid="text-uploaded-filename">{uploadedFile.name}</p>
-                                    <p className="text-[10px] text-green-400">{t.picker.uploadSuccess}</p>
-                                  </div>
-                                  <button
-                                    onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
-                                    className="text-[10px] text-muted-foreground hover:text-foreground underline shrink-0"
-                                    data-testid="button-change-file"
-                                  >
-                                    {t.picker.changeFile}
-                                  </button>
-                                </div>
-                              )}
-
-                              <Button
-                                className="w-full font-bold h-10 text-sm bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
-                                onClick={() => setStep("info")}
-                                disabled={!uploadedFile}
-                                data-testid="button-payment-done"
-                              >
-                                <span className="flex items-center gap-2">
-                                  <CheckCircle2 className="h-4 w-4" />
-                                  {t.picker.continueAfterPayment}
-                                </span>
-                              </Button>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                <button
+                  key={method.id}
+                  onClick={() => { setSelectedPaymentMethod(method.id); setUploadedFile(null); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10 hover:bg-white/5'}`}
+                  data-testid={`button-payment-${method.id}`}
+                >
+                  <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
+                  <div className="flex-1 text-left">
+                    <span className="font-medium text-foreground">{method.name}</span>
+                    <span className="block text-xs text-muted-foreground">Precio por semilla: {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
                   </div>
+                  {selectedPaymentMethod === method.id ? (
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  ) : (
+                    <div className="h-5 w-5 rounded-full border-2 border-white/20" />
+                  )}
+                </button>
               ))}
             </div>
 
+            <Button
+              className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
+              onClick={() => setStep("quantity")}
+              disabled={!selectedPaymentMethod}
+              data-testid="button-continue-to-quantity"
+            >
+              <span className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                {t.picker.continueButton}
+              </span>
+            </Button>
+          </motion.div>
+        ) : step === "payment-details" ? (
+          <motion.div key="payment-details" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
+            <div className="flex items-center gap-2 mb-1">
+              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
+                <ChevronLeft className="h-4 w-4 mr-1" />
+              </Button>
+              <h3 className="text-lg font-display font-bold text-foreground">{t.picker.paymentMethods}</h3>
+            </div>
+            {(() => {
+              const allMethods = (Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
+                const cfg = COUNTRY_CONFIG[countryCode];
+                return cfg.paymentMethods.map((method) => ({ ...method, countryCode, countryName: cfg.name, countryFlag: cfg.flag, currency: cfg.currency, price: cfg.price }));
+              }).concat(GLOBAL_PAYMENT_METHODS);
+              const method = allMethods.find(m => m.id === selectedPaymentMethod);
+              if (!method) return null;
+              return (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-primary bg-primary/10">
+                    <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
+                    <span className="font-medium text-foreground">{method.name}</span>
+                    <CheckCircle2 className="h-5 w-5 text-primary ml-auto" />
+                  </div>
+
+                  <div className="space-y-1">
+                    {method.details.map((detail) => (
+                      <div key={detail.label} className="flex items-center justify-between gap-2 py-0.5">
+                        <span className="text-xs text-muted-foreground">{detail.label}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-mono font-medium text-foreground" data-testid={`text-detail-${method.id}-${detail.label}`}>{detail.value}</span>
+                          <button
+                            onClick={() => handleCopyValue(detail.value, `${method.id}-${detail.label}`)}
+                            className="p-1 rounded hover:bg-white/10 transition-colors"
+                            data-testid={`button-copy-${method.id}-${detail.label}`}
+                          >
+                            {copiedField === `${method.id}-${detail.label}` ? (
+                              <Check className="h-3.5 w-3.5 text-green-400" />
+                            ) : (
+                              <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-primary/10 border border-primary/20">
+                    <span className="text-xs font-medium text-primary">Total a pagar</span>
+                    <span className="text-sm font-bold text-primary" data-testid={`text-price-${method.id}`}>
+                      {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
+                    </span>
+                  </div>
+
+                  <div className="border-t border-white/5 pt-3 mt-2 space-y-2">
+                    <p className="text-xs font-medium text-foreground">{t.picker.uploadProof}</p>
+
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,.pdf"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleFileUpload(file);
+                        e.target.value = "";
+                      }}
+                      data-testid="input-file-upload"
+                    />
+
+                    {!uploadedFile ? (
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isUploading}
+                        className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all hover:bg-primary/5 disabled:opacity-50"
+                        data-testid="button-upload-area"
+                      >
+                        {isUploading ? (
+                          <>
+                            <Loader2 className="h-6 w-6 text-primary animate-spin" />
+                            <span className="text-xs text-muted-foreground">{t.picker.uploading}</span>
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="h-6 w-6 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">{t.picker.uploadDragDrop}</span>
+                            <span className="text-[10px] text-muted-foreground/60">{t.picker.uploadFormats}</span>
+                          </>
+                        )}
+                      </button>
+                    ) : (
+                      <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-3 flex items-center gap-2">
+                        <FileCheck className="h-5 w-5 text-green-400 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium text-foreground truncate" data-testid="text-uploaded-filename">{uploadedFile.name}</p>
+                          <p className="text-[10px] text-green-400">{t.picker.uploadSuccess}</p>
+                        </div>
+                        <button
+                          onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
+                          className="text-[10px] text-muted-foreground hover:text-foreground underline shrink-0"
+                          data-testid="button-change-file"
+                        >
+                          {t.picker.changeFile}
+                        </button>
+                      </div>
+                    )}
+
+                    <Button
+                      className="w-full font-bold h-10 text-sm bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
+                      onClick={() => setStep("info")}
+                      disabled={!uploadedFile}
+                      data-testid="button-payment-done"
+                    >
+                      <span className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4" />
+                        {t.picker.continueAfterPayment}
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              );
+            })()}
           </motion.div>
         ) : step === "info" ? (
           <motion.div key="info" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
             <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("payment")} className="text-muted-foreground -ml-2" data-testid="button-back-to-payment">
+              <Button variant="ghost" size="sm" onClick={() => setStep("payment-details")} className="text-muted-foreground -ml-2" data-testid="button-back-to-payment-details">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <h3 className="text-lg font-display font-bold text-foreground flex items-center gap-2">
@@ -637,6 +660,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
           </motion.div>
         ) : step === "quantity" ? (
           <motion.div key="quantity" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
+            <div className="flex items-center gap-2 mb-1">
+              <Button variant="ghost" size="sm" onClick={() => setStep("payment")} className="text-muted-foreground -ml-2" data-testid="button-back-to-payment">
+                <ChevronLeft className="h-4 w-4 mr-1" />
+              </Button>
+              <h3 className="text-lg font-display font-bold text-foreground">{t.picker.quantityTitle || "Cantidad de semillas"}</h3>
+            </div>
             <div className="flex items-center gap-2" data-testid="dialog-viewers-counter">
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
                 <span className="relative flex h-2 w-2">
@@ -706,7 +735,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
               <Button
                 className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleProceedToPayment} disabled={!buyerEmail.trim() || quantity < 1}
+                onClick={handleProceedToPaymentDetails} disabled={!buyerEmail.trim() || quantity < 1}
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
