@@ -244,13 +244,13 @@ export default function Home() {
         <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
           {[
-            { name: "Loteria del Tachira", emoji: "🎰" },
-            { name: "Kino Tachira", emoji: "🎲" },
-            { name: "Loteria del Zulia", emoji: "🎯" },
+            { name: "CONALOT", logo: "/logos/conalot.jpg" },
+            { name: "Loteria del Tachira", logo: "/logos/tachira.jpg" },
+            { name: "Super Gana", logo: "/logos/supergana.png" },
           ].map((lottery) => (
             <div key={lottery.name} className="flex flex-col items-center gap-2 group" data-testid={`lottery-${lottery.name}`}>
-              <div className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
-                {lottery.emoji}
+              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
+                <img src={lottery.logo} alt={lottery.name} className="w-full h-full object-cover rounded-full" />
               </div>
               <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">{lottery.name}</span>
             </div>
