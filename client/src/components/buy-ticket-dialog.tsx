@@ -72,7 +72,7 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         ],
       },
       {
-        id: "transferencia_co", name: "Transferencia", icon: "🏦",
+        id: "transferencia_co", name: "Bancolombia (Transferencia)", icon: "🏦",
         details: [
           { label: "Banco", value: "Bancolombia" },
           { label: "Cuenta Ahorros", value: "123-456789-01" },
@@ -442,7 +442,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
                     <div className="flex-1 text-left">
                       <span className="font-medium text-foreground">{method.name}</span>
-                      <span className="text-xs text-muted-foreground ml-2">{method.countryName}</span>
                     </div>
                     <ChevronLeft className={`h-4 w-4 text-muted-foreground transition-transform ${selectedPaymentMethod === method.id ? '-rotate-90' : 'rotate-180'}`} />
                   </button>
