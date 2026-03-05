@@ -207,7 +207,7 @@ async function seedDatabase() {
       });
       const r2 = await storage.createRaffle({
         title: "Gana Con Mare #2",
-        description: "La moto definitiva, ahora puedes obtenerla por solo unos pocos dolares.",
+        description: "",
         imageUrls: [
           "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2000&auto=format&fit=crop",

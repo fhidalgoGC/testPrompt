@@ -134,9 +134,11 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               {raffle.title}
             </h3>
             
-            <p className="text-muted-foreground text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2">
-              {raffle.description}
-            </p>
+            {raffle.description && (
+              <p className="text-muted-foreground text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2">
+                {raffle.description}
+              </p>
+            )}
             {!isComplete && (
               <div className="flex items-center gap-2 mb-3 sm:mb-4" data-testid="viewers-counter">
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
