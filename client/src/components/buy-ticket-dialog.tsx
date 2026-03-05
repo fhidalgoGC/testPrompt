@@ -150,6 +150,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerName, setBuyerName] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [step, setStep] = useState<Step>("payment");
@@ -200,12 +201,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   }, [stopTimer, onClose]);
 
   const handleProceedToPaymentDetails = () => {
-    if (quantity < 1 || !buyerEmail.trim()) return;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(buyerEmail.trim())) {
-      toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
-      return;
-    }
+    if (quantity < 1) return;
     setStep("payment-details");
   };
 
@@ -372,9 +368,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
               <p className="text-xs text-muted-foreground">{t.picker.randomAssignNote}</p>
               <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
-                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
+                {buyerName.trim() && <div className="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {buyerName}</div>}
                 {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>}
+                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
+                <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
               </div>
             </div>
             <div className="flex gap-3">
@@ -598,6 +595,31 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
             <div className="space-y-3">
+              <div className="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <Input
+                  placeholder="Nombre completo"
+                  value={buyerName}
+                  onChange={(e) => setBuyerName(e.target.value)}
+                  className="bg-secondary/50 border-white/10 pl-10"
+                  data-testid="input-buyer-name"
+                />
+              </div>
+              <div className="relative">
+                <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder={
+                    selectedCountry === "VE" ? t.picker.idPlaceholderVE :
+                    selectedCountry === "MX" ? t.picker.idPlaceholderMX :
+                    selectedCountry === "CO" ? t.picker.idPlaceholderCO :
+                    t.picker.idPlaceholder
+                  }
+                  value={buyerIdNumber}
+                  onChange={(e) => setBuyerIdNumber(e.target.value)}
+                  className="bg-secondary/50 border-white/10 pl-10"
+                  data-testid="input-buyer-id"
+                />
+              </div>
               <div className="relative flex items-stretch rounded-md border border-white/10 bg-secondary/50 overflow-visible">
                 <div className="relative">
                   <button
@@ -630,26 +652,29 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <input type="tel" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} className="flex-1 bg-transparent h-10 px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none" data-testid="input-buyer-phone" />
               </div>
               <div className="relative">
-                <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder={
-                    selectedCountry === "VE" ? t.picker.idPlaceholderVE :
-                    selectedCountry === "MX" ? t.picker.idPlaceholderMX :
-                    selectedCountry === "CO" ? t.picker.idPlaceholderCO :
-                    t.picker.idPlaceholder
-                  }
-                  value={buyerIdNumber}
-                  onChange={(e) => setBuyerIdNumber(e.target.value)}
+                  type="email"
+                  placeholder={t.picker.emailPlaceholder}
+                  value={buyerEmail}
+                  onChange={(e) => setBuyerEmail(e.target.value)}
                   className="bg-secondary/50 border-white/10 pl-10"
-                  data-testid="input-buyer-id"
+                  data-testid="input-buyer-email"
                 />
               </div>
             </div>
 
             <Button
               className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-              onClick={() => setStep("confirm")}
-              disabled={!buyerPhone.trim() || !buyerIdNumber.trim()}
+              onClick={() => {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(buyerEmail.trim())) {
+                  toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
+                  return;
+                }
+                setStep("confirm");
+              }}
+              disabled={!buyerName.trim() || !buyerIdNumber.trim() || !buyerPhone.trim() || !buyerEmail.trim()}
               data-testid="button-continue-to-confirm"
             >
               <span className="flex items-center gap-2">
@@ -726,16 +751,27 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
 
-            <div className="space-y-3 pt-2">
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input type="email" placeholder={t.picker.emailPlaceholder} value={buyerEmail} onChange={(e) => setBuyerEmail(e.target.value)}
-                  className="bg-secondary/50 border-white/10 pl-10" data-testid="input-buyer-email" />
-              </div>
+            {(() => {
+              const allMethods = (Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
+                const cfg = COUNTRY_CONFIG[countryCode];
+                return cfg.paymentMethods.map((method) => ({ ...method, countryCode, countryName: cfg.name, countryFlag: cfg.flag, currency: cfg.currency, price: cfg.price }));
+              }).concat(GLOBAL_PAYMENT_METHODS);
+              const method = allMethods.find(m => m.id === selectedPaymentMethod);
+              if (!method) return null;
+              return (
+                <div className="flex items-center justify-between gap-2 py-2 px-3 rounded-lg bg-primary/10 border border-primary/20">
+                  <span className="text-sm font-medium text-primary">Total a pagar</span>
+                  <span className="text-lg font-bold text-primary" data-testid="text-quantity-total">
+                    {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
+                  </span>
+                </div>
+              );
+            })()}
 
+            <div className="pt-1">
               <Button
                 className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleProceedToPaymentDetails} disabled={!buyerEmail.trim() || quantity < 1}
+                onClick={handleProceedToPaymentDetails} disabled={quantity < 1}
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
