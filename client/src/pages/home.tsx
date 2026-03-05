@@ -260,7 +260,7 @@ export default function Home() {
           className="h-14 w-14 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95"
           data-testid="button-chat-fab"
         >
-          {chatOpen ? <X className="h-6 w-6" /> : <img src="/logos/call-center.png" alt="Soporte" className="h-8 w-8 invert" />}
+          {chatOpen ? <X className="h-6 w-6" /> : <img src="/logos/call-center.png" alt="Soporte" className="h-9 w-9 rounded-full object-cover invert" />}
         </button>
       </div>
 
