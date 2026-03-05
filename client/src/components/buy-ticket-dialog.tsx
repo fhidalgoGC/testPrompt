@@ -200,9 +200,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     onClose();
   }, [stopTimer, onClose]);
 
-  const handleProceedToPaymentDetails = () => {
+  const handleProceedToInfo = () => {
     if (quantity < 1) return;
-    setStep("payment-details");
+    setStep("info");
   };
 
   const handleCopyValue = (value: string, fieldId: string) => {
@@ -375,7 +375,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" className="flex-1 border-white/10" onClick={() => setStep("info")} data-testid="button-back-to-info">
+              <Button variant="outline" className="flex-1 border-white/10" onClick={() => setStep("payment-details")} data-testid="button-back-to-payment-details">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <Button
@@ -459,7 +459,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         ) : step === "payment-details" ? (
           <motion.div key="payment-details" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
             <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
+              <Button variant="ghost" size="sm" onClick={() => setStep("info")} className="text-muted-foreground -ml-2" data-testid="button-back-to-info">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <h3 className="text-lg font-display font-bold text-foreground">{t.picker.paymentMethods}</h3>
@@ -563,7 +563,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
                     <Button
                       className="w-full font-bold h-10 text-sm bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
-                      onClick={() => setStep("info")}
+                      onClick={() => setStep("confirm")}
                       disabled={!uploadedFile}
                       data-testid="button-payment-done"
                     >
@@ -580,7 +580,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         ) : step === "info" ? (
           <motion.div key="info" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
             <div className="flex items-center gap-2 mb-1">
-              <Button variant="ghost" size="sm" onClick={() => setStep("payment-details")} className="text-muted-foreground -ml-2" data-testid="button-back-to-payment-details">
+              <Button variant="ghost" size="sm" onClick={() => setStep("quantity")} className="text-muted-foreground -ml-2" data-testid="button-back-to-quantity">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <h3 className="text-lg font-display font-bold text-foreground flex items-center gap-2">
@@ -672,10 +672,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
                   return;
                 }
-                setStep("confirm");
+                setStep("payment-details");
               }}
               disabled={!buyerName.trim() || !buyerIdNumber.trim() || !buyerPhone.trim() || !buyerEmail.trim()}
-              data-testid="button-continue-to-confirm"
+              data-testid="button-continue-to-payment-details"
             >
               <span className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5" />
@@ -771,7 +771,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             <div className="pt-1">
               <Button
                 className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleProceedToPaymentDetails} disabled={quantity < 1}
+                onClick={handleProceedToInfo} disabled={quantity < 1}
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
