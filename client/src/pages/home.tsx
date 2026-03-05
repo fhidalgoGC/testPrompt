@@ -206,24 +206,24 @@ export default function Home() {
 
       <section className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto text-center border-t border-white/5 pt-4 sm:pt-8">
         <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-10 items-center">
-          <div className="flex flex-col items-center gap-2 group" data-testid="lottery-CONALOT">
+        <div className="flex justify-center gap-6 sm:gap-10">
+          <div className="flex flex-col items-center group" data-testid="lottery-CONALOT">
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
               <img src="/logos/conalot.jpg" alt="CONALOT" className="w-full h-full object-cover rounded-full" />
             </div>
-            <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">CONALOT</span>
+            <span className="text-xs text-muted-foreground mt-2">CONALOT</span>
           </div>
-          <div className="flex flex-col items-center gap-2 group" data-testid="lottery-Super Gana">
+          <div className="flex flex-col items-center group" data-testid="lottery-Super Gana">
             <div className="w-24 h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
               <img src="/logos/supergana.png" alt="Super Gana" className="w-full h-full object-contain" />
             </div>
-            <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">Super Gana</span>
+            <span className="text-xs text-muted-foreground mt-2">Super Gana</span>
           </div>
-          <div className="flex flex-col items-center gap-2 group" data-testid="lottery-Loteria del Tachira">
+          <div className="flex flex-col items-center group" data-testid="lottery-Loteria del Tachira">
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
               <img src="/logos/tachira.jpg" alt="Loteria del Tachira" className="w-full h-full object-cover rounded-full" />
             </div>
-            <span className="text-xs text-muted-foreground max-w-[80px] leading-tight">Loteria del Tachira</span>
+            <span className="text-xs text-muted-foreground mt-2">Loteria del Tachira</span>
           </div>
         </div>
       </section>
