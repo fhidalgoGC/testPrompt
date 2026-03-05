@@ -439,7 +439,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${selectedPaymentMethod === method.id ? 'bg-primary/10' : 'hover:bg-white/5'}`}
                     data-testid={`button-payment-${method.id}`}
                   >
-                    <span className="text-lg">{method.countryFlag}</span>
+                    <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
                     <div className="flex-1 text-left">
                       <span className="font-medium text-foreground">{method.name}</span>
                       <span className="text-xs text-muted-foreground ml-2">{method.countryName}</span>
