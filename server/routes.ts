@@ -206,7 +206,7 @@ async function seedDatabase() {
         soldTickets: 0,
       });
       const r2 = await storage.createRaffle({
-        title: "Ducati Panigale V4 S",
+        title: "Gana Con Mare #2",
         description: "La moto definitiva, ahora puedes obtenerla por solo unos pocos dolares.",
         imageUrls: [
           "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop",
