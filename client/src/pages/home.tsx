@@ -172,16 +172,6 @@ export default function Home() {
         <div className="absolute top-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16 space-y-4 sm:space-y-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4"
-          >
-            <Sparkles className="w-3 h-3" />
-            <span>{t.hero.badge}</span>
-          </motion.div>
-          
           <motion.h1 
             className="text-3xl sm:text-5xl md:text-7xl font-black font-display tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
@@ -192,15 +182,6 @@ export default function Home() {
             <span style={{fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif', fontSize: '0.85em'}}>{t.hero.titleEmoji}</span>{" "}
             {t.hero.title2}
           </motion.h1>
-          
-          <motion.p 
-            className="text-sm sm:text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto px-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            {t.hero.subtitle}
-          </motion.p>
         </div>
 
         {featuredRaffle && (
