@@ -208,8 +208,8 @@ export default function Home() {
         <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
         <div className="flex justify-center gap-6 sm:gap-10">
           <div className="flex flex-col items-center group" data-testid="lottery-CONALOT">
-            <div className="w-16 h-16 flex items-center justify-center overflow-hidden">
-              <img src="/logos/conalot.jpg" alt="CONALOT" className="w-full h-full object-contain" />
+            <div className="w-16 h-16 flex items-center justify-center overflow-hidden rounded-full">
+              <img src="/logos/conalot.jpg" alt="CONALOT" className="w-full h-full object-cover" />
             </div>
             <span className="text-xs text-muted-foreground mt-2">CONALOT</span>
           </div>
@@ -220,8 +220,8 @@ export default function Home() {
             <span className="text-xs text-muted-foreground mt-2">Super Gana</span>
           </div>
           <div className="flex flex-col items-center group" data-testid="lottery-Loteria del Tachira">
-            <div className="w-16 h-16 flex items-center justify-center overflow-hidden">
-              <img src="/logos/tachira.jpg" alt="Loteria del Tachira" className="w-full h-full object-contain" />
+            <div className="w-16 h-16 flex items-center justify-center overflow-hidden rounded-full">
+              <img src="/logos/tachira.jpg" alt="Loteria del Tachira" className="w-full h-full object-cover" />
             </div>
             <span className="text-xs text-muted-foreground mt-2">Loteria del Tachira</span>
           </div>
