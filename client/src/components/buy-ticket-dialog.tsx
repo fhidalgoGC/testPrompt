@@ -442,6 +442,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
                     <div className="flex-1 text-left">
                       <span className="font-medium text-foreground">{method.name}</span>
+                      <span className="block text-xs text-muted-foreground">Precio por semilla: {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
                     </div>
                     <ChevronLeft className={`h-4 w-4 text-muted-foreground transition-transform ${selectedPaymentMethod === method.id ? '-rotate-90' : 'rotate-180'}`} />
                   </button>
