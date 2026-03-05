@@ -38,7 +38,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 shrink-0">
-            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center overflow-hidden">
+            <div className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
               <img src="/logos/mare-woman.jpg" alt="Gana Con Mare" className="h-full w-full object-cover" />
             </div>
             <div className="leading-tight">
