@@ -456,17 +456,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                           className="overflow-hidden"
                         >
                           <div className="px-4 pb-3 pt-1 space-y-1 border-t border-white/5">
-                            <div className="py-1.5 px-3 rounded-lg bg-primary/10 border border-primary/20 space-y-0.5">
-                              <div className="flex items-center justify-between">
-                                <span className="text-xs text-primary/80">{quantity} semilla{quantity > 1 ? "s" : ""} x {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <span className="text-xs font-medium text-primary">Total a pagar</span>
-                                <span className="text-sm font-bold text-primary" data-testid={`text-price-${method.id}`}>
-                                  {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
-                                </span>
-                              </div>
-                            </div>
                             {method.details.map((detail) => (
                               <div key={detail.label} className="flex items-center justify-between gap-2 py-0.5">
                                 <span className="text-xs text-muted-foreground">{detail.label}</span>
@@ -486,6 +475,13 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                                 </div>
                               </div>
                             ))}
+
+                            <div className="flex items-center justify-between gap-2 py-1.5 px-3 mt-1 rounded-lg bg-primary/10 border border-primary/20">
+                              <span className="text-xs font-medium text-primary">Total a pagar</span>
+                              <span className="text-sm font-bold text-primary" data-testid={`text-price-${method.id}`}>
+                                {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
+                              </span>
+                            </div>
 
                             <div className="border-t border-white/5 pt-3 mt-2 space-y-2">
                               <p className="text-xs font-medium text-foreground">{t.picker.uploadProof}</p>
