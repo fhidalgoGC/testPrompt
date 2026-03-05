@@ -589,11 +589,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </h3>
             </div>
 
-            <div className="glass-gold rounded-lg p-3 flex items-start gap-3">
-              <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.verifyInfoDesc}</p>
-            </div>
-
             <div className="space-y-3">
               <div className="relative">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
