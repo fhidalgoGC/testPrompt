@@ -42,7 +42,7 @@ export default function Home() {
               <img src="/logos/mare-woman.jpg" alt="Gana Con Mare" className="h-full w-full object-cover" />
             </div>
             <div className="leading-tight">
-              <span className="font-display font-bold text-sm sm:text-base tracking-wide text-foreground block">Gana Con Mare</span>
+              <span className="font-display font-bold text-base sm:text-lg tracking-wide text-primary block">Gana Con Mare</span>
               <span className="text-[10px] sm:text-xs text-muted-foreground">@ganarconmare</span>
             </div>
           </div>

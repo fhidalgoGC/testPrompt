@@ -5,8 +5,8 @@ export type Locale = "es" | "en";
 const translations = {
   es: {
     nav: {
-      campaigns: "Suenos",
-      winners: "Suenos cumplidos",
+      campaigns: "Sueños",
+      winners: "Sueños cumplidos",
       howItWorks: "Como funciona",
       terms: "Terminos y condiciones",
       verifyOtp: "Verificar OTP",
@@ -21,16 +21,16 @@ const translations = {
       title2: "gana tus lechugas",
       title2Emoji: "🥬",
       title2End: "y empieza a cumplir tus sueños",
-      subtitle: "Oportunidades exclusivas de vivir tus suenos mas deseados. Tu sueno se activa en el momento exacto en que se venden el 100% de las semillas.",
+      subtitle: "Oportunidades exclusivas de vivir tus sueños mas deseados. Tu sueño se activa en el momento exacto en que se venden el 100% de las semillas.",
     },
     raffle: {
-      priorityCampaign: "Sueno Principal",
-      activeAllocations: "Suenos Activos",
+      priorityCampaign: "Sueño Principal",
+      activeAllocations: "Sueños Activos",
       searchAssets: "Buscar vehiculos...",
       verifiedAsset: "Vehiculo Verificado",
       secureEntry: "Sera mio",
       allocationFull: "Numeros Agotados",
-      awaitingDraw: "Sueno en camino",
+      awaitingDraw: "Sueño en camino",
       almostFree: "Casi gratis",
       badgeLabels: ["La mejor opcion", "Buenisimo", "No esta nada mal", "Increible", "Imperdible"] as readonly string[],
       viewersWatching: "Personas estan viendo este item",
@@ -38,7 +38,7 @@ const translations = {
     },
     progress: {
       targetReached: "Meta Alcanzada",
-      imminentDraw: "Sueno Inminente",
+      imminentDraw: "Sueño Inminente",
       fundingProgress: "Semillas Disponibles",
       drawTrigger: "Al completar el 100% se inicia el proceso.",
       drawUrgent: "Espera un poco, ya casi es tuyo",
@@ -46,7 +46,7 @@ const translations = {
     },
     picker: {
       title: "Compra tus semillas",
-      subtitle: "Participa por el sueno de",
+      subtitle: "Participa por el sueño de",
       selectCountry: "Selecciona tu pais",
       selectCountryDesc: "Elige tu pais para ver los precios disponibles.",
       quantityDesc: "Cada semilla tiene un numero aleatorio y seran enviados a tu correo despues de comprar.",
