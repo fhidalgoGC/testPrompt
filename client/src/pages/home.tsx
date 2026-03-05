@@ -266,7 +266,7 @@ export default function Home() {
           className="h-20 w-20 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95 p-2"
           data-testid="button-chat-fab"
         >
-          {chatOpen ? <X className="h-6 w-6" /> : <img src="/logos/call-center.webp" alt="Soporte" className="h-full w-full rounded-full object-contain invert" />}
+          {chatOpen ? <X className="h-6 w-6" /> : <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-1.5"><img src="/logos/call-center.webp" alt="Soporte" className="h-full w-full rounded-full object-contain invert" /></div>}
         </button>
       </div>
 
