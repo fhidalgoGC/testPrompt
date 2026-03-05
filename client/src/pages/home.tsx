@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle, Smile } from "lucide-react";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -38,8 +38,8 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 shrink-0">
-            <div className="h-7 w-7 sm:h-8 sm:w-8 bg-gradient-to-br from-primary to-yellow-600 rounded-sm flex items-center justify-center transform rotate-45">
-              <span className="font-display font-black text-black -rotate-45 text-base sm:text-lg">G</span>
+            <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
+              <Smile className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
             </div>
             <span className="font-display font-bold text-lg sm:text-xl tracking-wider uppercase text-glow">
               G<span className="text-primary">Mare</span>
