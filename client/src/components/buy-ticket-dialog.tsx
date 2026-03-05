@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X, Upload, FileCheck, Loader2, Eye } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X, Upload, FileCheck, Loader2, Eye, Smile } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -777,11 +777,16 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
         >
           <X className="h-5 w-5 text-muted-foreground" />
         </button>
-        <DialogHeader className="px-6 pt-2 pb-0">
-          <DialogTitle className="font-display text-lg flex items-center gap-2" data-testid="text-dialog-title">
-            <Ticket className="text-primary h-5 w-5" />{t.picker.title}
-          </DialogTitle>
-          <DialogDescription className="sr-only">{title}</DialogDescription>
+        <DialogHeader className="px-6 pt-3 pb-0">
+          <div className="flex items-center gap-3" data-testid="text-dialog-title">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
+              <Smile className="h-6 w-6 text-black" />
+            </div>
+            <div>
+              <DialogTitle className="font-display text-lg leading-tight">Gana Con Mare</DialogTitle>
+              <DialogDescription className="text-xs text-muted-foreground">@ganarconmare</DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
         <div className="px-6 pb-6 pt-1 min-h-[60vh]">
           {isOpen && <TicketPickerContent raffleId={raffleId} title={title} totalTickets={totalTickets} onClose={onClose} />}
