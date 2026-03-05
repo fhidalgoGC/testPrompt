@@ -178,8 +178,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {t.hero.title1} <span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.titleHighlight}</span> de{" "}
-            <span style={{fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif', fontSize: '0.85em'}}>{t.hero.titleEmoji}</span>{" "}
+            {t.hero.title1}{" "}
+            <span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.titleHighlight}</span>{", "}
             {t.hero.title2}
           </motion.h1>
         </div>
