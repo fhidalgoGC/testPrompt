@@ -39,7 +39,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 shrink-0">
             <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
-              <User className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
+              <img src="/logos/mare-icon.svg" alt="Gana Con Mare" className="h-6 w-6 sm:h-7 sm:w-7 invert" />
             </div>
             <div className="leading-tight">
               <span className="font-display font-bold text-sm sm:text-base tracking-wide text-foreground block">Gana Con Mare</span>
