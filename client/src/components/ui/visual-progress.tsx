@@ -90,7 +90,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       
       <div className={`w-full bg-secondary/50 rounded-full overflow-hidden relative border border-white/5 backdrop-blur-sm ${heights[size]}`}>
         <motion.div 
-          className="absolute top-0 left-0 h-full bg-primary/30 blur-md rounded-full"
+          className="absolute top-0 left-0 h-full bg-green-500/30 blur-md rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 1.5, ease: "easeOut" }}
@@ -98,10 +98,10 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
         <motion.div
           className={`absolute top-0 left-0 h-full rounded-full ${
             isComplete 
-              ? 'bg-gradient-to-r from-primary via-yellow-300 to-primary' 
+              ? 'bg-gradient-to-r from-green-500 via-green-300 to-green-500' 
               : isAlmostComplete
-              ? 'bg-gradient-to-r from-accent to-cyan-300'
-              : 'bg-gradient-to-r from-primary/80 to-primary'
+              ? 'bg-gradient-to-r from-green-400 to-green-300'
+              : 'bg-gradient-to-r from-green-500/80 to-green-500'
           }`}
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}

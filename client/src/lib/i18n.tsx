@@ -39,7 +39,7 @@ const translations = {
     progress: {
       targetReached: "Meta Alcanzada",
       imminentDraw: "Sueno Inminente",
-      fundingProgress: "Semillas Vendidas",
+      fundingProgress: "Semillas Disponibles",
       drawTrigger: "Al completar el 100% se inicia el proceso.",
       drawUrgent: "Espera un poco, ya casi es tuyo",
       totalCapacity: "Capacidad Total",
