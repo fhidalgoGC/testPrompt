@@ -779,8 +779,8 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
         </button>
         <DialogHeader className="px-6 pt-3 pb-0">
           <div className="flex items-center gap-3" data-testid="text-dialog-title">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
-              <img src="/logos/mare-icon.svg" alt="Gana Con Mare" className="h-7 w-7 invert" />
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center overflow-hidden">
+              <img src="/logos/mare-woman.jpg" alt="Gana Con Mare" className="h-full w-full object-cover" />
             </div>
             <div>
               <DialogTitle className="font-display text-lg leading-tight">Gana Con Mare</DialogTitle>
