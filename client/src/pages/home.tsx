@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle, Smile } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle, User } from "lucide-react";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 shrink-0">
             <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
-              <Smile className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
+              <User className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
             </div>
             <div className="leading-tight">
               <span className="font-display font-bold text-sm sm:text-base tracking-wide text-foreground block">Gana Con Mare</span>

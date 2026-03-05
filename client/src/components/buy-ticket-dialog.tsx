@@ -780,7 +780,7 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
         <DialogHeader className="px-6 pt-3 pb-0">
           <div className="flex items-center gap-3" data-testid="text-dialog-title">
             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center">
-              <Smile className="h-6 w-6 text-black" />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-black"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
             <div>
               <DialogTitle className="font-display text-lg leading-tight">Gana Con Mare</DialogTitle>
