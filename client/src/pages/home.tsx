@@ -93,15 +93,6 @@ export default function Home() {
               🇻🇪
             </div>
             <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex border-primary/30 text-primary hover:bg-primary/10 gap-1.5"
-              data-testid="button-login-desktop"
-            >
-              <LogIn className="h-3.5 w-3.5" />
-              {t.nav.login}
-            </Button>
-            <Button
               variant="ghost"
               size="icon"
               className="md:hidden text-foreground"
@@ -171,16 +162,6 @@ export default function Home() {
                   {t.nav.redeemSeeds}
                 </span>
               </Link>
-              <div className="border-t border-white/5 pt-2 mt-2">
-                <button
-                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-bold text-primary hover:bg-primary/10 transition-colors w-full"
-                  onClick={() => setMenuOpen(false)}
-                  data-testid="mobile-link-login"
-                >
-                  <LogIn className="h-4 w-4" />
-                  {t.nav.login}
-                </button>
-              </div>
             </div>
           </motion.div>
         )}
