@@ -173,7 +173,7 @@ export default function Home() {
 
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16 space-y-4 sm:space-y-6 relative z-10">
           <motion.h1 
-            className="text-3xl sm:text-5xl md:text-7xl font-black font-display tracking-tight leading-[1.1]"
+            className="text-2xl sm:text-3xl md:text-5xl font-black font-display tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
