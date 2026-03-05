@@ -16,9 +16,11 @@ const translations = {
     hero: {
       badge: "Cambia tu destino",
       title1: "Consigue tus",
-      titleHighlight: "semillas 🌱",
-      titleEmoji: "",
-      title2: "gana tus lechugas 🥬 y empieza a cumplir tus sueños",
+      titleHighlight: "semillas",
+      titleEmoji: "🌱",
+      title2: "gana tus lechugas",
+      title2Emoji: "🥬",
+      title2End: "y empieza a cumplir tus sueños",
       subtitle: "Oportunidades exclusivas de vivir tus suenos mas deseados. Tu sueno se activa en el momento exacto en que se venden el 100% de las semillas.",
     },
     raffle: {

@@ -195,7 +195,7 @@ async function seedDatabase() {
     const existing = await storage.getRaffles();
     if (existing.length === 0) {
       const r1 = await storage.createRaffle({
-        title: "2024 Porsche 911 GT3 RS",
+        title: "Gana Con Mare #1",
         description: "Participa por la oportunidad de ganar este espectacular deportivo de alto rendimiento.",
         imageUrls: [
           "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",

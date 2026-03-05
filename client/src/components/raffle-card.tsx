@@ -129,10 +129,6 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
 
         <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'md:p-10' : ''}`}>
           <div>
-            <div className="flex items-center gap-2 mb-2 text-primary/80">
-              <ShieldCheck className="w-4 h-4" />
-              <span className="text-xs font-medium uppercase tracking-widest">{t.raffle.verifiedAsset}</span>
-            </div>
             
             <h3 className={`font-display font-bold text-foreground mb-2 sm:mb-3 ${featured ? 'text-xl sm:text-3xl md:text-4xl' : 'text-lg sm:text-2xl'}`}>
               {raffle.title}
