@@ -196,7 +196,7 @@ async function seedDatabase() {
     if (existing.length === 0) {
       const r1 = await storage.createRaffle({
         title: "Gana Con Mare #1",
-        description: "Participa por la oportunidad de ganar este espectacular deportivo de alto rendimiento.",
+        description: "",
         imageUrls: [
           "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop",
