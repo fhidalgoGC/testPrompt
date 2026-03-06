@@ -69,6 +69,7 @@ export default function Home() {
               <a href="#" className="text-white hover:text-primary transition-colors" data-testid="link-campaigns">{t.nav.campaigns}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-winners">{t.nav.winners}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
+              <a href="#contacto" className="hover:text-white transition-colors" data-testid="link-contact">Contáctanos</a>
               <Link href="/terms">
                 <span className="hover:text-white transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
               </Link>
@@ -161,6 +162,15 @@ export default function Home() {
                 <HelpCircle className="h-4 w-4 text-primary/70" />
                 {t.nav.howItWorks}
               </a>
+              <a
+                href="#contacto"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMenuOpen(false)}
+                data-testid="mobile-link-contact"
+              >
+                <MessageCircle className="h-4 w-4 text-primary/70" />
+                Contáctanos
+              </a>
               <Link href="/terms">
                 <span
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
@@ -244,7 +254,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto border-t border-white/5 pt-4 sm:pt-8 pb-8">
+      <section id="contacto" className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto border-t border-white/5 pt-4 sm:pt-8 pb-8">
         <h3 className="font-display text-xl font-bold mb-6 text-center">Contáctanos</h3>
         <div className="flex items-center justify-center gap-6 sm:gap-8">
           <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground">
