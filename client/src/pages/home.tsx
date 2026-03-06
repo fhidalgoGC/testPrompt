@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setAvatarIndex((prev) => (prev + 1) % avatarImages.length);
-    }, 1000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
   const [menuOpen, setMenuOpen] = useState(false);
