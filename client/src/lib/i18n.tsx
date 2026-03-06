@@ -17,7 +17,7 @@ const translations = {
       badge: "Cambia tu destino",
       title1: "Consigue tus",
       titleHighlight: "semillas",
-      titleEmoji: "🌾",
+      titleEmoji: "🌱",
       title2: "gana tus",
       title2Highlight: "lechugas",
       title2Emoji1: "🥬",
