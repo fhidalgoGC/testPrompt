@@ -242,9 +242,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       <AnimatePresence mode="wait">
         {step === "success" ? (
           <motion.div key="success" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center text-center space-y-4 py-6">
-            <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
-              <CheckCircle2 className="h-8 w-8 text-primary" />
-            </div>
+            <Flame className="h-12 w-12 text-yellow-400" />
             <div>
               <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
               <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
