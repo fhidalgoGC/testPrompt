@@ -9,6 +9,7 @@ import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
+import { BrandHeader } from "./brand-header";
 
 interface BuyTicketDialogProps {
   raffleId: number;

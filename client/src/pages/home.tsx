@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RaffleCard } from "@/components/raffle-card";
+import { BrandHeader } from "@/components/brand-header";
 import { motion, AnimatePresence } from "framer-motion";
 import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, MessageCircle, User, Mail } from "lucide-react";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
@@ -37,15 +38,6 @@ const staticRaffles = [
 
 export default function Home() {
   const { t, locale, setLocale } = useI18n();
-  const [avatarIndex, setAvatarIndex] = useState(0);
-  const avatarImages = ["/logos/mare-avatar.jpg", "/logos/mare-avatar2.jpg"];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAvatarIndex((prev) => (prev + 1) % avatarImages.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
   const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
@@ -55,14 +47,8 @@ export default function Home() {
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2.5 shrink-0">
-            <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
-              <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
-            </a>
-            <div className="leading-tight">
-              <span className="font-display font-bold text-base sm:text-lg tracking-wide text-primary block">GANACONMARE</span>
-              <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">@maredorazio</a>
-            </div>
+          <div className="shrink-0">
+            <BrandHeader />
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
