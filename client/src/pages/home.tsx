@@ -12,7 +12,7 @@ import { Link } from "wouter";
 const staticRaffles = [
   {
     id: 1,
-    title: "GANA CON MARE #1",
+    title: "MARE TE PREMIA #1",
     description: "",
     imageUrls: [
       "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
