@@ -56,9 +56,9 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 shrink-0">
-            <div className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
+            <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
               <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
-            </div>
+            </a>
             <div className="leading-tight">
               <span className="font-display font-bold text-base sm:text-lg tracking-wide text-primary block">GANACONMARE</span>
               <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">@maredorazio</a>
