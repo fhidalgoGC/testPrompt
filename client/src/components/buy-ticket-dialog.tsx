@@ -711,14 +711,10 @@ export function BuyTicketDialog({ raffleId, title, totalTickets, isOpen, onClose
           <X className="h-5 w-5 text-muted-foreground" />
         </button>
         <DialogHeader className="px-6 pt-3 pb-0">
-          <div className="flex items-center gap-3" data-testid="text-dialog-title">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-yellow-600 flex items-center justify-center overflow-hidden">
-              <img src="/logos/mare-woman.jpg" alt="Gana Con Mare" className="h-full w-full object-cover" />
-            </div>
-            <div>
-              <DialogTitle className="font-display text-lg leading-tight">Gana Con Mare</DialogTitle>
-              <DialogDescription className="text-xs text-muted-foreground">@ganarconmare</DialogDescription>
-            </div>
+          <div data-testid="text-dialog-title">
+            <BrandHeader size="small" />
+            <DialogTitle className="sr-only">GANACONMARE</DialogTitle>
+            <DialogDescription className="sr-only">@maredorazio</DialogDescription>
           </div>
         </DialogHeader>
         <div className="px-6 pb-6 pt-1 min-h-[60vh]">

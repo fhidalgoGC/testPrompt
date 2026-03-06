@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RaffleCard } from "@/components/raffle-card";
 import { BrandHeader } from "@/components/brand-header";
 import { motion, AnimatePresence } from "framer-motion";
