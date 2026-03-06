@@ -60,7 +60,7 @@ export default function Home() {
               <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
             </div>
             <div className="leading-tight">
-              <span className="font-display font-bold text-base sm:text-lg tracking-wide text-primary block">Gana Con Mare</span>
+              <span className="font-display font-bold text-base sm:text-lg tracking-wide text-primary block">GANACONMARE</span>
               <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">@maredorazio</a>
             </div>
           </div>
