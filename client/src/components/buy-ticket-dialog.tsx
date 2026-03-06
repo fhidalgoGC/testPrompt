@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useBuyTickets, useSendOtp, useVerifyOtp } from "@/hooks/use-raffles";
+import { useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X, Upload, FileCheck, Loader2, Eye, Flame } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Minus, Plus, Copy, Check, X, Upload, FileCheck, Loader2, Eye, Flame } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -19,7 +18,6 @@ interface BuyTicketDialogProps {
   onClose: () => void;
 }
 
-const OTP_TIMEOUT_SECONDS = 300;
 const MAX_TICKETS = 100;
 
 type Step = "payment" | "quantity" | "payment-details" | "info" | "confirm" | "success";
@@ -152,53 +150,15 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerName, setBuyerName] = useState("");
   const [buyerIdNumber, setBuyerIdNumber] = useState("");
-  const [otpCode, setOtpCode] = useState("");
   const [step, setStep] = useState<Step>("payment");
-  const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT_SECONDS);
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const buyMutation = useBuyTickets();
-  const sendOtpMutation = useSendOtp();
-  const verifyOtpMutation = useVerifyOtp();
   const { toast } = useToast();
   const { t } = useI18n();
 
-  const stopTimer = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
-
-  const startTimer = useCallback(() => {
-    stopTimer();
-    setTimeLeft(OTP_TIMEOUT_SECONDS);
-    timerRef.current = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev <= 1) {
-          stopTimer();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-  }, [stopTimer]);
-
-  useEffect(() => () => stopTimer(), [stopTimer]);
-
-  useEffect(() => {
-    if (timeLeft === 0 && step === "otp") {
-      toast({ title: t.picker.timerExpiredTitle, description: t.picker.timerExpiredDesc });
-      setStep("confirm");
-    }
-  }, [timeLeft, step]);
-
   const handleClose = useCallback(() => {
-    stopTimer();
     onClose();
-  }, [stopTimer, onClose]);
+  }, [onClose]);
 
   const handleProceedToInfo = () => {
     if (quantity < 1) return;
@@ -246,73 +206,34 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       toast({ variant: "destructive", title: t.picker.invalidEmail, description: t.picker.invalidEmailDesc });
       return;
     }
-    try {
-      await sendOtpMutation.mutateAsync({ phone: buyerPhone.trim() });
-      toast({ title: t.picker.codeSent, description: t.picker.codeSentToEmail });
-      setStep("otp");
-      startTimer();
-    } catch {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: t.picker.errorGeneric });
-    }
+    setStep("confirm");
   };
 
-  const handleVerifyOtp = async () => {
-    if (otpCode.length !== 6) return;
-    try {
-      const result = await verifyOtpMutation.mutateAsync({ phone: buyerPhone.trim(), code: otpCode });
-      if (result.valid) {
-        stopTimer();
-        setStep("confirm");
-      } else {
-        toast({ variant: "destructive", title: t.picker.codeInvalid, description: t.picker.codeInvalidDesc });
-      }
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorGeneric });
+
+  const handleConfirmBuy = () => {
+    const randomNumbers: number[] = [];
+    const used = new Set<number>();
+    while (randomNumbers.length < quantity) {
+      const n = Math.floor(Math.random() * 9999) + 1;
+      if (!used.has(n)) { used.add(n); randomNumbers.push(n); }
     }
+    setAssignedNumbers(randomNumbers.sort((a, b) => a - b));
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let txId = "";
+    for (let i = 0; i < 8; i++) txId += chars[Math.floor(Math.random() * chars.length)];
+    setTransactionId(txId);
+    setStep("success");
+    const duration = 3000;
+    const end = Date.now() + duration;
+    const frame = () => {
+      confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
+      confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+    frame();
+    toast({ title: t.picker.toastTitle, description: t.picker.toastDesc.replace("{count}", String(quantity)).replace("{title}", title) });
   };
 
-  const handleResendOtp = async () => {
-    setOtpCode("");
-    try {
-      await sendOtpMutation.mutateAsync({ phone: buyerPhone.trim() });
-      toast({ title: t.picker.codeSent, description: t.picker.codeSentToEmail });
-      startTimer();
-    } catch {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: t.picker.errorGeneric });
-    }
-  };
-
-  const handleConfirmBuy = async () => {
-    try {
-      const result = await buyMutation.mutateAsync({
-        id: raffleId,
-        quantity,
-        buyerPhone: `${PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode}${buyerPhone.trim()}`,
-        buyerEmail: buyerEmail.trim(),
-        buyerIdNumber: buyerIdNumber.trim(),
-      });
-      setAssignedNumbers(result.assignedNumbers);
-      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let txId = "";
-      for (let i = 0; i < 8; i++) txId += chars[Math.floor(Math.random() * chars.length)];
-      setTransactionId(txId);
-      setStep("success");
-      const duration = 3000;
-      const end = Date.now() + duration;
-      const frame = () => {
-        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
-        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      };
-      frame();
-      toast({ title: t.picker.toastTitle, description: t.picker.toastDesc.replace("{count}", String(quantity)).replace("{title}", title) });
-    } catch (error) {
-      toast({ variant: "destructive", title: t.picker.errorTitle, description: error instanceof Error ? error.message : t.picker.errorDesc });
-    }
-  };
-
-  const timerPercent = (timeLeft / OTP_TIMEOUT_SECONDS) * 100;
-  const timerUrgent = timeLeft <= 60;
 
   const quickAmounts = [1, 2, 3, 5, 10, 25];
 
@@ -377,20 +298,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <Button
                 className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
                 onClick={handleConfirmBuy}
-                disabled={buyMutation.isPending}
                 data-testid="button-final-confirm"
               >
-                {buyMutation.isPending ? (
-                  <span className="flex items-center gap-2">
-                    <div className="h-4 w-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                    {t.picker.processing}
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <Zap className="h-4 w-4" />
-                    {t.picker.confirmBtn}
-                  </span>
-                )}
+                <span className="flex items-center gap-2">
+                  <Zap className="h-4 w-4" />
+                  {t.picker.confirmBtn}
+                </span>
               </Button>
             </div>
           </motion.div>
@@ -772,12 +685,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </Button>
             </div>
 
-            {buyMutation.isError && (
-              <div className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg">
-                <AlertCircle className="h-4 w-4 shrink-0" />
-                <p>{buyMutation.error instanceof Error ? buyMutation.error.message : t.picker.errorGeneric}</p>
-              </div>
-            )}
           </motion.div>
         ) : null}
       </AnimatePresence>
