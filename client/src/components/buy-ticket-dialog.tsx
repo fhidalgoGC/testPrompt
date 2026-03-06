@@ -353,9 +353,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         ) : step === "confirm" ? (
           <motion.div key="confirm" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5 py-4">
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="h-20 w-20 rounded-full bg-green-500/10 flex items-center justify-center">
-                <Sprout className="h-12 w-12 text-green-500" />
-              </div>
+              <Sprout className="h-12 w-12 text-yellow-400" />
               <div>
                 <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">{t.picker.confirmTitle}</h3>
               </div>
