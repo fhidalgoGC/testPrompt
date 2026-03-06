@@ -68,7 +68,6 @@ export default function Home() {
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
               <a href="#" className="hover:text-white transition-colors" data-testid="link-winners">{t.nav.winners}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
-              <a href="#contacto" className="hover:text-white transition-colors" data-testid="link-contact">Contáctanos</a>
               <Link href="/terms">
                 <span className="hover:text-white transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
               </Link>
@@ -78,6 +77,7 @@ export default function Home() {
                   {t.nav.redeemSeeds}
                 </span>
               </Link>
+              <a href="#contacto" className="hover:text-white transition-colors" data-testid="link-contact">Contáctanos</a>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -152,15 +152,6 @@ export default function Home() {
                 <HelpCircle className="h-4 w-4 text-primary/70" />
                 {t.nav.howItWorks}
               </a>
-              <a
-                href="#contacto"
-                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
-                onClick={() => setMenuOpen(false)}
-                data-testid="mobile-link-contact"
-              >
-                <MessageCircle className="h-4 w-4 text-primary/70" />
-                Contáctanos
-              </a>
               <Link href="/terms">
                 <span
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
@@ -181,6 +172,15 @@ export default function Home() {
                   {t.nav.redeemSeeds}
                 </span>
               </Link>
+              <a
+                href="#contacto"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMenuOpen(false)}
+                data-testid="mobile-link-contact"
+              >
+                <MessageCircle className="h-4 w-4 text-primary/70" />
+                Contáctanos
+              </a>
             </div>
           </motion.div>
         )}
