@@ -167,7 +167,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
                 w-full font-bold group-hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] transition-all duration-300
                 ${isComplete 
                   ? 'bg-secondary text-secondary-foreground hover:bg-secondary cursor-not-allowed opacity-80' 
-                  : 'bg-white text-black hover:bg-primary'}
+                  : 'bg-green-500 text-white hover:bg-green-600'}
               `}
               size={featured ? "lg" : "default"}
               onClick={() => !isComplete && setIsDialogOpen(true)}
