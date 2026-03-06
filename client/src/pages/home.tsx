@@ -66,7 +66,6 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-              <a href="#" className="text-white hover:text-primary transition-colors" data-testid="link-campaigns">{t.nav.campaigns}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-winners">{t.nav.winners}</a>
               <a href="#" className="hover:text-white transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
               <a href="#contacto" className="hover:text-white transition-colors" data-testid="link-contact">Contáctanos</a>
@@ -135,15 +134,6 @@ export default function Home() {
             className="fixed top-[57px] left-0 right-0 z-40 glass border-b border-white/5 md:hidden"
           >
             <div className="px-4 py-4 space-y-1">
-              <a
-                href="#"
-                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-colors"
-                onClick={() => setMenuOpen(false)}
-                data-testid="mobile-link-campaigns"
-              >
-                <Zap className="h-4 w-4 text-primary" />
-                {t.nav.campaigns}
-              </a>
               <a
                 href="#"
                 className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
