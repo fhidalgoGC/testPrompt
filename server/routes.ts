@@ -195,7 +195,7 @@ async function seedDatabase() {
     const existing = await storage.getRaffles();
     if (existing.length === 0) {
       const r1 = await storage.createRaffle({
-        title: "Gana Con Mare #1",
+        title: "GANA CON MARE #1",
         description: "",
         imageUrls: [
           "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
@@ -206,7 +206,7 @@ async function seedDatabase() {
         soldTickets: 0,
       });
       const r2 = await storage.createRaffle({
-        title: "Gana Con Mare #2",
+        title: "GANA CON MARE#2",
         description: "",
         imageUrls: [
           "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop",
