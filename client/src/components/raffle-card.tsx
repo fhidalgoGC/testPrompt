@@ -167,14 +167,14 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
                 w-full font-bold group-hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] transition-all duration-300
                 ${isComplete 
                   ? 'bg-secondary text-secondary-foreground hover:bg-secondary cursor-not-allowed opacity-80' 
-                  : 'bg-orange-500 text-white hover:bg-orange-600'}
+                  : 'bg-primary text-black hover:bg-yellow-500'}
               `}
               size={featured ? "lg" : "default"}
               onClick={() => !isComplete && setIsDialogOpen(true)}
               disabled={isComplete}
               data-testid={`button-secure-entry-${raffle.id}`}
             >
-              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<Sprout className="w-6 h-6 ml-1 text-yellow-400" /></>)}
+              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<Sprout className="w-6 h-6 ml-1 text-green-700" /></>)}
               {!isComplete && (
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               )}
