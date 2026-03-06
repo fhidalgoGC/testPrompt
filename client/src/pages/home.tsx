@@ -246,12 +246,8 @@ export default function Home() {
 
       <section id="contacto" className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto border-t border-white/5 pt-4 sm:pt-8 pb-8">
         <h3 className="font-display text-xl font-bold mb-6 text-center">Contáctanos</h3>
-        <div className="flex items-center justify-center gap-6 sm:gap-8">
-          <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground">
-            <a href="mailto:ganarconmare@gmail.com" className="hover:text-primary transition-colors" data-testid="link-email">ganarconmare@gmail.com</a>
-            <a href="https://wa.me/584226333703" target="_blank" rel="noopener noreferrer" className="hover:text-[#25D366] transition-colors" data-testid="link-whatsapp">WhatsApp: +58 422-633-3703</a>
-            <a href="https://t.me/+584226333703" target="_blank" rel="noopener noreferrer" className="hover:text-[#0088cc] transition-colors" data-testid="link-telegram">Telegram: @ganarconmare</a>
-          </div>
+        <div className="flex flex-col items-center justify-center gap-4">
+          <a href="mailto:ganarconmare@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-email">ganarconmare@gmail.com</a>
           <button
             onClick={() => setChatOpen(!chatOpen)}
             className="h-20 w-20 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95 p-2 shrink-0"
