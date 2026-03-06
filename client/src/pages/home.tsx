@@ -228,47 +228,49 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-        <AnimatePresence>
-          {chatOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.9 }}
-              transition={{ duration: 0.2 }}
-              className="flex flex-col gap-2 mb-2"
-            >
-              <a
-                href="https://wa.me/584226333703"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
-                data-testid="link-whatsapp"
+      <section className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto flex justify-end pb-8">
+        <div className="flex flex-col items-end gap-3">
+          <AnimatePresence>
+            {chatOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col gap-2 mb-2"
               >
-                <SiWhatsapp className="h-5 w-5" />
-                <span className="text-sm font-medium">WhatsApp</span>
-              </a>
-              <a
-                href="https://t.me/+584226333703"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
-                data-testid="link-telegram"
-              >
-                <SiTelegram className="h-5 w-5" />
-                <span className="text-sm font-medium">Telegram</span>
-              </a>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <button
-          onClick={() => setChatOpen(!chatOpen)}
-          className="h-20 w-20 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95 p-2"
-          data-testid="button-chat-fab"
-        >
-          {chatOpen ? <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-3.5"><img src="/logos/chat-bubbles.png" alt="Chat" className="h-full w-full object-contain invert" /></div> : <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-1.5"><img src="/logos/call-center.webp" alt="Soporte" className="h-full w-full rounded-full object-contain invert" /></div>}
-        </button>
-      </div>
+                <a
+                  href="https://wa.me/584226333703"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
+                  data-testid="link-whatsapp"
+                >
+                  <SiWhatsapp className="h-5 w-5" />
+                  <span className="text-sm font-medium">WhatsApp</span>
+                </a>
+                <a
+                  href="https://t.me/+584226333703"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-full pl-4 pr-5 py-3 shadow-lg transition-all hover:scale-105"
+                  data-testid="link-telegram"
+                >
+                  <SiTelegram className="h-5 w-5" />
+                  <span className="text-sm font-medium">Telegram</span>
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <button
+            onClick={() => setChatOpen(!chatOpen)}
+            className="h-20 w-20 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95 p-2"
+            data-testid="button-chat-fab"
+          >
+            {chatOpen ? <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-3.5"><img src="/logos/chat-bubbles.png" alt="Chat" className="h-full w-full object-contain invert" /></div> : <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-1.5"><img src="/logos/call-center.webp" alt="Soporte" className="h-full w-full rounded-full object-contain invert" /></div>}
+          </button>
+        </div>
+      </section>
 
     </div>
   );
