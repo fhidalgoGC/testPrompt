@@ -180,8 +180,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {t.hero.title1}{" "}
-            <span className="whitespace-nowrap"><span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.titleHighlight}</span><span style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.titleEmoji}</span></span>{", "}
-            <span className="whitespace-nowrap">{t.hero.title2}<span style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.title2Emoji}</span></span>{" "}
+            <span className="whitespace-nowrap"><span className="text-yellow-400" style={{textShadow: '0 0 20px rgba(250,204,21,0.4)'}}>{t.hero.titleHighlight}</span><span className="text-yellow-400" style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.titleEmoji}</span></span>{", "}
+            <span className="whitespace-nowrap"><span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.title2}</span><span className="text-green-400" style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.title2Emoji}</span></span>{" "}
             {t.hero.title2End}
           </motion.h1>
         </div>
