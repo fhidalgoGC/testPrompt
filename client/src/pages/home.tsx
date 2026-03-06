@@ -242,7 +242,7 @@ export default function Home() {
             data-testid="button-chat-fab"
           >
             <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-1.5">
-              <img src={chatOpen ? "/logos/chat-bubbles.png" : "/logos/call-center.webp"} alt="Soporte" className="h-full w-full object-contain invert" />
+              <img src={chatOpen ? "/logos/chat-bubbles.png" : "/logos/call-center.png"} alt="Soporte" className="h-full w-full object-contain invert" />
             </div>
           </button>
         </div>
