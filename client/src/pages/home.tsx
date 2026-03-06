@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRaffles } from "@/hooks/use-raffles";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle, User, Mail } from "lucide-react";
@@ -10,8 +9,33 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useI18n } from "@/lib/i18n";
 import { Link } from "wouter";
 
+const staticRaffles = [
+  {
+    id: 1,
+    title: "GANA CON MARE #1",
+    description: "",
+    imageUrls: [
+      "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=2000&auto=format&fit=crop",
+    ],
+    totalTickets: 9999,
+    soldTickets: 437,
+  },
+  {
+    id: 2,
+    title: "GANA CON MARE#2",
+    description: "",
+    imageUrls: [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2000&auto=format&fit=crop",
+    ],
+    totalTickets: 9999,
+    soldTickets: 898,
+  },
+];
+
 export default function Home() {
-  const { data: raffles, isLoading } = useRaffles();
   const { t, locale, setLocale } = useI18n();
   const [avatarIndex, setAvatarIndex] = useState(0);
   const avatarImages = ["/logos/mare-avatar.jpg", "/logos/mare-avatar2.jpg"];
@@ -25,22 +49,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center gap-6">
-          <div className="relative h-24 w-24">
-            <div className="absolute inset-0 border-t-2 border-primary rounded-full animate-spin"></div>
-            <div className="absolute inset-2 border-r-2 border-accent rounded-full animate-[spin_1.5s_linear_reverse_infinite]"></div>
-            <div className="absolute inset-4 border-b-2 border-white/20 rounded-full animate-[spin_2s_linear_infinite]"></div>
-            <Flame className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary w-8 h-8 animate-pulse text-glow" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const featuredRaffle = raffles?.[0];
+  const featuredRaffle = staticRaffles[0];
 
   return (
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
@@ -195,21 +204,19 @@ export default function Home() {
           </motion.h1>
         </div>
 
-        {featuredRaffle && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg sm:text-xl font-display font-bold uppercase tracking-wider flex items-center gap-2">
-                <Flame className="text-primary w-5 h-5" /> 
-                {t.raffle.priorityCampaign}
-              </h2>
-            </div>
-            <RaffleCard raffle={featuredRaffle} featured={true} badgeLabel={t.raffle.badgeLabels[0]} />
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg sm:text-xl font-display font-bold uppercase tracking-wider flex items-center gap-2">
+              <Flame className="text-primary w-5 h-5" /> 
+              {t.raffle.priorityCampaign}
+            </h2>
+          </div>
+          <RaffleCard raffle={featuredRaffle} featured={true} badgeLabel={t.raffle.badgeLabels[0]} />
+        </motion.div>
       </section>
 
 
