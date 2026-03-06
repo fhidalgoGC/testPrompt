@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sprout, ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
+import { Flame, ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useI18n } from "@/lib/i18n";
@@ -74,7 +74,7 @@ export default function Redeem() {
           className="text-center mb-8"
         >
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 mb-4">
-            <Sprout className="w-8 h-8 text-primary" />
+            <Flame className="w-8 h-8 text-primary" />
           </div>
           <h1 className="font-display font-bold text-3xl text-foreground mb-2" data-testid="text-redeem-title">
             {t.coupon.title}

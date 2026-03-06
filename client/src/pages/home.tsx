@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { RaffleCard } from "@/components/raffle-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, Sprout, MessageCircle, User, Mail } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, MessageCircle, User, Mail } from "lucide-react";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -73,7 +73,7 @@ export default function Home() {
               </Link>
               <Link href="/redeem">
                 <span className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5" data-testid="link-redeem">
-                  <Sprout className="h-3.5 w-3.5 text-primary" />
+                  <Flame className="h-3.5 w-3.5 text-primary" />
                   {t.nav.redeemSeeds}
                 </span>
               </Link>
@@ -168,7 +168,7 @@ export default function Home() {
                   onClick={() => setMenuOpen(false)}
                   data-testid="mobile-link-redeem"
                 >
-                  <Sprout className="h-4 w-4" />
+                  <Flame className="h-4 w-4" />
                   {t.nav.redeemSeeds}
                 </span>
               </Link>
@@ -198,7 +198,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {t.hero.title1}{" "}
-            <span className="whitespace-nowrap"><span className="text-yellow-400" style={{textShadow: '0 0 20px rgba(250,204,21,0.4)'}}>{t.hero.titleHighlight}</span><span className="text-yellow-400 inline-flex items-center" style={{fontSize: '1em', verticalAlign: 'middle'}}> <Sprout className="inline h-[1.2em] w-[1.2em]" style={{fontSize: 'inherit'}} /></span></span>{", "}
+            <span className="whitespace-nowrap"><span className="text-yellow-400" style={{textShadow: '0 0 20px rgba(250,204,21,0.4)'}}>{t.hero.titleHighlight}</span><span className="text-yellow-400 inline-flex items-center" style={{fontSize: '1em', verticalAlign: 'middle'}}> <Flame className="inline h-[1.2em] w-[1.2em]" style={{fontSize: 'inherit'}} /></span></span>{", "}
             <span className="whitespace-nowrap">{t.hero.title2} <span className="text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.title2Highlight}</span><span style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.title2Emoji1}</span><span className="text-green-400" style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.title2Emoji2}</span></span>{" "}
             {t.hero.title2End}
           </motion.h1>

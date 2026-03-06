@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X, Upload, FileCheck, Loader2, Eye, Sprout } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Timer, Minus, Plus, Clock, Copy, Check, X, Upload, FileCheck, Loader2, Eye, Flame } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -353,7 +353,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         ) : step === "confirm" ? (
           <motion.div key="confirm" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5 py-4">
             <div className="flex flex-col items-center text-center space-y-4">
-              <Sprout className="h-12 w-12 text-yellow-400" />
+              <Flame className="h-12 w-12 text-yellow-400" />
               <div>
                 <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">{t.picker.confirmTitle}</h3>
               </div>
