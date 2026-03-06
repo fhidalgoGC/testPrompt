@@ -43,7 +43,7 @@ export default function Home() {
             </div>
             <div className="leading-tight">
               <span className="font-display font-bold text-base sm:text-lg tracking-wide text-primary block">Gana Con Mare</span>
-              <span className="text-[10px] sm:text-xs text-muted-foreground">@ganarconmare</span>
+              <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-xs text-muted-foreground hover:text-primary transition-colors">@maredorazio</a>
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
