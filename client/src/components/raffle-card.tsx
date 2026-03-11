@@ -137,7 +137,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
                   <Eye className="w-3.5 h-3.5 text-green-400" />
                   <span className="text-xs font-bold text-green-400">{viewers}</span>
                 </div>
-                <span className="text-xs text-muted-foreground font-bold">
+                <span className="text-xs text-foreground font-bold">
                   {t.raffle.viewersWatching}
                 </span>
               </div>
