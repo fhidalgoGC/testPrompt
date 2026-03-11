@@ -110,19 +110,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               <div className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
                 {t.raffle.awaitingDraw}
               </div>
-            ) : (
-              <>
-                {badgeLabel && (
-                  <div className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]" data-testid="badge-label">
-                    {badgeLabel}
-                  </div>
-                )}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full backdrop-blur-md border bg-red-500/90 text-white border-red-400/50 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse" data-testid="badge-discount">
-                  <Flame className="w-3.5 h-3.5" />
-                  <span>{t.raffle.almostFree}</span>
-                </div>
-              </>
-            )}
+            ) : null}
           </div>
         </div>
 
