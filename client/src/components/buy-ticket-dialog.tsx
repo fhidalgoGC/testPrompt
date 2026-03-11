@@ -258,7 +258,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   data-testid="button-copy-transaction"
                 >
                   {copiedField === "txid" ? (
-                    <Check className="h-4 w-4 text-green-400" />
+                    <Check className="h-4 w-4 text-green-700 dark:text-green-400" />
                   ) : (
                     <Copy className="h-4 w-4 text-muted-foreground" />
                   )}
@@ -399,7 +399,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                             data-testid={`button-copy-${method.id}-${detail.label}`}
                           >
                             {copiedField === `${method.id}-${detail.label}` ? (
-                              <Check className="h-3.5 w-3.5 text-green-400" />
+                              <Check className="h-3.5 w-3.5 text-green-700 dark:text-green-400" />
                             ) : (
                               <Copy className="h-3.5 w-3.5 text-muted-foreground" />
                             )}
@@ -454,10 +454,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                       </button>
                     ) : (
                       <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-3 flex items-center gap-2">
-                        <FileCheck className="h-5 w-5 text-green-400 shrink-0" />
+                        <FileCheck className="h-5 w-5 text-green-700 dark:text-green-400 shrink-0" />
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-medium text-foreground truncate" data-testid="text-uploaded-filename">{uploadedFile.name}</p>
-                          <p className="text-[10px] text-green-400">{t.picker.uploadSuccess}</p>
+                          <p className="text-[10px] text-green-700 dark:text-green-400">{t.picker.uploadSuccess}</p>
                         </div>
                         <button
                           onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
@@ -595,13 +595,13 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <h3 className="text-lg font-display font-bold text-foreground">{t.picker.quantityTitle || "Cantidad de semillas"}</h3>
             </div>
             <div className="flex items-center gap-2" data-testid="dialog-viewers-counter">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-600/10 dark:bg-green-500/10 border border-green-600/30 dark:border-green-500/20">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 dark:bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600 dark:bg-green-500"></span>
                 </span>
-                <Eye className="w-3.5 h-3.5 text-green-400" />
-                <span className="text-xs font-bold text-green-400">{Math.floor(Math.random() * 80) + 40}</span>
+                <Eye className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
+                <span className="text-xs font-bold text-green-700 dark:text-green-400">{Math.floor(Math.random() * 80) + 40}</span>
               </div>
               <span className="text-xs text-muted-foreground">
                 Personas estan comprando sus semillas
