@@ -52,7 +52,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       prevPercentageRef.current = displayPercentage;
       percentControls.start({
         scale: [1, 1.15, 1],
-        color: ["#22c55e", "#22c55e", isAlmostComplete ? "#F59E0B" : "#22c55e"],
+        color: ["#15803d", "#15803d", isAlmostComplete ? "#F59E0B" : "#15803d"],
         transition: { duration: 0.6, ease: "easeOut" },
       });
       barFlashControls.start({
@@ -90,7 +90,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       
       <div className={`w-full bg-secondary/50 rounded-full overflow-hidden relative border border-border backdrop-blur-sm ${heights[size]}`}>
         <motion.div 
-          className="absolute top-0 left-0 h-full bg-green-500/30 blur-md rounded-full"
+          className="absolute top-0 left-0 h-full bg-green-700/30 dark:bg-green-500/30 blur-md rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 1.5, ease: "easeOut" }}
@@ -98,10 +98,10 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
         <motion.div
           className={`absolute top-0 left-0 h-full rounded-full ${
             isComplete 
-              ? 'bg-gradient-to-r from-green-500 via-green-300 to-green-500' 
+              ? 'bg-gradient-to-r from-green-600 via-green-400 to-green-600 dark:from-green-500 dark:via-green-300 dark:to-green-500' 
               : isAlmostComplete
-              ? 'bg-gradient-to-r from-green-400 to-green-300'
-              : 'bg-gradient-to-r from-green-500/80 to-green-500'
+              ? 'bg-gradient-to-r from-green-600 to-green-500 dark:from-green-400 dark:to-green-300'
+              : 'bg-gradient-to-r from-green-600 to-green-700 dark:from-green-500/80 dark:to-green-500'
           }`}
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}

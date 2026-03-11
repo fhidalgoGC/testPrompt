@@ -129,13 +129,13 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
             )}
             {!isComplete && (
               <div className="flex items-center gap-2 mb-3 sm:mb-4" data-testid="viewers-counter">
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-600/10 dark:bg-green-500/10 border border-green-600/30 dark:border-green-500/20">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 dark:bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600 dark:bg-green-500"></span>
                   </span>
-                  <Eye className="w-3.5 h-3.5 text-green-400" />
-                  <span className="text-xs font-bold text-green-400">{viewers}</span>
+                  <Eye className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
+                  <span className="text-xs font-bold text-green-700 dark:text-green-400">{viewers}</span>
                 </div>
                 <span className="text-xs text-foreground font-bold">
                   {t.raffle.viewersWatching}
@@ -163,7 +163,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               disabled={isComplete}
               data-testid={`button-secure-entry-${raffle.id}`}
             >
-              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<Flame className="w-6 h-6 ml-1 text-green-500" /></>)}
+              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<Flame className="w-6 h-6 ml-1 text-green-700 dark:text-green-500" /></>)}
               {!isComplete && (
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               )}
