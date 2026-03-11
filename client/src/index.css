@@ -50,9 +50,41 @@
     --radius: 1rem;
   }
 
-  /* Force dark mode styling */
-  .dark {
-    /* Variables are already dark mode optimized above */
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --card-border: 240 6% 88%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    --popover-border: 240 6% 88%;
+
+    --primary: 43 96% 46%;
+    --primary-foreground: 0 0% 100%;
+    --primary-border: 43 96% 36%;
+
+    --secondary: 240 5% 93%;
+    --secondary-foreground: 240 10% 10%;
+    --secondary-border: 240 5% 85%;
+
+    --muted: 240 5% 93%;
+    --muted-foreground: 240 5% 40%;
+    --muted-border: 240 5% 85%;
+
+    --accent: 180 80% 40%;
+    --accent-foreground: 0 0% 100%;
+    --accent-border: 180 80% 30%;
+
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-border: 0 84% 40%;
+
+    --border: 240 6% 88%;
+    --input: 240 6% 88%;
+    --ring: 43 96% 46%;
   }
 
   * {
@@ -62,10 +94,19 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
-    /* Subtle radial gradient background for depth */
+    background-attachment: fixed;
+  }
+
+  .dark body,
+  body:has(.dark) {
     background-image: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.05) 0%, transparent 50%), 
                       radial-gradient(circle at 100% 100%, rgba(0, 255, 255, 0.03) 0%, transparent 50%);
-    background-attachment: fixed;
+  }
+
+  .light body,
+  body:has(.light) {
+    background-image: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.04) 0%, transparent 50%), 
+                      radial-gradient(circle at 100% 100%, rgba(0, 150, 200, 0.03) 0%, transparent 50%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -104,15 +145,30 @@
 }
 
 /* Glassmorphism utilities */
-.glass {
+.dark .glass {
   background: rgba(20, 20, 25, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-gold {
+.light .glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.dark .glass-gold {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(20, 20, 25, 0.8) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.light .glass-gold {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(255, 255, 255, 0.9) 100%);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(245, 158, 11, 0.2);

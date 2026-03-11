@@ -2,12 +2,13 @@ import { useState } from "react";
 import { RaffleCard } from "@/components/raffle-card";
 import { BrandHeader } from "@/components/brand-header";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, MessageCircle, User, Mail } from "lucide-react";
+import { Flame, Info, Search, Sparkles, Globe, Menu, X, LogIn, FileText, Trophy, HelpCircle, Zap, ShieldCheck, MessageCircle, User, Mail, Sun, Moon } from "lucide-react";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useI18n } from "@/lib/i18n";
+import { useTheme } from "@/lib/theme-context";
 import { Link } from "wouter";
 
 const staticRaffles = [
@@ -38,6 +39,7 @@ const staticRaffles = [
 
 export default function Home() {
   const { t, locale, setLocale } = useI18n();
+  const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
@@ -56,12 +58,6 @@ export default function Home() {
               <a href="#" className="hover:text-white transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
               <Link href="/terms">
                 <span className="hover:text-white transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
-              </Link>
-              <Link href="/redeem">
-                <span className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5" data-testid="link-redeem">
-                  <Flame className="h-3.5 w-3.5 text-primary" />
-                  {t.nav.redeemSeeds}
-                </span>
               </Link>
               <a href="#contacto" className="hover:text-white transition-colors" data-testid="link-contact">Contáctanos</a>
             </div>
@@ -91,6 +87,13 @@ export default function Home() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <button
+              onClick={toggleTheme}
+              className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center transition-colors shrink-0"
+              data-testid="button-theme-toggle"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4 text-muted-foreground" /> : <Moon className="h-4 w-4 text-muted-foreground" />}
+            </button>
             <div
               className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 flex items-center justify-center text-lg shrink-0"
               data-testid="flag-venezuela"
@@ -146,16 +149,6 @@ export default function Home() {
                 >
                   <FileText className="h-4 w-4 text-primary/70" />
                   {t.nav.terms}
-                </span>
-              </Link>
-              <Link href="/redeem">
-                <span
-                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-primary hover:bg-white/5 transition-colors cursor-pointer"
-                  onClick={() => setMenuOpen(false)}
-                  data-testid="mobile-link-redeem"
-                >
-                  <Flame className="h-4 w-4" />
-                  {t.nav.redeemSeeds}
                 </span>
               </Link>
               <a
