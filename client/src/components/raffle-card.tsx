@@ -62,7 +62,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         layout
       >
         <div className={`relative overflow-hidden ${featured ? 'h-[200px] sm:h-full sm:min-h-[300px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
-          <div className="absolute inset-0 z-10 hidden md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
+          <div className="absolute inset-0 z-10 hidden dark:md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
           
           <AnimatePresence mode="wait">
             <motion.img
@@ -118,7 +118,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'md:p-10' : ''}`}>
           <div>
             
-            <h3 className={`mb-2 sm:mb-3 font-extrabold tracking-wide ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Playfair Display', serif", background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fde68a 60%, #f59e0b 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: 'none', filter: 'drop-shadow(0 0 12px rgba(250,204,21,0.5))'}}>
+            <h3 className={`mb-2 sm:mb-3 font-extrabold tracking-wide raffle-title ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Playfair Display', serif"}}>
               {raffle.title}
             </h3>
             
