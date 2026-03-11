@@ -52,7 +52,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       prevPercentageRef.current = displayPercentage;
       percentControls.start({
         scale: [1, 1.15, 1],
-        color: ["#22c55e", "#22c55e", isAlmostComplete ? "#F59E0B" : "#ffffff"],
+        color: ["#22c55e", "#22c55e", isAlmostComplete ? "#F59E0B" : "inherit"],
         transition: { duration: 0.6, ease: "easeOut" },
       });
       barFlashControls.start({
