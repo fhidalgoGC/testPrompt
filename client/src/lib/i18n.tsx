@@ -16,10 +16,10 @@ const translations = {
     hero: {
       badge: "Cambia tu destino",
       title1: "Consigue tus",
-      titleHighlight: "semillas",
+      titleHighlight: "Semillas",
       titleEmoji: "🌱",
       title2: "gana tus",
-      title2Highlight: "lechugas",
+      title2Highlight: "Lechugas",
       title2Emoji1: "🥬",
       title2Emoji2: "$$$",
       title2End: "y empieza a cumplir tus sueños",
