@@ -280,10 +280,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
             <div className="glass-gold rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t.picker.ticketCount}</span>
+                <span className="text-foreground font-semibold">{t.picker.ticketCount}</span>
                 <span className="text-primary font-display font-bold text-lg" data-testid="text-confirm-count">{quantity}</span>
               </div>
-              <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-xs text-muted-foreground">
+              <div className="border-t border-border pt-2 mt-2 space-y-1 text-xs text-foreground font-medium">
                 {buyerName.trim() && <div className="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {buyerName}</div>}
                 {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>}
                 <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
