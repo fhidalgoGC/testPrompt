@@ -88,7 +88,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
         </motion.span>
       </div>
       
-      <div className={`w-full bg-secondary/50 rounded-full overflow-hidden relative border border-white/5 backdrop-blur-sm ${heights[size]}`}>
+      <div className={`w-full bg-secondary/50 rounded-full overflow-hidden relative border border-border backdrop-blur-sm ${heights[size]}`}>
         <motion.div 
           className="absolute top-0 left-0 h-full bg-green-500/30 blur-md rounded-full"
           initial={{ width: 0 }}

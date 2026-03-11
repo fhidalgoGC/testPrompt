@@ -52,8 +52,9 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
     <>
       <motion.div 
         className={`
-          group relative overflow-hidden rounded-2xl bg-card border border-white/5
+          group relative overflow-hidden rounded-2xl bg-card border border-border
           transition-all duration-500 hover:border-primary/30 box-glow-hover
+          shadow-lg dark:shadow-none dark:border-white/5
           ${featured ? 'md:grid md:grid-cols-2 md:gap-0' : 'flex flex-col'}
         `}
         onMouseEnter={() => setIsHovered(true)}
@@ -61,7 +62,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         layout
       >
         <div className={`relative overflow-hidden ${featured ? 'h-[200px] sm:h-full sm:min-h-[300px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10 md:bg-gradient-to-r md:from-transparent md:to-card" />
+          <div className="absolute inset-0 z-10 hidden md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
           
           <AnimatePresence mode="wait">
             <motion.img

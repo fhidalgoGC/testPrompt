@@ -47,30 +47,30 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
-      <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
+      <nav className="fixed top-0 w-full z-50 glass border-b border-border px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="shrink-0">
             <BrandHeader />
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-              <a href="#" className="hover:text-white transition-colors" data-testid="link-winners">{t.nav.winners}</a>
-              <a href="#" className="hover:text-white transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
+              <a href="#" className="hover:text-foreground transition-colors" data-testid="link-winners">{t.nav.winners}</a>
+              <a href="#" className="hover:text-foreground transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
               <Link href="/terms">
-                <span className="hover:text-white transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
+                <span className="hover:text-foreground transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
               </Link>
-              <a href="#contacto" className="hover:text-white transition-colors" data-testid="link-contact">Contáctanos</a>
+              <a href="#contacto" className="hover:text-foreground transition-colors" data-testid="link-contact">Contáctanos</a>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
-                  className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center transition-colors shrink-0"
+                  className="h-9 w-9 rounded-full border border-border bg-secondary/50 hover:bg-muted flex items-center justify-center transition-colors shrink-0"
                   data-testid="button-lang-switch"
                 >
                   <Globe className="h-4 w-4 text-muted-foreground" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[140px] bg-card border-white/10">
+              <DropdownMenuContent align="end" className="min-w-[140px] bg-card border-border">
                 <DropdownMenuItem
                   onClick={() => setLocale("es")}
                   className={`gap-2 text-sm cursor-pointer ${locale === "es" ? "text-primary font-bold" : ""}`}
@@ -89,13 +89,13 @@ export default function Home() {
             </DropdownMenu>
             <button
               onClick={toggleTheme}
-              className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 hover:bg-white/10 flex items-center justify-center transition-colors shrink-0"
+              className="h-9 w-9 rounded-full border border-border bg-secondary/50 hover:bg-muted flex items-center justify-center transition-colors shrink-0"
               data-testid="button-theme-toggle"
             >
               {theme === "dark" ? <Sun className="h-4 w-4 text-muted-foreground" /> : <Moon className="h-4 w-4 text-muted-foreground" />}
             </button>
             <div
-              className="h-9 w-9 rounded-full border border-white/10 bg-secondary/50 flex items-center justify-center text-lg shrink-0"
+              className="h-9 w-9 rounded-full border border-border bg-secondary/50 flex items-center justify-center text-lg shrink-0"
               data-testid="flag-venezuela"
             >
               🇻🇪
@@ -120,12 +120,12 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-[57px] left-0 right-0 z-40 glass border-b border-white/5 md:hidden"
+            className="fixed top-[57px] left-0 right-0 z-40 glass border-b border-border md:hidden"
           >
             <div className="px-4 py-4 space-y-1">
               <a
                 href="#"
-                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                 onClick={() => setMenuOpen(false)}
                 data-testid="mobile-link-winners"
               >
@@ -134,7 +134,7 @@ export default function Home() {
               </a>
               <a
                 href="#"
-                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                 onClick={() => setMenuOpen(false)}
                 data-testid="mobile-link-how"
               >
@@ -143,7 +143,7 @@ export default function Home() {
               </a>
               <Link href="/terms">
                 <span
-                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors cursor-pointer"
                   onClick={() => setMenuOpen(false)}
                   data-testid="mobile-link-terms"
                 >
@@ -153,7 +153,7 @@ export default function Home() {
               </Link>
               <a
                 href="#contacto"
-                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                 onClick={() => setMenuOpen(false)}
                 data-testid="mobile-link-contact"
               >
@@ -199,7 +199,7 @@ export default function Home() {
       </section>
 
 
-      <section className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto text-center border-t border-white/5 pt-4 sm:pt-8">
+      <section className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto text-center border-t border-border pt-4 sm:pt-8">
         <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
         <div className="flex justify-center gap-6 sm:gap-10">
           <div className="flex flex-col items-center group w-24" data-testid="lottery-CONALOT">
@@ -209,7 +209,7 @@ export default function Home() {
             <span className="text-xs text-muted-foreground mt-2">CONALOT</span>
           </div>
           <div className="flex flex-col items-center group w-24" data-testid="lottery-Super Gana">
-            <div className="w-20 h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden mx-auto">
+            <div className="w-20 h-16 bg-muted/50 border border-border rounded-lg flex items-center justify-center overflow-hidden mx-auto">
               <img src="/logos/supergana.png" alt="Super Gana" className="w-full h-full object-contain" />
             </div>
             <span className="text-xs text-muted-foreground mt-2">Super Gana</span>
@@ -223,7 +223,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contacto" className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto border-t border-white/5 pt-4 sm:pt-8 pb-8">
+      <section id="contacto" className="mt-4 sm:mt-8 px-4 max-w-4xl mx-auto border-t border-border pt-4 sm:pt-8 pb-8">
         <h3 className="font-display text-xl font-bold mb-6 text-center">Contáctanos</h3>
         <div className="flex flex-col items-center justify-center gap-4">
           <a href="mailto:ganaconmare@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-email">ganaconmare@gmail.com</a>
@@ -232,8 +232,8 @@ export default function Home() {
             className="h-20 w-20 rounded-full bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all hover:scale-110 active:scale-95 p-2 shrink-0"
             data-testid="button-chat-fab"
           >
-            <div className="h-full w-full rounded-full bg-black flex items-center justify-center p-1.5">
-              <img src={chatOpen ? "/logos/chat-bubbles.png" : "/logos/call-center.png"} alt="Soporte" className="h-full w-full object-contain invert" />
+            <div className="h-full w-full rounded-full bg-background flex items-center justify-center p-1.5">
+              <img src={chatOpen ? "/logos/chat-bubbles.png" : "/logos/call-center.png"} alt="Soporte" className="h-full w-full object-contain dark:invert" />
             </div>
           </button>
         </div>
