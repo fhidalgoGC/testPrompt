@@ -122,7 +122,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       </div>
       
       <div className="mt-3 text-xs text-muted-foreground/80">
-        <span>{t.progress.drawTrigger} </span>
+        <span className="font-bold">{t.progress.drawTrigger} </span>
         <motion.span
           className="inline-block text-red-500 font-bold"
           animate={{
