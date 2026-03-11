@@ -53,7 +53,7 @@ export default function Home() {
             <BrandHeader />
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
-            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
+            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-foreground/70 dark:text-muted-foreground">
               <a href="#" className="hover:text-foreground transition-colors" data-testid="link-winners">{t.nav.winners}</a>
               <a href="#" className="hover:text-foreground transition-colors" data-testid="link-how">{t.nav.howItWorks}</a>
               <Link href="/terms">
