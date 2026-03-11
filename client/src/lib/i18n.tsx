@@ -186,6 +186,32 @@ const translations = {
         },
       ],
     },
+    howItWorks: {
+      title: "Como Funciona",
+      subtitle: "Tu camino hacia el sueno de un vehiculo premium en 5 simples pasos.",
+      steps: [
+        {
+          title: "1. Elige tu Sueno",
+          description: "Explora los vehiculos disponibles en nuestra plataforma. Cada campana tiene una capacidad de 9,999 semillas, y tu puedes adquirir las que desees.",
+        },
+        {
+          title: "2. Compra tus Semillas",
+          description: "Selecciona la cantidad de semillas que deseas y completa el proceso de pago. Cada semilla tiene un numero aleatorio unico que sera tu oportunidad.",
+        },
+        {
+          title: "3. Realiza tu Pago",
+          description: "Elige tu metodo de pago preferido, realiza la transferencia y sube tu comprobante. Verificaremos tu pago en minutos o hasta un maximo de 24 horas.",
+        },
+        {
+          title: "4. Espera al 100%",
+          description: "El proceso se activa unicamente cuando el 100% de las semillas han sido vendidas. Mientras tanto, puedes seguir el progreso en tiempo real desde la plataforma.",
+        },
+        {
+          title: "5. Seleccion del Ganador",
+          description: "Una vez vendidas todas las semillas, se realiza una seleccion aleatoria y transparente. El ganador sera notificado por correo electronico y contactado en 48 horas.",
+        },
+      ],
+    },
     langSwitch: "EN",
   },
   en: {
@@ -364,6 +390,32 @@ const translations = {
         {
           heading: "8. Modifications",
           body: "We reserve the right to modify these terms at any time. Changes will be notified through the platform.",
+        },
+      ],
+    },
+    howItWorks: {
+      title: "How It Works",
+      subtitle: "Your path to owning a premium vehicle in 5 simple steps.",
+      steps: [
+        {
+          title: "1. Choose Your Dream",
+          description: "Browse the available vehicles on our platform. Each campaign has a capacity of 9,999 seeds, and you can acquire as many as you want.",
+        },
+        {
+          title: "2. Buy Your Seeds",
+          description: "Select the number of seeds you want and complete the payment process. Each seed has a unique random number that represents your chance.",
+        },
+        {
+          title: "3. Make Your Payment",
+          description: "Choose your preferred payment method, make the transfer, and upload your proof of payment. We'll verify your payment in minutes or up to 24 hours.",
+        },
+        {
+          title: "4. Wait for 100%",
+          description: "The process activates only when 100% of the seeds have been sold. Meanwhile, you can follow the progress in real time on the platform.",
+        },
+        {
+          title: "5. Winner Selection",
+          description: "Once all seeds are sold, a random and transparent selection is made. The winner will be notified by email and contacted within 48 hours.",
         },
       ],
     },

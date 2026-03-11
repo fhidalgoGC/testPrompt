@@ -1,38 +1,15 @@
 import { useI18n } from "@/lib/i18n";
-import { Button } from "@/components/ui/button";
-import { Globe, ChevronLeft, Menu } from "lucide-react";
+import { Navbar } from "@/components/navbar";
+import { ChevronLeft } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 
 export default function Terms() {
-  const { t, locale, setLocale } = useI18n();
+  const { t, locale } = useI18n();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <Link href="/">
-            <div className="flex items-center gap-2 shrink-0 cursor-pointer" data-testid="link-home-logo">
-              <div className="h-7 w-7 sm:h-8 sm:w-8 bg-gradient-to-br from-primary to-yellow-600 rounded-sm flex items-center justify-center transform rotate-45">
-                <span className="font-display font-black text-black -rotate-45 text-base sm:text-lg">G</span>
-              </div>
-              <span className="font-display font-bold text-lg sm:text-xl tracking-wider uppercase text-glow">
-                G<span className="text-primary">Mare</span>
-              </span>
-            </div>
-          </Link>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setLocale(locale === "es" ? "en" : "es")}
-            className="border-white/10 text-xs font-bold gap-1.5 shrink-0"
-            data-testid="button-lang-switch"
-          >
-            <Globe className="h-3.5 w-3.5" />
-            {t.langSwitch}
-          </Button>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
         <Link href="/">

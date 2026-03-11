@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/lib/theme-context";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Terms from "@/pages/terms";
+import HowItWorks from "@/pages/how-it-works";
 import Redeem from "@/pages/redeem";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/terms" component={Terms} />
+      <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/redeem" component={Redeem} />
       <Route component={NotFound} />
     </Switch>
