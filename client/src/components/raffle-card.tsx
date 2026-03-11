@@ -129,7 +129,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'md:p-10' : ''}`}>
           <div>
             
-            <h3 className={`mb-2 sm:mb-3 uppercase tracking-widest ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Bebas Neue', sans-serif", background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fde68a 60%, #f59e0b 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: 'none', filter: 'drop-shadow(0 0 12px rgba(250,204,21,0.5))'}}>
+            <h3 className={`mb-2 sm:mb-3 font-extrabold tracking-wide ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Playfair Display', serif", background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fde68a 60%, #f59e0b 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: 'none', filter: 'drop-shadow(0 0 12px rgba(250,204,21,0.5))'}}>
               {raffle.title}
             </h3>
             
