@@ -236,7 +236,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   };
 
 
-  const quickAmounts = [4, 8, 12, 20, 32, 48];
+  const quickAmounts = [4, 8, 12, 20, 32, 48, 96];
 
   return (
     <div className="space-y-3">
