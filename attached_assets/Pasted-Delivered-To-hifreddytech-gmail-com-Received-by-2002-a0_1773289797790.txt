@@ -1,0 +1,304 @@
+Delivered-To: hifreddytech@gmail.com
+Received: by 2002:a05:7110:3037:b0:2fa:f0ac:20a with SMTP id u23csp68852gea;
+        Tue, 3 Mar 2026 08:22:41 -0800 (PST)
+X-Received: by 2002:a05:690c:c50b:b0:785:cecb:4b19 with SMTP id 00721157ae682-798854759e6mr158588527b3.5.1772554961073;
+        Tue, 03 Mar 2026 08:22:41 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1772554961; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=aFImcX+k2qW7MA8Oi78cTwzKrkim2KJUqCuKqHjc0pSmcukJnlmwNTDy+ox8YVA6Sl
+         uHOz4p6dhqmHZYuewH/Ew/NJRtjETlAm4SYGAYX6Mpdv8O37vaFqQDBqudlDzWuRHNPc
+         cWsKIEXHaEie0b5dd8uOlk3CvAw6bQ6+jbJIOg512PsPWTHJtqByrAIgGrQ1RvcBoTFm
+         svMSz12FLJnZB0la80KON3DDgmAjUbkcO4OFYG4gCA8xLr2GPfp0pFJ0vVG3lKRJiB92
+         R7nPoNxUX932AykNgYJd/FxgAcs6L8vIGSZ2TuRNLOAUBjHccv8zx2xddxsurD0qGaVj
+         41xA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=Gb+wMVRjwS4L/IH5tGiEAWDANHtr04DazW/Fy0cdIFw=;
+        fh=nYFolDG8Zq7bjA9l5VmuahLZBZ6N+Ox4RVQzgCGcTFs=;
+        b=Pi6ZiGYaGUbHJ7m794c/WIWx9MXXSkMoVoU91dzJ+kRrq/l9jFfPclj5P0m65sMYV/
+         MBc4K24fJiWPu4f0jzbUjiE6aZXy+O2DDs9vjKe9MAzuDEsKN51oSU05427Ixlz7Xr90
+         2G2+9lxbJOChZGCZ15e2NaNILzGKsc98Z91+OOxHmLlkMSPy92xPQmxeWbaZwgspp7YE
+         l/q/V8dy9E5BWf4BRmkF/Y7/OCV9W5P8cutOnMN1TGVaBNPTRY4BTvAF1ErC1FMTtIle
+         qTcrwvAdFdLQytHv30UctBh9oyepBTU/JZ6P580Fryb9qvFO4yqqoXIdpOuyLIHaoY3Q
+         K57w==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20230601 header.b=ewPWjIBy;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of eironfive15@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=eironfive15@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <eironfive15@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 00721157ae682-79876ae2e66sor94488667b3.5.2026.03.03.08.22.40
+        for <Hifreddytech@gmail.com>
+        (Google Transport Security);
+        Tue, 03 Mar 2026 08:22:41 -0800 (PST)
+Received-SPF: pass (google.com: domain of eironfive15@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20230601 header.b=ewPWjIBy;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of eironfive15@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=eironfive15@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1772554960; cv=none;
+        d=google.com; s=arc-20240605;
+        b=O7kJ4BRcowCvtXPo+e/8hr9NnF95a95/cVzpMpq/yh/MqFS7m9KV+Nw7XmB+onci9R
+         N7Vba6BIvw/3ukpsxh/Jy5eSC4CA66SZ0NNN8WX0K4JqbwQWXQZh1bifs7572SYiBdam
+         roQ8Qnot3kk4Lgjdh3tk7T+v2y6C+5V8z7sd4kIwsR+Br+eFF+ZHo4/5Csuz1/OaK64f
+         ZBij2Go0QnfWQJA1/6vGWa/Lb2l/i4YVhTIgTAcJyj1QAjnOyV7sVbb2OqaIPxIXy4Zd
+         L0Lf8sQEYy/3V3YLj9f7wMYaKBCAa1ojXSNOvw+Y6tRfYnMNGf3B2ShPHR1SZ8QOQpQ0
+         KAzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=Gb+wMVRjwS4L/IH5tGiEAWDANHtr04DazW/Fy0cdIFw=;
+        fh=nYFolDG8Zq7bjA9l5VmuahLZBZ6N+Ox4RVQzgCGcTFs=;
+        b=QEJkCVk/PYZSK0a8E9Er53+QF8h9MjbbapeKVR5s4FQSoZsJ1b+28QTwDSTCHgSm5F
+         c7TL7z2uhO/wWyavxAxAUhsVNVeUUIA05F02strHB/JTdpxWDYaPocO4shbWKt1ZJvbI
+         eA0DBugL0KJwzSf17htZ5pj0yM7cqRqDyxbUh0UwNwR9sWyEOUXvOifOzBzYOJTCyLy2
+         0eKu7xpyRykJXsBbMDOeSeJQ/82JNJqE4vTZKT+Wx5mWlG24Ypoe1yw9j9DasXhQuPdl
+         TAyCSR+fMFYxCQ8slMXE3sN4p13mdLgzfdPUcaLZS3e/B8fjGDecAvEgA+pMbrQsd9yi
+         mVCA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772554960; x=1773159760; dara=google.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Gb+wMVRjwS4L/IH5tGiEAWDANHtr04DazW/Fy0cdIFw=;
+        b=ewPWjIByLsoUVEoCKITN/0bueypIF5jOIFD5Yi2wRw3aqPiKGYldkZ3+qFh2eLF9ur
+         lB2r6B3zB8WtMN8A6BH0AxB+sDJch3iyGFntYCrYE8UT6coWG7an6pO1bfUyb8QyUy0Z
+         s5oG5juB3YgygakBQ0/j0HNazZOg0GMr3x9T/XrSLE+bniME2U7nbDUFBNG1Kdx3Ktsx
+         SQA6gLYaWGIVBACPAKlSg2fVEFKF2I5MJZPoJoa1uLTjqYcB9DdcpmwVLgsc39nLDpPi
+         brKzdBgY9dXU/5SDHBQJSH4n86bgLoyyf7QZGgZLbnhQvCvgAYh1GCmoLasv21RdI/Rv
+         RFMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772554960; x=1773159760;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gb+wMVRjwS4L/IH5tGiEAWDANHtr04DazW/Fy0cdIFw=;
+        b=DGnFF389xf8vS9dJ3km42HeJEkPI7/MwSeE2sMUN0iJA7Ipc0PuDjFk35kmIrLnSZe
+         mDsDZtCEBeES4qKKzAUqV8L/Wa7sxUQnwcntx1BBucC8C2qH+uAVWza3QIqrwHQr4pUN
+         DpdgBsYD/IoA6dzsYXvERyOYRbPSUqYV81r98GcmSgnnGevgKGMSFgr1ToBREREuDqjF
+         T1ClwDvzbxouYpp+0vR6OodXT+jKgclOxPbfjnTmEEdUEdaCwoHaAElr+qeeMCRgEyd2
+         2I3tv/rRQksO6lEhcciS5r1zp/GYrgu3lhVu+9FpgwpgKGuCrDblbskrIZkq+27vF4br
+         U9nQ==
+X-Gm-Message-State: AOJu0YxLJvdQ8KuHyBYZr9MW+GCS0SA/ytnPGw2oE5ro7yqO71HhppME z4HC6TPILZnwS8JQYnE6CtqDD1FKG+PsvYcbilzc4OTWsyXjxg4DimLNVZWWw2MsuHHG2uwZKyp 8Mm5HgqJI1qLjg3+U+XL0xmeoniMPOxj4KQ==
+X-Gm-Gg: ATEYQzwf8htZ559ICoOptPwX2FHQhpO4F6NfsYJPHfF6vMBL26cx1nSh8wl+qpOtSzV mHic67bIGEiLlKeDVCcNhj1d2K7vqojvZduiImDFZPeDY5QGbpNoMjGrpADNTcbb/LN8ZRGKUfp 0eO6WmiwnsRLoDcjep86IK7oLoHSeFvYzv28Ja4pKTIqVBz4tOoKzLaTCB8aMqszxk78QwQfkWe MuxGrC4H5wnrglMinaIEKd62G4aTuuwe3lXVxiG4hgPzERAZrrfGI9uyXsIV/XGy6887hNAW6Wq cyqqKv8=
+X-Received: by 2002:a05:690c:c01:b0:798:6cdc:b629 with SMTP id 00721157ae682-798855a5f8cmr159401947b3.39.1772554960269; Tue, 03 Mar 2026 08:22:40 -0800 (PST)
+MIME-Version: 1.0
+References: <fd8a6a247c352101988cb28d3076816c@inteliticket.com>
+In-Reply-To: <fd8a6a247c352101988cb28d3076816c@inteliticket.com>
+From: Aron Hidalgo <eironfive15@gmail.com>
+Date: Tue, 3 Mar 2026 11:22:28 -0500
+X-Gm-Features: AaiRm53qQGK7reibSMEjcckbT5ZikUS3DH_uGUbyD16JSjJR7cwbGGfVB6MdeHc
+Message-ID: <CAGUoZMa8NJZeoDzyF8wgGmFUcQcBi4hUhEGFjNrhgySjuBzrLw@mail.gmail.com>
+Subject: Fwd: Tu compra ha sido aprobada
+To: Hifreddytech@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000c075a3064c211c99"
+
+--000000000000c075a3064c211c99
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+---------- Mensaje reenviado ---------
+De: Vagateo <soporte@inteliticket.com>
+Fecha: El mi=C3=A9, feb 25, 2026 a la(s) 10:57=E2=80=AFa.m.
+Asunto: Tu compra ha sido aprobada
+Para: <eironfive15@gmail.com>
+
+
+=C2=A1Compra Aprobada!
+
+Tu transacci=C3=B3n ha sido confirmada exitosamente
+=E2=9C=93 Pago Verificado
+=C2=A1Hola Aron Hidalgo!
+
+Nos complace informarte que tu compra ha sido aprobada exitosamente. Tus
+boletos han sido asignados.
+=E2=9C=93
+Compra #102840
+Aprobada
+Total Pagado: Bs. 5,400.00 VES
+M=C3=A9todo de Pago: Pago M=C3=B3vil
+Fecha de Compra: 25/02/2026 11:56
+Cantidad de Boletos: 3
+Tus Boletos Asignados
+3777
+4029
+5134
+
+=C2=BFNecesitas ayuda?
+WhatsApp <https://wa.me/584227200163> Email <vagasorteo@gmail.com> Tel=C3=
+=A9fono
+<+584227200163>
+
+*Vagateo*
+Este es un correo autom=C3=A1tico, no responder. Para consultas, usa nuestr=
+os
+canales de soporte.
+Conserva este email como comprobante de tu participaci=C3=B3n.
+
+https://vagateo.com
+
+--000000000000c075a3064c211c99
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div><br></div><div><br><div class=3D"gmail_quote gmail_quote_container"><d=
+iv dir=3D"ltr" class=3D"gmail_attr">---------- Mensaje reenviado ---------<=
+br>De: <strong class=3D"gmail_sendername" dir=3D"auto">Vagateo</strong> <sp=
+an dir=3D"auto">&lt;<a href=3D"mailto:soporte@inteliticket.com">soporte@int=
+eliticket.com</a>&gt;</span><br>Fecha: El mi=C3=A9, feb 25, 2026 a la(s) 10=
+:57=E2=80=AFa.m.<br>Asunto: Tu compra ha sido aprobada<br>Para:  &lt;<a hre=
+f=3D"mailto:eironfive15@gmail.com">eironfive15@gmail.com</a>&gt;<br></div><=
+br><br><u></u>
+
+
+   =20
+   =20
+   =20
+   =20
+   =20
+   =20
+   =20
+       =20
+   =20
+
+
+<div>
+    <div class=3D"m_2990315615235705387email-container">
+       =20
+        <div class=3D"m_2990315615235705387header">
+           =20
+           =20
+            <h1 class=3D"m_2990315615235705387header-title">=C2=A1Compra Ap=
+robada!</h1>
+            <p class=3D"m_2990315615235705387header-subtitle">Tu transacci=
+=C3=B3n ha sido confirmada exitosamente</p>
+           =20
+            <div class=3D"m_2990315615235705387status-badge">
+                <span class=3D"m_2990315615235705387status-icon">=E2=9C=93<=
+/span>
+                Pago Verificado
+            </div>
+        </div>
+
+       =20
+        <div class=3D"m_2990315615235705387content">
+            <div class=3D"m_2990315615235705387greeting">
+                =C2=A1Hola Aron Hidalgo!
+            </div>
+
+            <p class=3D"m_2990315615235705387message">
+                Nos complace informarte que tu compra ha sido aprobada exit=
+osamente. Tus boletos han sido asignados.
+            </p>
+
+           =20
+            <div class=3D"m_2990315615235705387purchase-card">
+                <div class=3D"m_2990315615235705387purchase-header">
+                    <span class=3D"m_2990315615235705387purchase-icon">=E2=
+=9C=93</span>
+                    <div style=3D"display:inline-block;vertical-align:top">
+                        <div class=3D"m_2990315615235705387purchase-code">C=
+ompra #102840</div>
+                        <div class=3D"m_2990315615235705387purchase-status"=
+>Aprobada</div>
+                    </div>
+                </div>
+               =20
+                <div class=3D"m_2990315615235705387purchase-details">
+                    <div class=3D"m_2990315615235705387detail-row">
+                        <span class=3D"m_2990315615235705387detail-label">T=
+otal Pagado:</span>
+                        <span class=3D"m_2990315615235705387detail-value">B=
+s. 5,400.00 VES</span>
+                    </div>
+                    <div class=3D"m_2990315615235705387detail-row">
+                        <span class=3D"m_2990315615235705387detail-label">M=
+=C3=A9todo de Pago:</span>
+                        <span class=3D"m_2990315615235705387detail-value">P=
+ago M=C3=B3vil</span>
+                    </div>
+                    <div class=3D"m_2990315615235705387detail-row">
+                        <span class=3D"m_2990315615235705387detail-label">F=
+echa de Compra:</span>
+                        <span class=3D"m_2990315615235705387detail-value">2=
+5/02/2026 11:56</span>
+                    </div>
+                    <div class=3D"m_2990315615235705387detail-row">
+                        <span class=3D"m_2990315615235705387detail-label">C=
+antidad de Boletos:</span>
+                        <span class=3D"m_2990315615235705387detail-value">3=
+</span>
+                    </div>
+                </div>
+            </div>
+
+           =20
+            <div class=3D"m_2990315615235705387tickets-section">
+                <h2 class=3D"m_2990315615235705387section-title">
+                    Tus Boletos Asignados
+                </h2>
+               =20
+                                    <div class=3D"m_2990315615235705387tick=
+ets-grid">
+                                                    <div class=3D"m_2990315=
+615235705387ticket">3777</div>
+                                                    <div class=3D"m_2990315=
+615235705387ticket">4029</div>
+                                                    <div class=3D"m_2990315=
+615235705387ticket">5134</div>
+                                            </div>
+                            </div>
+            <br>
+        </div>
+
+       =20
+        <div class=3D"m_2990315615235705387footer">
+            <div class=3D"m_2990315615235705387support-section">
+                <div class=3D"m_2990315615235705387support-title">=C2=BFNec=
+esitas ayuda?</div>
+               =20
+                <div class=3D"m_2990315615235705387contact-links">
+                                            <a href=3D"https://wa.me/584227=
+200163" class=3D"m_2990315615235705387contact-item" target=3D"_blank">
+                            WhatsApp
+                        </a>
+                   =20
+                                            <a href=3D"mailto:vagasorteo@gm=
+ail.com" class=3D"m_2990315615235705387contact-item" target=3D"_blank">
+                            Email
+                        </a>
+                   =20
+                                            <a href=3D"tel:+584227200163" c=
+lass=3D"m_2990315615235705387contact-item" target=3D"_blank">
+                            Tel=C3=A9fono
+                        </a>
+                                    </div>
+            </div>
+
+            <div class=3D"m_2990315615235705387disclaimer">
+                <p>
+                    <strong>Vagateo</strong><br>
+                    Este es un correo autom=C3=A1tico, no responder. Para c=
+onsultas, usa nuestros canales de soporte.<br>
+                    Conserva este email como comprobante de tu participaci=
+=C3=B3n.
+                </p>
+                                    <p style=3D"margin-top:10px">
+                        <a href=3D"https://vagateo.com" class=3D"m_29903156=
+15235705387company-link" target=3D"_blank">https://vagateo.com</a>
+                    </p>
+                            </div>
+        </div>
+    </div>
+</div>
+
+</div></div>
+
+--000000000000c075a3064c211c99--

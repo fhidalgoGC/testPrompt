@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Rechazada - GANA CON MAREDORAZIO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f0; color: #1a1a1a; }
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px 30px; text-align: center; }
+        .header-logo { font-size: 14px; font-weight: 800; color: #d4a017; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .header-title { font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .header-subtitle { font-size: 14px; color: #a0a0a0; }
+        .status-badge { display: inline-block; background-color: #991b1b; color: #ffffff; padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-top: 20px; letter-spacing: 0.5px; }
+        .status-icon { margin-right: 6px; }
+        .content { padding: 30px; }
+        .greeting { font-size: 20px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+        .message { font-size: 14px; color: #555555; line-height: 1.6; margin-bottom: 24px; }
+        .purchase-card { background-color: #faf8f0; border: 1px solid #e8e4d4; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+        .purchase-header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e8e4d4; }
+        .purchase-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background-color: #991b1b; color: #ffffff; border-radius: 50%; font-size: 18px; font-weight: 700; }
+        .purchase-code { font-size: 16px; font-weight: 700; color: #1a1a1a; }
+        .purchase-status { font-size: 12px; color: #991b1b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .purchase-details { padding: 16px 20px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0ece0; }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { font-size: 13px; color: #888888; }
+        .detail-value { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+        .alert-box { background-color: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+        .alert-box-title { font-size: 14px; font-weight: 700; color: #991b1b; margin-bottom: 6px; }
+        .alert-box-text { font-size: 13px; color: #7f1d1d; line-height: 1.5; }
+        .reason-box { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+        .reason-label { font-size: 12px; color: #888888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .reason-text { font-size: 14px; color: #1a1a1a; font-weight: 500; }
+        .footer { background-color: #1a1a1a; padding: 30px; text-align: center; }
+        .support-title { font-size: 14px; font-weight: 700; color: #ffffff; margin-bottom: 16px; }
+        .contact-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; }
+        .contact-item { display: inline-block; padding: 8px 16px; background-color: #2d2d2d; color: #d4a017; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .brand-footer { font-size: 16px; font-weight: 800; color: #d4a017; letter-spacing: 2px; margin-bottom: 8px; }
+        .footer-note { font-size: 11px; color: #666666; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="header-logo">GANA CON MAREDORAZIO</div>
+            <h1 class="header-title">Compra Rechazada</h1>
+            <p class="header-subtitle">No pudimos verificar tu pago</p>
+            <div class="status-badge">
+                <span class="status-icon">&#10007;</span>
+                Pago No Verificado
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="greeting">
+                Hola {{BUYER_NAME}},
+            </div>
+
+            <p class="message">
+                Lamentamos informarte que no hemos podido verificar el pago asociado a tu compra. A continuaci&oacute;n encontrar&aacute;s los detalles.
+            </p>
+
+            <div class="purchase-card">
+                <div class="purchase-header">
+                    <span class="purchase-icon">&#10007;</span>
+                    <div>
+                        <div class="purchase-code">Compra #{{TRANSACTION_ID}}</div>
+                        <div class="purchase-status">Rechazada</div>
+                    </div>
+                </div>
+                <div class="purchase-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Monto:</span>
+                        <span class="detail-value">{{TOTAL_AMOUNT}} {{CURRENCY}}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">M&eacute;todo de Pago:</span>
+                        <span class="detail-value">{{PAYMENT_METHOD}}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Fecha:</span>
+                        <span class="detail-value">{{PURCHASE_DATE}}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Cantidad de Semillas:</span>
+                        <span class="detail-value">{{QUANTITY}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reason-box">
+                <div class="reason-label">Motivo del rechazo</div>
+                <p class="reason-text">{{REJECTION_REASON}}</p>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-box-title">&#128712; &#191;Qu&eacute; puedes hacer?</div>
+                <p class="alert-box-text">
+                    Si crees que esto es un error, cont&aacute;ctanos por WhatsApp o correo electr&oacute;nico con tu n&uacute;mero de transacci&oacute;n y te ayudaremos a resolverlo.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="support-title">&#191;Necesitas ayuda?</div>
+            <div class="contact-links">
+                <a href="https://wa.me/584226333703" class="contact-item">WhatsApp</a>
+                <a href="mailto:ganaconmare@gmail.com" class="contact-item">Email</a>
+                <a href="https://t.me/+584226333703" class="contact-item">Telegram</a>
+            </div>
+            <div class="brand-footer">GANA CON MAREDORAZIO</div>
+            <p class="footer-note">
+                Este es un correo autom&aacute;tico, no responder. Para consultas, usa nuestros canales de soporte.<br>
+                Conserva este email como comprobante de tu participaci&oacute;n.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
