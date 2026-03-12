@@ -11,6 +11,7 @@ import Home from "@/pages/home";
 import Terms from "@/pages/terms";
 import HowItWorks from "@/pages/how-it-works";
 import Redeem from "@/pages/redeem";
+import EmailPreview from "@/pages/email-preview";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/terms" component={Terms} />
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/redeem" component={Redeem} />
+      <Route path="/email-preview" component={EmailPreview} />
       <Route component={NotFound} />
     </Switch>
   );
