@@ -22,7 +22,7 @@ export function BrandHeader({ size = "default" }: { size?: "default" | "small" }
         <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
       </a>
       <div className="leading-tight">
-        <span className={`font-display font-bold ${titleSize} tracking-wide text-primary block`}>GANACONMARE</span>
+        <span className={`font-display font-bold ${titleSize} tracking-wide text-primary block`}>GANA CON MAREDORAZIO</span>
         <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className={`${subSize} text-muted-foreground hover:text-primary transition-colors`}>@maredorazio</a>
       </div>
     </div>
