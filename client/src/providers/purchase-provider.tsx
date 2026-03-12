@@ -33,6 +33,10 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const submitPurchase = useCallback(async (params: SubmitPurchaseParams): Promise<{ transactionId: string }> => {
+    if (!proofFileRef.current) {
+      throw new Error("Debes adjuntar el comprobante de pago");
+    }
+
     const rifaId = "GM1";
 
     const request: PurchaseRequest = {
