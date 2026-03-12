@@ -10,7 +10,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
 import { usePurchase } from "@/providers/purchase-provider";
-import { uploadComprobante } from "@/services/purchase-service";
 import { BrandHeader } from "./brand-header";
 
 interface BuyTicketDialogProps {
@@ -144,8 +143,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [selectedCountry] = useState<Country>((globalCountry === "OTHER" ? "VE" : globalCountry) as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [uploadedFile, setUploadedFile] = useState<{ name: string; filename: string } | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<{ name: string; file: File } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [quantity, setQuantity] = useState(4);
   const [phoneCountry, setPhoneCountry] = useState("VE");
@@ -175,21 +173,14 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const handleFileUpload = async (file: File) => {
+  const handleFileSelect = (file: File) => {
     if (file.size > 10 * 1024 * 1024) {
       toast({ variant: "destructive", title: t.picker.uploadError, description: "Max 10MB" });
       return;
     }
-    setIsUploading(true);
-    try {
-      const data = await uploadComprobante(file);
-      setUploadedFile({ name: file.name, filename: data.filename });
-      toast({ title: t.picker.uploadSuccess });
-    } catch (err) {
-      toast({ variant: "destructive", title: t.picker.uploadError, description: err instanceof Error ? err.message : "" });
-    } finally {
-      setIsUploading(false);
-    }
+    setUploadedFile({ name: file.name, file });
+    purchase.setProofFile(file);
+    toast({ title: t.picker.uploadSuccess });
   };
 
   const handleSendCode = async () => {
@@ -219,39 +210,24 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     const method = allMethods.find(m => m.id === selectedPaymentMethod);
     const total = method ? String(method.price * quantity) : "0";
     const currency = method?.currency || "";
+    const precioUnitario = method ? String(method.price) : "0";
     const dialCode = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode || "";
     const fullPhone = `${dialCode} ${buyerPhone}`;
 
-    purchase.setRaffleInfo(raffleId, title);
-    purchase.setPaymentInfo(selectedPaymentMethod || "", currency);
-    purchase.setQuantityInfo(quantity, total);
-    purchase.setBuyerInfo(buyerName, fullPhone, buyerEmail, buyerIdNumber);
-    purchase.setProofFile(uploadedFile?.filename || "");
-
     try {
-      const res = await fetch("/api/purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          raffleId,
-          quantity,
-          buyerName,
-          buyerPhone: fullPhone,
-          buyerEmail,
-          buyerIdNumber,
-          paymentMethod: selectedPaymentMethod,
-          paymentCurrency: currency,
-          totalAmount: total,
-          proofFilename: uploadedFile?.filename || "",
-        }),
+      const data = await purchase.submitPurchase({
+        raffleId,
+        raffleTitle: title,
+        quantity,
+        paymentMethod: selectedPaymentMethod || "",
+        paymentCurrency: currency,
+        precioUnitario,
+        totalAmount: total,
+        buyerName,
+        buyerPhone: fullPhone,
+        buyerEmail,
+        buyerIdNumber,
       });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Error");
-      }
-
-      const data = await res.json();
       setTransactionId(data.transactionId);
       setStep("success");
 
@@ -371,7 +347,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 }).concat(GLOBAL_PAYMENT_METHODS).map((method) => (
                 <button
                   key={method.id}
-                  onClick={() => { setSelectedPaymentMethod(method.id); setUploadedFile(null); }}
+                  onClick={() => { setSelectedPaymentMethod(method.id); setUploadedFile(null); purchase.setProofFile(null); }}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10 hover:bg-white/5'}`}
                   data-testid={`button-payment-${method.id}`}
                 >
@@ -463,7 +439,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                       className="hidden"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
-                        if (file) handleFileUpload(file);
+                        if (file) handleFileSelect(file);
                         e.target.value = "";
                       }}
                       data-testid="input-file-upload"
@@ -472,22 +448,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     {!uploadedFile ? (
                       <button
                         onClick={() => fileInputRef.current?.click()}
-                        disabled={isUploading}
-                        className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all hover:bg-primary/5 disabled:opacity-50"
+                        className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all hover:bg-primary/5"
                         data-testid="button-upload-area"
                       >
-                        {isUploading ? (
-                          <>
-                            <Loader2 className="h-6 w-6 text-primary animate-spin" />
-                            <span className="text-xs text-muted-foreground">{t.picker.uploading}</span>
-                          </>
-                        ) : (
-                          <>
-                            <Upload className="h-6 w-6 text-muted-foreground" />
-                            <span className="text-xs text-muted-foreground">{t.picker.uploadDragDrop}</span>
-                            <span className="text-[10px] text-muted-foreground/60">{t.picker.uploadFormats}</span>
-                          </>
-                        )}
+                        <Upload className="h-6 w-6 text-muted-foreground" />
+                        <span className="text-xs text-muted-foreground">{t.picker.uploadDragDrop}</span>
+                        <span className="text-[10px] text-muted-foreground/60">{t.picker.uploadFormats}</span>
                       </button>
                     ) : (
                       <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-3 flex items-center gap-2">
@@ -497,7 +463,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                           <p className="text-[10px] text-green-700 dark:text-green-400">{t.picker.uploadSuccess}</p>
                         </div>
                         <button
-                          onClick={() => { setUploadedFile(null); fileInputRef.current?.click(); }}
+                          onClick={() => { setUploadedFile(null); purchase.setProofFile(null); fileInputRef.current?.click(); }}
                           className="text-[10px] text-muted-foreground hover:text-foreground underline shrink-0"
                           data-testid="button-change-file"
                         >

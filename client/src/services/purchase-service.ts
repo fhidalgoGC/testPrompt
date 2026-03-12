@@ -1,47 +1,56 @@
+const AWS_ENDPOINT = "https://4v82xof559.execute-api.us-east-1.amazonaws.com/dev/rifa/registro-completo";
+
 export interface PurchaseRequest {
-  raffleId: number;
-  quantity: number;
-  buyerName: string;
-  buyerPhone: string;
-  buyerEmail: string;
-  buyerIdNumber: string;
-  paymentMethod: string;
-  paymentCurrency: string;
-  totalAmount: string;
-  proofFilename: string;
+  rifaId: string;
+  name: string;
+  email: string;
+  telefono: string;
+  cedula: string;
+  moneda: string;
+  precioUnitario: string;
+  cantidad: string;
+  total: string;
+  metodoPago: string;
+  file: File | null;
 }
 
 export interface PurchaseResponse {
-  transactionId: string;
-}
-
-export interface UploadResponse {
-  success: boolean;
-  filename: string;
-  originalName: string;
-  size: number;
+  transactionId?: string;
+  message?: string;
+  [key: string]: unknown;
 }
 
 export async function submitPurchase(data: PurchaseRequest): Promise<PurchaseResponse> {
-  const res = await fetch("/api/purchase", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Error al procesar la compra");
-  }
-  return await res.json();
-}
-
-export async function uploadComprobante(file: File): Promise<UploadResponse> {
   const formData = new FormData();
-  formData.append("comprobante", file);
-  const res = await fetch("/api/upload-comprobante", { method: "POST", body: formData });
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Upload failed");
+  formData.append("rifaId", data.rifaId);
+  formData.append("name", data.name);
+  formData.append("email", data.email);
+  formData.append("telefono", data.telefono);
+  formData.append("cedula", data.cedula);
+  formData.append("moneda", data.moneda);
+  formData.append("precioUnitario", data.precioUnitario);
+  formData.append("cantidad", data.cantidad);
+  formData.append("total", data.total);
+  formData.append("metodoPago", data.metodoPago);
+  if (data.file) {
+    formData.append("file", data.file);
   }
+
+  const res = await fetch(AWS_ENDPOINT, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    let errorMessage = "Error al procesar la compra";
+    try {
+      const err = await res.json();
+      errorMessage = err.message || errorMessage;
+    } catch {
+      errorMessage = `Error ${res.status}: ${res.statusText}`;
+    }
+    throw new Error(errorMessage);
+  }
+
   return await res.json();
 }

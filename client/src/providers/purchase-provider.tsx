@@ -1,100 +1,63 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from "react";
 import { submitPurchase as submitPurchaseService, type PurchaseRequest } from "@/services/purchase-service";
 
-interface PurchaseData {
+export interface SubmitPurchaseParams {
   raffleId: number;
   raffleTitle: string;
   quantity: number;
   paymentMethod: string;
   paymentCurrency: string;
+  precioUnitario: string;
   totalAmount: string;
   buyerName: string;
   buyerPhone: string;
   buyerEmail: string;
   buyerIdNumber: string;
-  proofFilename: string;
 }
 
 interface PurchaseContextType {
-  purchaseData: PurchaseData;
-  setRaffleInfo: (raffleId: number, raffleTitle: string) => void;
-  setPaymentInfo: (method: string, currency: string) => void;
-  setQuantityInfo: (quantity: number, totalAmount: string) => void;
-  setBuyerInfo: (name: string, phone: string, email: string, idNumber: string) => void;
-  setProofFile: (filename: string) => void;
-  submitPurchase: () => Promise<{ transactionId: string }>;
-  resetPurchase: () => void;
+  proofFile: File | null;
+  setProofFile: (file: File | null) => void;
+  submitPurchase: (params: SubmitPurchaseParams) => Promise<{ transactionId: string }>;
 }
-
-const defaultData: PurchaseData = {
-  raffleId: 0,
-  raffleTitle: "",
-  quantity: 4,
-  paymentMethod: "",
-  paymentCurrency: "",
-  totalAmount: "",
-  buyerName: "",
-  buyerPhone: "",
-  buyerEmail: "",
-  buyerIdNumber: "",
-  proofFilename: "",
-};
 
 const PurchaseContext = createContext<PurchaseContextType | null>(null);
 
 export function PurchaseProvider({ children }: { children: ReactNode }) {
-  const [purchaseData, setPurchaseData] = useState<PurchaseData>({ ...defaultData });
+  const proofFileRef = useRef<File | null>(null);
+  const [, setFileVersion] = useState(0);
 
-  const setRaffleInfo = useCallback((raffleId: number, raffleTitle: string) => {
-    setPurchaseData(prev => ({ ...prev, raffleId, raffleTitle }));
+  const setProofFile = useCallback((file: File | null) => {
+    proofFileRef.current = file;
+    setFileVersion(v => v + 1);
   }, []);
 
-  const setPaymentInfo = useCallback((method: string, currency: string) => {
-    setPurchaseData(prev => ({ ...prev, paymentMethod: method, paymentCurrency: currency }));
-  }, []);
+  const submitPurchase = useCallback(async (params: SubmitPurchaseParams): Promise<{ transactionId: string }> => {
+    const rifaId = "GM1";
 
-  const setQuantityInfo = useCallback((quantity: number, totalAmount: string) => {
-    setPurchaseData(prev => ({ ...prev, quantity, totalAmount }));
-  }, []);
-
-  const setBuyerInfo = useCallback((name: string, phone: string, email: string, idNumber: string) => {
-    setPurchaseData(prev => ({ ...prev, buyerName: name, buyerPhone: phone, buyerEmail: email, buyerIdNumber: idNumber }));
-  }, []);
-
-  const setProofFile = useCallback((filename: string) => {
-    setPurchaseData(prev => ({ ...prev, proofFilename: filename }));
-  }, []);
-
-  const submitPurchase = useCallback(async (): Promise<{ transactionId: string }> => {
     const request: PurchaseRequest = {
-      raffleId: purchaseData.raffleId,
-      quantity: purchaseData.quantity,
-      buyerName: purchaseData.buyerName,
-      buyerPhone: purchaseData.buyerPhone,
-      buyerEmail: purchaseData.buyerEmail,
-      buyerIdNumber: purchaseData.buyerIdNumber,
-      paymentMethod: purchaseData.paymentMethod,
-      paymentCurrency: purchaseData.paymentCurrency,
-      totalAmount: purchaseData.totalAmount,
-      proofFilename: purchaseData.proofFilename,
+      rifaId,
+      name: params.buyerName,
+      email: params.buyerEmail,
+      telefono: params.buyerPhone,
+      cedula: params.buyerIdNumber,
+      moneda: params.paymentCurrency,
+      precioUnitario: params.precioUnitario,
+      cantidad: String(params.quantity),
+      total: params.totalAmount,
+      metodoPago: params.paymentMethod,
+      file: proofFileRef.current,
     };
-    return await submitPurchaseService(request);
-  }, [purchaseData]);
 
-  const resetPurchase = useCallback(() => {
-    setPurchaseData({ ...defaultData });
+    const response = await submitPurchaseService(request);
+    return { transactionId: response.transactionId || response.message || "OK" };
   }, []);
 
   return (
     <PurchaseContext.Provider value={{
-      purchaseData,
-      setRaffleInfo,
-      setPaymentInfo,
-      setQuantityInfo,
-      setBuyerInfo,
+      proofFile: proofFileRef.current,
       setProofFile,
       submitPurchase,
-      resetPurchase,
     }}>
       {children}
     </PurchaseContext.Provider>
