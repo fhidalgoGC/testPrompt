@@ -39,5 +39,14 @@ task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
 
+[[workflows.workflow]]
+name = "build Prod"
+mode = "sequential"
+author = 44036098
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run build"
+
 [agent]
 expertMode = true
