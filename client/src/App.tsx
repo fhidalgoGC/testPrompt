@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/lib/i18n";
 import { ThemeProvider } from "@/lib/theme-context";
+import { PurchaseProvider } from "@/lib/purchase-context";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Terms from "@/pages/terms";
@@ -28,12 +29,14 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <ThemeProvider>
-          <TooltipProvider>
-            <div className="min-h-screen bg-background text-foreground">
-              <Router />
-            </div>
-            <Toaster />
-          </TooltipProvider>
+          <PurchaseProvider>
+            <TooltipProvider>
+              <div className="min-h-screen bg-background text-foreground">
+                <Router />
+              </div>
+              <Toaster />
+            </TooltipProvider>
+          </PurchaseProvider>
         </ThemeProvider>
       </I18nProvider>
     </QueryClientProvider>

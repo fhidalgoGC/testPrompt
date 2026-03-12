@@ -31,9 +31,26 @@ export const coupons = pgTable("coupons", {
   usedByEmail: text("used_by_email"),
 });
 
+export const purchases = pgTable("purchases", {
+  id: serial("id").primaryKey(),
+  transactionId: text("transaction_id").notNull().unique(),
+  raffleId: integer("raffle_id").notNull(),
+  quantity: integer("quantity").notNull(),
+  buyerName: text("buyer_name").notNull(),
+  buyerPhone: text("buyer_phone").notNull(),
+  buyerEmail: text("buyer_email").notNull(),
+  buyerIdNumber: text("buyer_id_number"),
+  paymentMethod: text("payment_method").notNull(),
+  paymentCurrency: text("payment_currency").notNull(),
+  totalAmount: text("total_amount").notNull(),
+  proofFilename: text("proof_filename").notNull(),
+  status: text("status").notNull().default("pending"),
+});
+
 export const insertRaffleSchema = createInsertSchema(raffles).omit({ id: true });
 export const insertTicketSchema = createInsertSchema(tickets).omit({ id: true });
 export const insertCouponSchema = createInsertSchema(coupons).omit({ id: true });
+export const insertPurchaseSchema = createInsertSchema(purchases).omit({ id: true });
 
 export type InsertRaffle = z.infer<typeof insertRaffleSchema>;
 export type Raffle = typeof raffles.$inferSelect;
@@ -41,3 +58,5 @@ export type InsertTicket = z.infer<typeof insertTicketSchema>;
 export type Ticket = typeof tickets.$inferSelect;
 export type Coupon = typeof coupons.$inferSelect;
 export type InsertCoupon = z.infer<typeof insertCouponSchema>;
+export type Purchase = typeof purchases.$inferSelect;
+export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;

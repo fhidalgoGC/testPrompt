@@ -9,6 +9,7 @@ import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
+import { usePurchase } from "@/lib/purchase-context";
 import { BrandHeader } from "./brand-header";
 
 interface BuyTicketDialogProps {
@@ -138,6 +139,7 @@ function formatTime(seconds: number): string {
 
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const { country: globalCountry } = useI18n();
+  const purchase = usePurchase();
   const [selectedCountry] = useState<Country>((globalCountry === "OTHER" ? "VE" : globalCountry) as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -211,28 +213,68 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   };
 
 
-  const handleConfirmBuy = () => {
-    const randomNumbers: number[] = [];
-    const used = new Set<number>();
-    while (randomNumbers.length < quantity) {
-      const n = Math.floor(Math.random() * 9999) + 1;
-      if (!used.has(n)) { used.add(n); randomNumbers.push(n); }
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleConfirmBuy = async () => {
+    setIsSubmitting(true);
+
+    const allMethods = (Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
+      const cfg = COUNTRY_CONFIG[countryCode];
+      return cfg.paymentMethods.map((method) => ({ ...method, countryCode, countryName: cfg.name, countryFlag: cfg.flag, currency: cfg.currency, price: cfg.price }));
+    }).concat(GLOBAL_PAYMENT_METHODS);
+    const method = allMethods.find(m => m.id === selectedPaymentMethod);
+    const total = method ? String(method.price * quantity) : "0";
+    const currency = method?.currency || "";
+    const dialCode = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode || "";
+    const fullPhone = `${dialCode} ${buyerPhone}`;
+
+    purchase.setRaffleInfo(raffleId, title);
+    purchase.setPaymentInfo(selectedPaymentMethod || "", currency);
+    purchase.setQuantityInfo(quantity, total);
+    purchase.setBuyerInfo(buyerName, fullPhone, buyerEmail, buyerIdNumber);
+    purchase.setProofFile(uploadedFile?.filename || "");
+
+    try {
+      const res = await fetch("/api/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          raffleId,
+          quantity,
+          buyerName,
+          buyerPhone: fullPhone,
+          buyerEmail,
+          buyerIdNumber,
+          paymentMethod: selectedPaymentMethod,
+          paymentCurrency: currency,
+          totalAmount: total,
+          proofFilename: uploadedFile?.filename || "",
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || "Error");
+      }
+
+      const data = await res.json();
+      setTransactionId(data.transactionId);
+      setStep("success");
+
+      const duration = 3000;
+      const end = Date.now() + duration;
+      const frame = () => {
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      };
+      frame();
+      toast({ title: t.picker.toastTitle, description: t.picker.toastDesc.replace("{count}", String(quantity)).replace("{title}", title) });
+    } catch (err) {
+      toast({ variant: "destructive", title: t.picker.errorTitle, description: err instanceof Error ? err.message : t.picker.errorGeneric });
+    } finally {
+      setIsSubmitting(false);
     }
-    setAssignedNumbers(randomNumbers.sort((a, b) => a - b));
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    let txId = "";
-    for (let i = 0; i < 8; i++) txId += chars[Math.floor(Math.random() * chars.length)];
-    setTransactionId(txId);
-    setStep("success");
-    const duration = 3000;
-    const end = Date.now() + duration;
-    const frame = () => {
-      confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
-      confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ["#F59E0B", "#FBBF24", "#ffffff"] });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    };
-    frame();
-    toast({ title: t.picker.toastTitle, description: t.picker.toastDesc.replace("{count}", String(quantity)).replace("{title}", title) });
   };
 
 
@@ -297,11 +339,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <Button
                 className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
                 onClick={handleConfirmBuy}
+                disabled={isSubmitting}
                 data-testid="button-final-confirm"
               >
                 <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
-                  {t.picker.confirmBtn}
+                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                  {isSubmitting ? t.picker.processing : t.picker.confirmBtn}
                 </span>
               </Button>
             </div>

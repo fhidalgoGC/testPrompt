@@ -3,10 +3,13 @@ import {
   raffles,
   tickets,
   coupons,
+  purchases,
   type Raffle,
   type InsertRaffle,
   type Ticket,
   type Coupon,
+  type Purchase,
+  type InsertPurchase,
 } from "@shared/schema";
 import { eq, and } from "drizzle-orm";
 
@@ -19,6 +22,7 @@ export interface IStorage {
   seedTickets(raffleId: number, ticketNumbers: number[], soldCount: number): Promise<void>;
   redeemCoupon(code: string, email: string): Promise<{ credits: number }>;
   createCoupon(code: string, credits: number): Promise<Coupon>;
+  createPurchase(data: InsertPurchase): Promise<Purchase>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -118,6 +122,11 @@ export class DatabaseStorage implements IStorage {
   async createCoupon(code: string, credits: number): Promise<Coupon> {
     const [coupon] = await db.insert(coupons).values({ code: code.toUpperCase(), credits }).returning();
     return coupon;
+  }
+
+  async createPurchase(data: InsertPurchase): Promise<Purchase> {
+    const [purchase] = await db.insert(purchases).values(data).returning();
+    return purchase;
   }
 }
 
