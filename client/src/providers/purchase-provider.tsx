@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { submitPurchase as submitPurchaseService, type PurchaseRequest } from "@/services/purchase-service";
 
 interface PurchaseData {
   raffleId: number;
@@ -65,27 +66,19 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const submitPurchase = useCallback(async (): Promise<{ transactionId: string }> => {
-    const res = await fetch("/api/purchase", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        raffleId: purchaseData.raffleId,
-        quantity: purchaseData.quantity,
-        buyerName: purchaseData.buyerName,
-        buyerPhone: purchaseData.buyerPhone,
-        buyerEmail: purchaseData.buyerEmail,
-        buyerIdNumber: purchaseData.buyerIdNumber,
-        paymentMethod: purchaseData.paymentMethod,
-        paymentCurrency: purchaseData.paymentCurrency,
-        totalAmount: purchaseData.totalAmount,
-        proofFilename: purchaseData.proofFilename,
-      }),
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Error al procesar la compra");
-    }
-    return await res.json();
+    const request: PurchaseRequest = {
+      raffleId: purchaseData.raffleId,
+      quantity: purchaseData.quantity,
+      buyerName: purchaseData.buyerName,
+      buyerPhone: purchaseData.buyerPhone,
+      buyerEmail: purchaseData.buyerEmail,
+      buyerIdNumber: purchaseData.buyerIdNumber,
+      paymentMethod: purchaseData.paymentMethod,
+      paymentCurrency: purchaseData.paymentCurrency,
+      totalAmount: purchaseData.totalAmount,
+      proofFilename: purchaseData.proofFilename,
+    };
+    return await submitPurchaseService(request);
   }, [purchaseData]);
 
   const resetPurchase = useCallback(() => {

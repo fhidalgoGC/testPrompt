@@ -9,7 +9,8 @@ import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
-import { usePurchase } from "@/lib/purchase-context";
+import { usePurchase } from "@/providers/purchase-provider";
+import { uploadComprobante } from "@/services/purchase-service";
 import { BrandHeader } from "./brand-header";
 
 interface BuyTicketDialogProps {
@@ -181,14 +182,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     }
     setIsUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("comprobante", file);
-      const res = await fetch("/api/upload-comprobante", { method: "POST", body: formData });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Upload failed");
-      }
-      const data = await res.json();
+      const data = await uploadComprobante(file);
       setUploadedFile({ name: file.name, filename: data.filename });
       toast({ title: t.picker.uploadSuccess });
     } catch (err) {
