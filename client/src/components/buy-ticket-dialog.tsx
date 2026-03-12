@@ -19,7 +19,7 @@ interface BuyTicketDialogProps {
   onClose: () => void;
 }
 
-const MAX_TICKETS = 100;
+const MAX_TICKETS = 96;
 
 type Step = "payment" | "quantity" | "payment-details" | "info" | "confirm" | "success";
 
@@ -144,7 +144,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [uploadedFile, setUploadedFile] = useState<{ name: string; filename: string } | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(4);
   const [phoneCountry, setPhoneCountry] = useState("VE");
   const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const [buyerPhone, setBuyerPhone] = useState("");
@@ -236,7 +236,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   };
 
 
-  const quickAmounts = [1, 2, 3, 5, 10, 25];
+  const quickAmounts = [4, 8, 12, 20, 32, 48];
 
   return (
     <div className="space-y-3">
@@ -613,28 +613,19 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <Button
                 variant="outline" size="icon"
                 className="h-12 w-12 rounded-full border-white/10 text-foreground"
-                onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                disabled={quantity <= 1}
+                onClick={() => setQuantity(q => Math.max(4, q - 4))}
+                disabled={quantity <= 4}
                 data-testid="button-decrease-qty"
               >
                 <Minus className="h-5 w-5" />
               </Button>
               <div className="w-24 text-center">
-                <Input
-                  type="number" min={1} max={MAX_TICKETS} value={quantity}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value, 10);
-                    if (!isNaN(val) && val >= 1 && val <= MAX_TICKETS) setQuantity(val);
-                    else if (e.target.value === "") setQuantity(1);
-                  }}
-                  className="bg-secondary/50 border-white/10 text-center text-3xl font-display font-bold h-14 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  data-testid="input-quantity"
-                />
+                <span className="block bg-secondary/50 border border-border rounded-md text-center text-3xl font-display font-bold h-14 leading-[3.5rem]" data-testid="text-quantity">{quantity}</span>
               </div>
               <Button
                 variant="outline" size="icon"
                 className="h-12 w-12 rounded-full border-white/10 text-foreground"
-                onClick={() => setQuantity(q => Math.min(MAX_TICKETS, q + 1))}
+                onClick={() => setQuantity(q => Math.min(MAX_TICKETS, q + 4))}
                 disabled={quantity >= MAX_TICKETS}
                 data-testid="button-increase-qty"
               >
