@@ -1,4 +1,4 @@
-const AWS_ENDPOINT = "https://4v82xof559.execute-api.us-east-1.amazonaws.com/dev/rifa/registro-completo";
+const AWS_ENDPOINT = "https://qtriav9nzf.execute-api.us-east-1.amazonaws.com/dev/rifa/registro-completo";
 
 export interface PurchaseRequest {
   rifaId: string;
@@ -14,10 +14,34 @@ export interface PurchaseRequest {
   file: File | null;
 }
 
+interface ApiResponseData {
+  transactionId: string;
+  id: string;
+  rifaId: string;
+  name: string;
+  email: string;
+  telefono: string;
+  moneda: string;
+  precioUnitario: number;
+  cantidad: number;
+  total: number;
+  metodoPago: string;
+  status: string;
+  img_url: string;
+  img_key: string;
+}
+
+interface ApiResponse {
+  path: string;
+  status: number;
+  messages: { code: string; name: string; value: string }[];
+  data: ApiResponseData;
+}
+
 export interface PurchaseResponse {
-  transactionId?: string;
-  message?: string;
-  [key: string]: unknown;
+  transactionId: string;
+  id: string;
+  status: string;
 }
 
 export async function submitPurchase(data: PurchaseRequest): Promise<PurchaseResponse> {
@@ -45,12 +69,18 @@ export async function submitPurchase(data: PurchaseRequest): Promise<PurchaseRes
     let errorMessage = "Error al procesar la compra";
     try {
       const err = await res.json();
-      errorMessage = err.message || errorMessage;
+      errorMessage = err.data?.message || err.message || errorMessage;
     } catch {
       errorMessage = `Error ${res.status}: ${res.statusText}`;
     }
     throw new Error(errorMessage);
   }
 
-  return await res.json();
+  const apiResponse: ApiResponse = await res.json();
+
+  return {
+    transactionId: apiResponse.data.transactionId,
+    id: apiResponse.data.id,
+    status: apiResponse.data.status,
+  };
 }
