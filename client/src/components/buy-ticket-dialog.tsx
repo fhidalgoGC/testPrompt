@@ -590,7 +590,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 }
                 setStep("payment-details");
               }}
-              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.length < 7 || !buyerEmail.trim()}
+              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.length < 7 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
               data-testid="button-continue-to-payment-details"
             >
               <span className="flex items-center gap-2">
