@@ -95,9 +95,7 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
     id: "binance", name: "Binance Pay", icon: "💰",
     countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
     details: [
-      { label: "Binance ID", value: "123456789" },
-      { label: "Titular", value: "GMare Global" },
-      { label: "Red", value: "USDT (TRC20)" },
+      { label: "Binance ID", value: "91914887" },
     ],
   },
   {
