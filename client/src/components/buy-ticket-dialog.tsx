@@ -53,10 +53,9 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
       {
         id: "pago_movil", name: "Pago Movil", icon: "📱",
         details: [
-          { label: "Banco", value: "Bancolombia" },
-          { label: "Cuenta", value: "00981065221" },
-          { label: "Tipo", value: "Cta de ahorros" },
-          { label: "Titular", value: "Aron Hidalgo" },
+          { label: "Telefono", value: "0412-1234567" },
+          { label: "Cedula", value: "V-12345678" },
+          { label: "Banco", value: "Banesco" },
         ],
       },
     ],
@@ -82,9 +81,9 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         id: "transferencia_co", name: "Bancolombia (Transferencia)", icon: "🏦",
         details: [
           { label: "Banco", value: "Bancolombia" },
-          { label: "Cuenta Ahorros", value: "123-456789-01" },
-          { label: "Titular", value: "GMare SAS" },
-          { label: "NIT", value: "901.234.567-8" },
+          { label: "Cuenta", value: "00981065221" },
+          { label: "Tipo", value: "Cta de ahorros" },
+          { label: "Titular", value: "Aron Hidalgo" },
         ],
       },
     ],
