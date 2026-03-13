@@ -66,8 +66,6 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
         details: [
           { label: "Banco", value: "BBVA México" },
           { label: "CLABE", value: "012345678901234567" },
-          { label: "Titular", value: "GMare S.A. de C.V." },
-          { label: "Concepto", value: "Semillas GMare" },
         ],
       },
     ],
