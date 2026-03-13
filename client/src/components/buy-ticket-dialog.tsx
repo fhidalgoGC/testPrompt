@@ -11,6 +11,19 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
 import { usePurchase } from "@/providers/purchase-provider";
 import { BrandHeader } from "./brand-header";
+import pagoMovilLogo from "@/assets/logos/pago-movil.png";
+import speiLogo from "@/assets/logos/spei.jpg";
+import transferenciaLogo from "@/assets/logos/transferencia.png";
+import binanceLogo from "@/assets/logos/binance.png";
+import zelleLogo from "@/assets/logos/zelle.png";
+
+const PAYMENT_LOGOS: Record<string, string> = {
+  pago_movil: pagoMovilLogo,
+  spei: speiLogo,
+  transferencia_co: transferenciaLogo,
+  binance: binanceLogo,
+  zelle: zelleLogo,
+};
 
 interface BuyTicketDialogProps {
   raffleId: number;
@@ -64,13 +77,6 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
   CO: {
     name: "Colombia", flag: "🇨🇴", currency: "COP", price: 4200,
     paymentMethods: [
-      {
-        id: "nequi", name: "Nequi", icon: "💜",
-        details: [
-          { label: "Numero Nequi", value: "300-1234567" },
-          { label: "Titular", value: "GMare SAS" },
-        ],
-      },
       {
         id: "transferencia_co", name: "Bancolombia (Transferencia)", icon: "🏦",
         details: [
@@ -351,7 +357,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10 hover:bg-white/5'}`}
                   data-testid={`button-payment-${method.id}`}
                 >
-                  <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
+                  <img src={PAYMENT_LOGOS[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
                   <div className="flex-1 text-left">
                     <span className="font-medium text-foreground">{method.name}</span>
                     <span className="block text-xs text-muted-foreground">Precio por semilla: {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
@@ -395,7 +401,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               return (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-primary bg-primary/10">
-                    <img src={({pago_movil:"/logos/pago-movil.png",spei:"/logos/spei.jpg",nequi:"/logos/nequi.png",transferencia_co:"/logos/transferencia.png",binance:"/logos/binance.png",zelle:"/logos/zelle.png"} as Record<string,string>)[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
+                    <img src={PAYMENT_LOGOS[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
                     <span className="font-medium text-foreground">{method.name}</span>
                     <CheckCircle2 className="h-5 w-5 text-primary ml-auto" />
                   </div>

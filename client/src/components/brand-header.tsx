@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import mareAvatar1 from "@/assets/logos/mare-avatar.jpg";
+import mareAvatar2 from "@/assets/logos/mare-avatar2.jpg";
 
-const avatarImages = ["/logos/mare-avatar.jpg", "/logos/mare-avatar2.jpg"];
+const avatarImages = [mareAvatar1, mareAvatar2];
 
 export function BrandHeader({ size = "default" }: { size?: "default" | "small" }) {
   const [avatarIndex, setAvatarIndex] = useState(0);

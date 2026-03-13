@@ -7,6 +7,11 @@ import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
+import conalotImg from "@/assets/logos/conalot.jpg";
+import superganaImg from "@/assets/logos/supergana.png";
+import tachiraImg from "@/assets/logos/tachira.jpg";
+import callCenterImg from "@/assets/logos/call-center.png";
+import chatBubblesImg from "@/assets/logos/chat-bubbles.png";
 
 const staticRaffles = [
   {
@@ -83,19 +88,19 @@ export default function Home() {
         <div className="flex justify-center gap-6 sm:gap-10">
           <div className="flex flex-col items-center group w-24" data-testid="lottery-CONALOT">
             <div className="w-16 h-16 flex items-center justify-center overflow-hidden rounded-full mx-auto">
-              <img src="/logos/conalot.jpg" alt="CONALOT" className="w-full h-full object-cover" />
+              <img src={conalotImg} alt="CONALOT" className="w-full h-full object-cover" />
             </div>
             <span className="text-xs text-muted-foreground mt-2">CONALOT</span>
           </div>
           <div className="flex flex-col items-center group w-24" data-testid="lottery-Super Gana">
             <div className="w-20 h-16 bg-muted/50 border border-border rounded-lg flex items-center justify-center overflow-hidden mx-auto">
-              <img src="/logos/supergana.png" alt="Super Gana" className="w-full h-full object-contain" />
+              <img src={superganaImg} alt="Super Gana" className="w-full h-full object-contain" />
             </div>
             <span className="text-xs text-muted-foreground mt-2">Super Gana</span>
           </div>
           <div className="flex flex-col items-center group w-24" data-testid="lottery-Loteria del Tachira">
             <div className="w-16 h-16 flex items-center justify-center overflow-hidden rounded-full mx-auto">
-              <img src="/logos/tachira.jpg" alt="Loteria del Tachira" className="w-full h-full object-cover" />
+              <img src={tachiraImg} alt="Loteria del Tachira" className="w-full h-full object-cover" />
             </div>
             <span className="text-xs text-muted-foreground mt-2 text-center">Loteria del Tachira</span>
           </div>
@@ -112,7 +117,7 @@ export default function Home() {
             data-testid="button-chat-fab"
           >
             <div className="h-full w-full rounded-full bg-background flex items-center justify-center p-1.5">
-              <img src={chatOpen ? "/logos/chat-bubbles.png" : "/logos/call-center.png"} alt="Soporte" className="h-full w-full object-contain dark:invert" />
+              <img src={chatOpen ? chatBubblesImg : callCenterImg} alt="Soporte" className="h-full w-full object-contain dark:invert" />
             </div>
           </button>
         </div>
