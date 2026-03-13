@@ -15,14 +15,12 @@ import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";
 import binanceLogo from "@/assets/logos/binance.png";
-import zelleLogo from "@/assets/logos/zelle.png";
 
 const PAYMENT_LOGOS: Record<string, string> = {
   pago_movil: pagoMovilLogo,
   spei: speiLogo,
   transferencia_co: transferenciaLogo,
   binance: binanceLogo,
-  zelle: zelleLogo,
 };
 
 interface BuyTicketDialogProps {
@@ -96,14 +94,6 @@ const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFla
     countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
     details: [
       { label: "Binance ID", value: "91914887" },
-    ],
-  },
-  {
-    id: "zelle", name: "Zelle", icon: "💸",
-    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
-    details: [
-      { label: "Email Zelle", value: "pagos@gmare.com" },
-      { label: "Titular", value: "GMare Global" },
     ],
   },
 ];
