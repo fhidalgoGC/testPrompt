@@ -64,8 +64,8 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
       {
         id: "spei", name: "Transferencia SPEI", icon: "🏦",
         details: [
-          { label: "Banco", value: "BBVA México" },
-          { label: "CLABE", value: "012345678901234567" },
+          { label: "Banco", value: "MercadoPago" },
+          { label: "CLABE", value: "722969010417786326" },
         ],
       },
     ],
