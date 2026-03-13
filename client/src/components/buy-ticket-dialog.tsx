@@ -51,11 +51,11 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
     name: "Venezuela", flag: "🇻🇪", currency: "USD", price: 1,
     paymentMethods: [
       {
-        id: "pago_movil", name: "Pago Movil", icon: "📱",
+        id: "pago_movil", name: "Pago Móvil", icon: "📱",
         details: [
-          { label: "Telefono", value: "0412-1234567" },
-          { label: "Cedula", value: "V-12345678" },
-          { label: "Banco", value: "Banesco" },
+          { label: "Cédula", value: "20242594" },
+          { label: "Celular", value: "0422-6333703" },
+          { label: "Banco", value: "Banco de Venezuela 0102" },
         ],
       },
     ],
