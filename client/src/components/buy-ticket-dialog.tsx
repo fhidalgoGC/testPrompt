@@ -565,7 +565,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     </div>
                   )}
                 </div>
-                <input type="tel" inputMode="numeric" placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value.replace(/\D/g, ""))} className="flex-1 bg-transparent h-10 px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none" data-testid="input-buyer-phone" />
+                <input type="tel" inputMode="numeric" maxLength={12} placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value.replace(/\D/g, "").slice(0, 12))} className="flex-1 bg-transparent h-10 px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none" data-testid="input-buyer-phone" />
               </div>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
