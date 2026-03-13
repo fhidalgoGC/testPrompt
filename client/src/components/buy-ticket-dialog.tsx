@@ -155,7 +155,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerName, setBuyerName] = useState("");
-  const [buyerIdNumber, setBuyerIdNumber] = useState("");
+  const [buyerIdNumber, setBuyerIdNumber] = useState("V-");
   const [step, setStep] = useState<Step>("payment");
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
@@ -525,7 +525,13 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     t.picker.idPlaceholder
                   }
                   value={buyerIdNumber}
-                  onChange={(e) => setBuyerIdNumber(e.target.value)}
+                  onChange={(e) => {
+                    let val = e.target.value;
+                    if (!val.startsWith("V-")) val = "V-";
+                    const digits = val.slice(2).replace(/\D/g, "").slice(0, 8);
+                    setBuyerIdNumber("V-" + digits);
+                  }}
+                  maxLength={10}
                   className="bg-secondary/50 border-white/10 pl-10"
                   data-testid="input-buyer-id"
                 />
@@ -584,7 +590,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 }
                 setStep("payment-details");
               }}
-              disabled={!buyerName.trim() || !buyerIdNumber.trim() || !buyerPhone.trim() || !buyerEmail.trim()}
+              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || !buyerPhone.trim() || !buyerEmail.trim()}
               data-testid="button-continue-to-payment-details"
             >
               <span className="flex items-center gap-2">
