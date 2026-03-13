@@ -54,7 +54,7 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
     };
 
     const response = await submitPurchaseService(request);
-    return { transactionId: response.transactionId || response.message || "OK" };
+    return { transactionId: response.transactionId };
   }, []);
 
   return (
