@@ -75,7 +75,7 @@ export default function Home() {
         >
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg sm:text-xl font-display font-bold uppercase tracking-wider flex items-center gap-2">
-              <img src={seedIconImg} alt="Semilla" className="w-8 h-8 object-contain" /> 
+              <img src={seedIconImg} alt="Semilla" className="w-12 h-12 object-contain" /> 
               {t.raffle.priorityCampaign}
             </h2>
           </div>
