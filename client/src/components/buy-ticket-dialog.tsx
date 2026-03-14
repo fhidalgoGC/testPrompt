@@ -423,7 +423,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   </div>
 
                   <div className="border-t border-white/5 pt-3 mt-2 space-y-2">
-                    <p className="text-xs font-medium text-foreground">{t.picker.uploadProof}</p>
+                    <h4 className="text-lg font-display font-bold text-foreground">{t.picker.uploadProof}</h4>
 
                     <input
                       ref={fileInputRef}
