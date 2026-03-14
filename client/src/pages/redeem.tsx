@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
+import seedIconImg from "@assets/IMG_5589_1773506977428.PNG";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useI18n } from "@/lib/i18n";
@@ -74,7 +75,7 @@ export default function Redeem() {
           className="text-center mb-8"
         >
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 mb-4">
-            <Flame className="w-8 h-8 text-primary" />
+            <img src={seedIconImg} alt="Semilla" className="w-8 h-8 object-contain" />
           </div>
           <h1 className="font-display font-bold text-3xl text-foreground mb-2" data-testid="text-redeem-title">
             {t.coupon.title}

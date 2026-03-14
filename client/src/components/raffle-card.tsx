@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { VisualProgress } from "./ui/visual-progress";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
-import { ChevronRight, ChevronLeft, ShieldCheck, Flame, Eye } from "lucide-react";
+import { ChevronRight, ChevronLeft, ShieldCheck, Eye } from "lucide-react";
+import seedIconImg from "@assets/IMG_5589_1773506977428.PNG";
 import { useI18n } from "@/lib/i18n";
 
 interface Raffle {
@@ -163,7 +164,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               disabled={isComplete}
               data-testid={`button-secure-entry-${raffle.id}`}
             >
-              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<Flame className="w-6 h-6 ml-1 text-green-700 dark:text-green-500" /></>)}
+              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<img src={seedIconImg} alt="Semilla" className="w-6 h-6 ml-1 object-contain" /></>)}
               {!isComplete && (
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               )}

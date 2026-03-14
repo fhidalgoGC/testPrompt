@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Minus, Plus, Copy, Check, X, Upload, FileCheck, Loader2, Eye, Flame } from "lucide-react";
+import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Minus, Plus, Copy, Check, X, Upload, FileCheck, Loader2, Eye } from "lucide-react";
+import seedIconImg from "@assets/IMG_5589_1773506977428.PNG";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -247,7 +248,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
       <AnimatePresence mode="wait">
         {step === "success" ? (
           <motion.div key="success" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center text-center space-y-4 py-6">
-            <Flame className="h-12 w-12 text-yellow-400" />
+            <img src={seedIconImg} alt="Semilla" className="h-12 w-12 object-contain" />
             <div>
               <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
               <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
@@ -277,7 +278,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         ) : step === "confirm" ? (
           <motion.div key="confirm" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5 py-4">
             <div className="flex flex-col items-center text-center space-y-4">
-              <Flame className="h-12 w-12 text-yellow-400" />
+              <img src={seedIconImg} alt="Semilla" className="h-12 w-12 object-contain" />
               <div>
                 <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">{t.picker.confirmTitle}</h3>
               </div>
