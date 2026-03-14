@@ -271,7 +271,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
               <p className="text-xs text-primary/80 font-medium">{t.picker.saveTransactionNote}</p>
             </div>
-            <Button variant="outline" className="mt-2 border-white/10" onClick={handleClose} data-testid="button-close-success">
+            <Button variant="outline" className="mt-2 border-border" onClick={handleClose} data-testid="button-close-success">
               {t.picker.closeBtn}
             </Button>
           </motion.div>
@@ -296,7 +296,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" className="flex-1 border-white/10" onClick={() => setStep("payment-details")} data-testid="button-back-to-payment-details">
+              <Button variant="outline" className="flex-1 border-border" onClick={() => setStep("payment-details")} data-testid="button-back-to-payment-details">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <Button
@@ -341,7 +341,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <button
                   key={method.id}
                   onClick={() => { setSelectedPaymentMethod(method.id); setUploadedFile(null); purchase.setProofFile(null); }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-white/10 hover:bg-white/5'}`}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-border hover:bg-muted/50'}`}
                   data-testid={`button-payment-${method.id}`}
                 >
                   <img src={PAYMENT_LOGOS[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
@@ -352,7 +352,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   {selectedPaymentMethod === method.id ? (
                     <CheckCircle2 className="h-5 w-5 text-primary" />
                   ) : (
-                    <div className="h-5 w-5 rounded-full border-2 border-white/20" />
+                    <div className="h-5 w-5 rounded-full border-2 border-border" />
                   )}
                 </button>
               ))}
@@ -500,7 +500,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   placeholder="Nombre completo"
                   value={buyerName}
                   onChange={(e) => setBuyerName(e.target.value)}
-                  className="bg-secondary/50 border-white/10 pl-10"
+                  className="bg-secondary/50 border-border pl-10"
                   data-testid="input-buyer-name"
                 />
               </div>
@@ -521,16 +521,16 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     setBuyerIdNumber("V-" + digits);
                   }}
                   maxLength={10}
-                  className="bg-secondary/50 border-white/10 pl-10"
+                  className="bg-secondary/50 border-border pl-10"
                   data-testid="input-buyer-id"
                 />
               </div>
-              <div className="relative flex items-stretch rounded-md border border-white/10 bg-secondary/50 overflow-visible">
+              <div className="relative flex items-stretch rounded-md border border-border bg-secondary/50 overflow-visible">
                 <div className="relative">
                   <button
                     type="button"
                     onClick={() => setPhoneDropdownOpen(!phoneDropdownOpen)}
-                    className="h-full px-3 flex items-center gap-1.5 hover:bg-white/10 transition-colors shrink-0 border-r border-white/10"
+                    className="h-full px-3 flex items-center gap-1.5 hover:bg-muted/50 transition-colors shrink-0 border-r border-border"
                     data-testid="button-phone-country"
                   >
                     <span className="text-base">{PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.flag}</span>
@@ -563,7 +563,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   placeholder={t.picker.emailPlaceholder}
                   value={buyerEmail}
                   onChange={(e) => setBuyerEmail(e.target.value)}
-                  className="bg-secondary/50 border-white/10 pl-10"
+                  className="bg-secondary/50 border-border pl-10"
                   data-testid="input-buyer-email"
                 />
               </div>
@@ -614,7 +614,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             <div className="flex items-center justify-center gap-4">
               <Button
                 variant="outline" size="icon"
-                className="h-12 w-12 rounded-full border-white/10 text-foreground"
+                className="h-12 w-12 rounded-full border-border text-foreground"
                 onClick={() => setQuantity(q => Math.max(4, q - 4))}
                 disabled={quantity <= 4}
                 data-testid="button-decrease-qty"
@@ -626,7 +626,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
               <Button
                 variant="outline" size="icon"
-                className="h-12 w-12 rounded-full border-white/10 text-foreground"
+                className="h-12 w-12 rounded-full border-border text-foreground"
                 onClick={() => setQuantity(q => Math.min(MAX_TICKETS, q + 4))}
                 disabled={quantity >= MAX_TICKETS}
                 data-testid="button-increase-qty"
@@ -639,7 +639,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               {quickAmounts.map(amt => (
                 <Button
                   key={amt} variant={quantity === amt ? "default" : "outline"} size="sm"
-                  className={`min-w-[3rem] ${quantity === amt ? "" : "border-white/10 text-muted-foreground"}`}
+                  className={`min-w-[3rem] ${quantity === amt ? "" : "border-border text-muted-foreground"}`}
                   onClick={() => setQuantity(amt)}
                   data-testid={`button-quick-${amt}`}
                 >{amt}</Button>
