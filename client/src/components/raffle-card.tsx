@@ -4,7 +4,7 @@ import { VisualProgress } from "./ui/visual-progress";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
 import { ChevronRight, ChevronLeft, ShieldCheck, Eye } from "lucide-react";
-import seedIconImg from "@assets/d3777354-d33b-4874-a37a-5c7585262666_1773507161470.JPG";
+import seedIconImg from "@/assets/seed-icon-nobg.png";
 import { useI18n } from "@/lib/i18n";
 
 interface Raffle {
