@@ -415,9 +415,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-primary/10 border border-primary/20">
-                    <span className="text-xs font-medium text-primary">Total a pagar</span>
-                    <span className="text-sm font-bold text-primary" data-testid={`text-price-${method.id}`}>
+                  <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
+                    <span className="text-xs font-medium text-amber-800 dark:text-primary">Total a pagar</span>
+                    <span className="text-sm font-bold text-amber-800 dark:text-primary" data-testid={`text-price-${method.id}`}>
                       {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
                     </span>
                   </div>
@@ -441,12 +441,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     {!uploadedFile ? (
                       <button
                         onClick={() => fileInputRef.current?.click()}
-                        className="w-full border-2 border-dashed border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all hover:bg-primary/5"
+                        className="w-full border-2 border-dashed border-amber-300 dark:border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all bg-amber-50/50 dark:bg-transparent hover:bg-primary/5"
                         data-testid="button-upload-area"
                       >
-                        <Upload className="h-6 w-6 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">{t.picker.uploadDragDrop}</span>
-                        <span className="text-[10px] text-muted-foreground/60">{t.picker.uploadFormats}</span>
+                        <Upload className="h-6 w-6 text-amber-700 dark:text-muted-foreground" />
+                        <span className="text-xs text-amber-800 dark:text-muted-foreground">{t.picker.uploadDragDrop}</span>
+                        <span className="text-[10px] text-amber-700/70 dark:text-muted-foreground/60">{t.picker.uploadFormats}</span>
                       </button>
                     ) : (
                       <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-3 flex items-center gap-2">
@@ -655,9 +655,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               const method = allMethods.find(m => m.id === selectedPaymentMethod);
               if (!method) return null;
               return (
-                <div className="flex items-center justify-between gap-2 py-2 px-3 rounded-lg bg-primary/10 border border-primary/20">
-                  <span className="text-sm font-medium text-primary">Total a pagar</span>
-                  <span className="text-lg font-bold text-primary" data-testid="text-quantity-total">
+                <div className="flex items-center justify-between gap-2 py-2 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
+                  <span className="text-sm font-medium text-amber-800 dark:text-primary">Total a pagar</span>
+                  <span className="text-lg font-bold text-amber-800 dark:text-primary" data-testid="text-quantity-total">
                     {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
                   </span>
                 </div>
