@@ -306,7 +306,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 data-testid="button-final-confirm"
               >
                 <span className="flex items-center gap-2">
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-4 w-4 object-contain" />}
+                  {isSubmitting ? <Loader2 className="h-6 w-6 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
                   {isSubmitting ? t.picker.processing : t.picker.confirmBtn}
                 </span>
               </Button>
@@ -365,7 +365,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               data-testid="button-continue-to-quantity"
             >
               <span className="flex items-center gap-2">
-                <img src={seedIconImg} alt="Semilla" className="h-5 w-5 object-contain" />
+                <img src={seedIconImg} alt="Semilla" className="h-7 w-7 object-contain" />
                 {t.picker.continueButton}
               </span>
             </Button>
@@ -671,7 +671,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
-                  <img src={seedIconImg} alt="Semilla" className="h-5 w-5 object-contain" />
+                  <img src={seedIconImg} alt="Semilla" className="h-7 w-7 object-contain" />
                   {quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
                 </span>
               </Button>
