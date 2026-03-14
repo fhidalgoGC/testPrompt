@@ -1,4 +1,4 @@
-# GanaConMare (GANA CON MAREDORAZIO)
+# GanaConMare (GANA CON MARE)
 
 ## Overview
 A premium vehicle draw/sorteo platform. Users can browse active campaigns, select seeds (tickets), and purchase them. The draw only activates once 100% of seeds (9999) are sold.
