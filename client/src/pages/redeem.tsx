@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
-import seedIconImg from "@assets/IMG_5589_1773506977428.PNG";
+import seedIconImg from "@assets/d3777354-d33b-4874-a37a-5c7585262666_1773507161470.JPG";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useI18n } from "@/lib/i18n";
