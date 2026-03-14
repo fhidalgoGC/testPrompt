@@ -253,8 +253,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <h3 className="text-xl font-bold text-foreground" data-testid="text-success-title">{t.picker.successTitle}</h3>
               <p className="text-sm text-muted-foreground mt-1">{t.picker.successDesc}</p>
             </div>
-            <div className="glass-gold rounded-lg p-4 w-full max-w-sm space-y-3">
-              <p className="text-sm text-muted-foreground">{t.picker.transactionLabel}</p>
+            <div className="bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20 rounded-lg p-4 w-full max-w-sm space-y-3">
+              <p className="text-sm text-black dark:text-muted-foreground">{t.picker.transactionLabel}</p>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-2xl font-mono font-bold text-primary tracking-widest" data-testid="text-transaction-id">{transactionId}</span>
                 <button
@@ -269,7 +269,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   )}
                 </button>
               </div>
-              <p className="text-xs text-primary/80 font-medium">{t.picker.saveTransactionNote}</p>
+              <p className="text-xs text-black dark:text-primary/80 font-medium">{t.picker.saveTransactionNote}</p>
             </div>
             <Button variant="outline" className="mt-2 border-border" onClick={handleClose} data-testid="button-close-success">
               {t.picker.closeBtn}
@@ -283,9 +283,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">{t.picker.confirmTitle}</h3>
               </div>
             </div>
-            <div className="glass-gold rounded-lg p-3 space-y-2">
+            <div className="bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20 rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-foreground font-semibold">{t.picker.ticketCount}</span>
+                <span className="text-black dark:text-foreground font-semibold">{t.picker.ticketCount}</span>
                 <span className="text-primary font-display font-bold text-lg" data-testid="text-confirm-count">{quantity}</span>
               </div>
               <div className="border-t border-border pt-2 mt-2 space-y-1 text-xs text-foreground font-medium">
