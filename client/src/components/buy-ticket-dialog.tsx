@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Ticket, Zap, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Minus, Plus, Copy, Check, X, Upload, FileCheck, Loader2, Eye } from "lucide-react";
+import { Ticket, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Minus, Plus, Copy, Check, X, Upload, FileCheck, Loader2, Eye } from "lucide-react";
 import seedIconImg from "@/assets/seed-icon-nobg.png";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
@@ -306,7 +306,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 data-testid="button-final-confirm"
               >
                 <span className="flex items-center gap-2">
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-4 w-4 object-contain" />}
                   {isSubmitting ? t.picker.processing : t.picker.confirmBtn}
                 </span>
               </Button>
@@ -365,7 +365,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               data-testid="button-continue-to-quantity"
             >
               <span className="flex items-center gap-2">
-                <Zap className="h-5 w-5" />
+                <img src={seedIconImg} alt="Semilla" className="h-5 w-5 object-contain" />
                 {t.picker.continueButton}
               </span>
             </Button>
@@ -671,7 +671,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 data-testid="button-proceed-contact"
               >
                 <span className="flex items-center gap-2">
-                  <Zap className="h-5 w-5" />
+                  <img src={seedIconImg} alt="Semilla" className="h-5 w-5 object-contain" />
                   {quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
                 </span>
               </Button>
