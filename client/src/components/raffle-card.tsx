@@ -55,7 +55,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
           group relative overflow-hidden rounded-2xl bg-card border border-border
           transition-all duration-500 hover:border-primary/30 box-glow-hover
           shadow-lg dark:shadow-none dark:border-white/5
-          flex flex-col max-w-[400px] mx-auto
+          flex flex-col max-w-[700px] mx-auto
         `}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
