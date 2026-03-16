@@ -1,16 +1,31 @@
+import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { VisualProgress } from "@/components/ui/visual-progress";
 import { useI18n } from "@/lib/i18n";
 
 interface RaffleStatsProps {
-  viewersCount: number;
   sold: number;
   total: number;
   isComplete: boolean;
 }
 
-export function RaffleStats({ viewersCount, sold, total, isComplete }: RaffleStatsProps) {
+export function RaffleStats({ sold, total, isComplete }: RaffleStatsProps) {
   const { t } = useI18n();
+  const [viewersCount, setViewersCount] = useState(Math.floor(Math.random() * (150 - 20 + 1) + 20));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setViewersCount(prev => {
+        const minViewers = 20;
+        const maxViewers = 150;
+        const change = Math.floor(Math.random() * 20) - 10;
+        const newCount = Math.max(minViewers, Math.min(maxViewers, prev + change));
+        return newCount;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>

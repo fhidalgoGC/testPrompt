@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RaffleStats } from "@/components/raffle-stats";
+import { RaffleStats } from "@/components/general/raffle-stats";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
 import { ShieldCheck, ChevronRight } from "lucide-react";
@@ -108,7 +108,6 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               </p>
             )}
             <RaffleStats 
-              viewersCount={viewers}
               sold={raffle.soldTickets}
               total={raffle.totalTickets}
               isComplete={isComplete}
