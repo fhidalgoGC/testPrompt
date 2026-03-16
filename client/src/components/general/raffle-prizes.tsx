@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
+import seedLightImg from "@assets/WhatsApp_Image_2026-03-16_at_13.26.38_1773689508178.jpeg";
 import seedDarkImg from "@assets/WhatsApp_Image_2026-03-16_at_13.24.30_1773689374715.jpeg";
 
 export function RafflePrizes() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+
+    const observer = new MutationObserver(() => {
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      setIsDark(isDarkMode);
+    });
+
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="space-y-4 text-left">
       <div>
@@ -26,7 +43,7 @@ export function RafflePrizes() {
           {Array.from({ length: 8 }).map((_, i) => (
             <img 
               key={i} 
-              src={seedDarkImg}
+              src={isDark ? seedDarkImg : seedLightImg}
               alt="Semilla premiada"
               className="h-16 w-16 object-contain"
             />
