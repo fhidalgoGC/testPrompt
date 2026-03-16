@@ -53,7 +53,7 @@ export default function Home() {
         <div className="absolute top-40 left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute top-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <h2 className="text-3xl sm:text-4xl font-bold text-black dark:text-black mb-8">Actívate con tus semillas</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold text-black dark:text-black mb-8 text-center">Actívate con tus SEMILLAS</h2>
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
