@@ -148,6 +148,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [step, setStep] = useState<Step>("payment");
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
+  const [referencia, setReferencia] = useState("");
   const { toast } = useToast();
   const { t } = useI18n();
 
@@ -220,6 +221,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         buyerPhone: fullPhone,
         buyerEmail,
         buyerIdNumber,
+        referencia,
       });
       setTransactionId(data.transactionId);
       setStep("success");
@@ -422,7 +424,18 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     </span>
                   </div>
 
-                  <div className="border-t border-white/5 pt-3 mt-2 space-y-2">
+                  <div className="border-t border-white/5 pt-3 mt-2 space-y-3">
+                    <div>
+                      <label className="text-xs font-bold text-foreground block mb-2">Referencia</label>
+                      <Input
+                        placeholder="Ingresa tu referencia de pago"
+                        value={referencia}
+                        onChange={(e) => setReferencia(e.target.value)}
+                        className="text-sm"
+                        data-testid="input-referencia"
+                      />
+                    </div>
+
                     <h4 className="text-lg font-display font-bold text-foreground">{t.picker.uploadProof}</h4>
 
                     <input
