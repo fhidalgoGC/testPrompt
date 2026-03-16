@@ -5,7 +5,8 @@
 @tailwind utilities;
 
 /* Import organized style files */
-@import './styles/theme.css';
+@import './styles/theme.light.css';
+@import './styles/theme.dark.css';
 @import './styles/colors.css';
 @import './styles/globals.css';
 @import './styles/components.css';

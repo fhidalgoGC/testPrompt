@@ -1,0 +1,88 @@
+/* Dark Theme Colors - Brand & Primary Colors */
+
+@layer base {
+  .dark {
+    /* Brand Yellow - GANA CON MARE (Dark Mode) */
+    --brand-yellow-light: 44 97% 78%;    /* #FCD34D */
+    --brand-yellow: 44 97% 78%;          /* #FCD34D */
+    
+    /* Primary Green - Progress Bar & Main Actions (Dark Mode) */
+    --primary-green-light: 134 75% 50%;  /* #22c55e */
+    --primary-green: 134 75% 50%;        /* #22c55e */
+    --primary-green-dark: 134 80% 45%;   /* #10b981 */
+
+    /* Secondary Colors */
+    --accent-teal: 180 100% 50%;         /* Cyan accent */
+    --accent-orange: 38 92% 50%;         /* Warning/secondary */
+  }
+}
+
+/* Dark Theme Utilities */
+@layer utilities {
+  .dark {
+    /* Yellow Brand Colors */
+    .text-yellow-brand {
+      @apply text-yellow-300;
+    }
+
+    .bg-yellow-brand {
+      @apply bg-yellow-300;
+    }
+
+    .border-yellow-brand {
+      @apply border-yellow-300;
+    }
+
+    .from-yellow-brand {
+      @apply from-yellow-300;
+    }
+
+    .to-yellow-brand {
+      @apply to-yellow-400;
+    }
+
+    /* Green Primary Colors */
+    .text-green-primary {
+      @apply text-green-500;
+    }
+
+    .bg-green-primary {
+      @apply bg-green-500;
+    }
+
+    .border-green-primary {
+      @apply border-green-500;
+    }
+
+    .from-green-primary {
+      @apply from-green-500;
+    }
+
+    .to-green-primary {
+      @apply to-green-400;
+    }
+
+    /* Gradient backgrounds */
+    .bg-gradient-yellow-brand {
+      @apply bg-gradient-to-r from-yellow-300 to-yellow-400;
+    }
+
+    .bg-gradient-green-primary {
+      @apply bg-gradient-to-r from-green-500 to-green-400;
+    }
+
+    /* Text shadows for brand styling */
+    .text-shadow-brand {
+      text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+    }
+
+    /* Hover effects */
+    .hover-yellow-brand:hover {
+      @apply from-yellow-400 to-yellow-500;
+    }
+
+    .hover-green-primary:hover {
+      @apply from-green-600 to-green-500;
+    }
+  }
+}
