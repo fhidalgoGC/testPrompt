@@ -118,7 +118,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
             
             <Button 
               className={`
-                w-full font-bold group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-300
+                w-full font-bold group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-300 border border-black
                 ${isComplete 
                   ? 'bg-secondary text-secondary-foreground hover:bg-secondary cursor-not-allowed opacity-80' 
                   : 'bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600'}
