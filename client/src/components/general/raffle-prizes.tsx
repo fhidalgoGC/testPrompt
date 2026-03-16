@@ -6,14 +6,14 @@ export function RafflePrizes() {
       <div>
         <h4 className="text-sm font-bold text-foreground mb-2">Top de Compras</h4>
         <div className="space-y-1 text-xs">
-          <p className="text-muted-foreground">1er Lugar 600 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span></p>
-          <p className="text-muted-foreground">2do Lugar 300 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span></p>
-          <p className="text-muted-foreground">3er Lugar 100 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span></p>
+          <p className="text-muted-foreground">1er Lugar 600 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span></p>
+          <p className="text-muted-foreground">2do Lugar 300 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span></p>
+          <p className="text-muted-foreground">3er Lugar 100 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span></p>
         </div>
       </div>
 
       <div>
-        <h4 className="text-sm font-bold text-foreground mb-2">8 semillas especiales de 25 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span> cada una</h4>
+        <h4 className="text-sm font-bold text-foreground mb-2">8 semillas especiales de 25 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span> cada una</h4>
         <p className="text-xs text-muted-foreground leading-relaxed">
           {specialNumbers.join(" - ")}
         </p>
