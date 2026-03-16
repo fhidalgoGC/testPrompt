@@ -1,6 +1,7 @@
-export function RafflePrizes() {
-  const specialNumbers = ["2222", "0241", "5555", "9999", "1994", "2000", "2026", "0101", "1111", "0422"];
+import seedLightImg from "@assets/WhatsApp_Image_2026-03-16_at_13.26.38_1773689245177.jpeg";
+import seedDarkImg from "@assets/WhatsApp_Image_2026-03-16_at_13.24.30_1773689374715.jpeg";
 
+export function RafflePrizes() {
   return (
     <div className="space-y-4 text-left">
       <div>
@@ -22,9 +23,16 @@ export function RafflePrizes() {
 
       <div>
         <h4 className="text-lg font-bold text-foreground mb-2">8 SEMILLAS premiadas de 25 <span className="!text-green-700 dark:!text-green-400">$</span> c/u</h4>
-        <p className="text-xs text-foreground leading-relaxed">
-          {specialNumbers.join(" - ")}
-        </p>
+        <div className="flex flex-wrap gap-2 justify-start">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <img 
+              key={i} 
+              src={window.matchMedia("(prefers-color-scheme: dark)").matches ? seedDarkImg : seedLightImg}
+              alt="Semilla premiada"
+              className="h-16 w-16 object-contain"
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
