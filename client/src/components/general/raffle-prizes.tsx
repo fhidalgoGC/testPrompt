@@ -4,16 +4,22 @@ export function RafflePrizes() {
   return (
     <div className="space-y-4 text-center">
       <div>
-        <h4 className="text-lg font-bold text-foreground mb-2">Top Lugares</h4>
-        <div className="space-y-1 text-xs text-foreground font-bold">
-          <p>1er Lugar 600 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span>, 10 pm de SUPER GANA</p>
-          <p>2do Lugar 300 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span>, 4pm de SUPER GANA</p>
-          <p>3er Lugar 100 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span>, 1PM de SUPER GANA</p>
+        <div className="space-y-2 text-xs text-foreground">
+          <div>
+            <p className="font-bold">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+            <p className="text-xs text-muted-foreground mt-1">El ganador será el resultado de las 10PM de Súper Gana un día después de agotarse las semillas</p>
+          </div>
+          <div>
+            <p className="font-bold">2do lugar - 300 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+          </div>
+          <div>
+            <p className="font-bold">3er lugar - 100 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+          </div>
         </div>
       </div>
 
       <div>
-        <h4 className="text-lg font-bold text-foreground mb-2">8 semillas especiales de 25 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span> cada una</h4>
+        <h4 className="text-lg font-bold text-foreground mb-2">8 semillas especiales de 25 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span> cada una</h4>
         <p className="text-xs text-foreground leading-relaxed">
           {specialNumbers.join(" - ")}
         </p>
