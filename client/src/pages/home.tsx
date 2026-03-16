@@ -65,7 +65,7 @@ export default function Home() {
       </section>
 
 
-      <section className="mt-40 sm:mt-48 px-4 max-w-4xl mx-auto text-center border-t border-border pt-4 sm:pt-8">
+      <section className="mt-8 sm:mt-12 px-4 max-w-4xl mx-auto text-center border-t border-border pt-4 sm:pt-8">
         <h3 className="font-display text-xl font-bold mb-8">{t.footer.title}</h3>
         <div className="flex justify-center gap-6 sm:gap-10">
           <div className="flex flex-col items-center group w-24" data-testid="lottery-CONALOT">
