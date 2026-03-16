@@ -295,6 +295,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>}
                 <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
                 <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
+                {referencia.trim() && <div className="flex items-center gap-2"><ShieldCheck className="h-3 w-3" /> {referencia}</div>}
               </div>
             </div>
             <div className="flex gap-3">
