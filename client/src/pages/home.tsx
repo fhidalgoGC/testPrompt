@@ -53,20 +53,6 @@ export default function Home() {
         <div className="absolute top-40 left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute top-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16 space-y-4 sm:space-y-6 relative z-10">
-          <motion.h1 
-            className="text-2xl sm:text-3xl md:text-5xl font-black font-display tracking-tight leading-[1.1]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {t.hero.title1}{" "}
-            <span className="whitespace-nowrap"><span className="text-yellow-400" style={{textShadow: '0 0 20px rgba(250,204,21,0.4)'}}>{t.hero.titleHighlight}</span><span className="inline-flex items-center" style={{fontSize: '1em', verticalAlign: 'middle'}}> <img src={seedIconImg} alt="Semilla" className="inline h-[1.2em] w-[1.2em] object-contain" /></span></span>{", "}
-            <span className="whitespace-nowrap">{t.hero.title2} <span className="text-green-700 dark:text-green-400" style={{textShadow: '0 0 20px rgba(74,222,128,0.4)'}}>{t.hero.title2Highlight}</span><span style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.title2Emoji1}</span><span className="text-green-700 dark:text-green-400" style={{fontSize: '0.6em', verticalAlign: 'middle'}}> {t.hero.title2Emoji2}</span></span>{" "}
-            {t.hero.title2End}
-          </motion.h1>
-        </div>
-
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
