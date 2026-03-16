@@ -1,0 +1,197 @@
+/* Component-Specific Styles */
+
+@layer components {
+  /* Brand Header Component */
+  .brand-header {
+    @apply flex items-center gap-2.5;
+  }
+
+  .brand-header__avatar {
+    @apply rounded-xl flex items-center justify-center overflow-hidden;
+  }
+
+  .brand-header__title {
+    @apply font-display font-bold tracking-wide text-brand-yellow block transition-all;
+  }
+
+  .brand-header__subtitle {
+    @apply text-muted-foreground transition-colors block;
+  }
+
+  /* Raffle Card Component */
+  .raffle-card {
+    @apply group relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/30 shadow-lg dark:shadow-none dark:border-white/5 flex flex-col;
+  }
+
+  .raffle-card__image {
+    @apply relative w-full;
+  }
+
+  .raffle-card__content {
+    @apply relative z-20 flex flex-col justify-between;
+  }
+
+  .raffle-card__title {
+    @apply mb-2 sm:mb-3 font-extrabold tracking-wide text-center;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .raffle-card__description {
+    @apply text-muted-foreground text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2;
+  }
+
+  .raffle-card__badge {
+    @apply px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border bg-primary/20 text-primary border-primary/50 shadow-[0_0_15px_rgba(245,158,11,0.3)];
+  }
+
+  /* Buy Ticket Dialog Component */
+  .buy-ticket-dialog {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+  }
+
+  .buy-ticket-dialog__content {
+    @apply bg-card border border-border rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full mx-4;
+  }
+
+  .buy-ticket-dialog__title {
+    @apply text-2xl sm:text-3xl font-bold mb-4 text-center;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .buy-ticket-dialog__form {
+    @apply space-y-4;
+  }
+
+  .buy-ticket-dialog__input {
+    @apply w-full px-4 py-2 rounded-lg border border-border bg-input text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+
+  /* Buy Seeds Button Component */
+  .buy-seeds-button {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300;
+    @apply bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 active:scale-95;
+  }
+
+  .buy-seeds-button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Raffle Stats Component */
+  .raffle-stats {
+    @apply flex items-center gap-2 text-sm;
+  }
+
+  .raffle-stats__viewers {
+    @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-primary/10 text-primary;
+  }
+
+  .raffle-stats__progress {
+    @apply w-full h-2 bg-muted rounded-full overflow-hidden;
+  }
+
+  .raffle-stats__progress-bar {
+    @apply h-full bg-gradient-to-r from-green-500 to-green-600 transition-all duration-300;
+  }
+
+  /* Raffle Prizes Component */
+  .raffle-prizes {
+    @apply space-y-2;
+  }
+
+  .raffle-prizes__item {
+    @apply flex items-center justify-between px-3 py-2 rounded-lg bg-muted/30;
+  }
+
+  .raffle-prizes__label {
+    @apply font-medium text-sm;
+  }
+
+  .raffle-prizes__value {
+    @apply font-bold text-brand-yellow;
+  }
+
+  /* Form Components */
+  .form-input {
+    @apply w-full px-4 py-2 rounded-lg border border-border bg-input text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold mb-2;
+  }
+
+  .form-error {
+    @apply text-xs text-error mt-1;
+  }
+
+  /* Button Variants */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-black hover:bg-yellow-500 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-95;
+  }
+
+  .btn-outline {
+    @apply border border-border text-foreground hover:bg-muted active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-muted active:scale-95;
+  }
+
+  .btn-brand {
+    @apply bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:shadow-lg active:scale-95;
+  }
+
+  /* Cards */
+  .card {
+    @apply rounded-2xl bg-card border border-border p-6;
+  }
+
+  .card-outline {
+    @apply rounded-2xl border border-border p-6;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-primary {
+    @apply bg-primary/20 text-primary;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  .badge-success {
+    @apply bg-green-500/20 text-green-600 dark:text-green-400;
+  }
+
+  .badge-error {
+    @apply bg-red-500/20 text-red-600 dark:text-red-400;
+  }
+
+  .badge-warning {
+    @apply bg-orange-500/20 text-orange-600 dark:text-orange-400;
+  }
+
+  /* Text Styles */
+  .text-subtitle {
+    @apply text-lg font-semibold;
+  }
+
+  .text-muted {
+    @apply text-muted-foreground;
+  }
+
+  .text-hint {
+    @apply text-xs text-muted-foreground;
+  }
+}

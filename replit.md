@@ -60,10 +60,22 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - `client/src/lib/theme-context.tsx` - Dark/light theme provider
 - `client/src/lib/purchase-context.tsx` - Purchase flow state provider
 - `client/src/components/navbar.tsx` - Reusable navbar component (brand, nav links, lang switch, theme toggle)
-- `client/src/components/brand-header.tsx` - Brand logo + Instagram link
+- `client/src/components/general/brand-header.tsx` - Brand logo + Instagram links (BrandHeader with "Gana con Mare" in brand yellow)
 - `client/src/pages/home.tsx` - Main landing page
 - `client/src/pages/terms.tsx` - Terms & Conditions page
 - `client/src/pages/how-it-works.tsx` - How it works page
 - `client/src/components/raffle-card.tsx` - Campaign card component
 - `client/src/components/buy-ticket-dialog.tsx` - Purchase flow dialog (payment → quantity → proof → info → confirm)
 - `client/src/components/ui/visual-progress.tsx` - Animated progress bar
+
+## Styling System
+- `client/src/styles/colors.css` - Centralized color variables (brand yellow: #FBBF24 light / #FCD34D dark, grayscale, status colors)
+- `client/src/styles/globals.css` - Global typography, spacing, elevation, animations, and utility classes
+- `client/src/styles/components.css` - Component-specific styles (brand-header, raffle-card, buttons, badges, cards, etc.)
+- All styles are imported in `client/src/index.css` and organized with @layer base/components/utilities
+
+## Brand Colors
+- **Brand Yellow**: `text-brand-yellow` (or `text-yellow-400` light / `text-yellow-300` dark)
+  - Light Mode: #FBBF24 (HSL: 45 97% 77%)
+  - Dark Mode: #FCD34D (HSL: 44 97% 78%)
+  - Used in: "Gana con Mare" header title with black text-shadow outline

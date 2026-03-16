@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import organized style files */
+@import './styles/colors.css';
+@import './styles/globals.css';
+@import './styles/components.css';
+
 @layer base {
   :root {
     --font-sans: 'DM Sans', sans-serif;

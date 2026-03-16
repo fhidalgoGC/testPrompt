@@ -1,0 +1,96 @@
+/* Color Variables - Centralized Color Palette */
+@layer base {
+  :root {
+    /* Brand Colors - GANA CON MARE */
+    --brand-yellow-light: 45 97% 77%;    /* #FBBF24 - Light mode yellow */
+    --brand-yellow-dark: 44 97% 78%;     /* #FCD34D - Dark mode yellow */
+    --brand-black: 0 0% 0%;
+    
+    /* Primary Yellows */
+    --yellow-50: 45 100% 97%;
+    --yellow-100: 45 100% 94%;
+    --yellow-200: 45 97% 88%;
+    --yellow-300: 44 97% 78%;
+    --yellow-400: 45 97% 77%;
+    --yellow-500: 45 96% 71%;
+    --yellow-600: 44 88% 55%;
+    --yellow-700: 42 84% 43%;
+    --yellow-800: 39 77% 34%;
+    --yellow-900: 38 71% 25%;
+
+    /* Grays */
+    --gray-50: 0 0% 98%;
+    --gray-100: 0 0% 96%;
+    --gray-200: 0 0% 89%;
+    --gray-300: 0 0% 83%;
+    --gray-400: 0 0% 64%;
+    --gray-500: 0 0% 45%;
+    --gray-600: 0 0% 32%;
+    --gray-700: 0 0% 24%;
+    --gray-800: 0 0% 13%;
+    --gray-900: 0 0% 9%;
+
+    /* Status Colors */
+    --success-green: 142 71% 45%;
+    --error-red: 0 84% 60%;
+    --warning-orange: 38 92% 50%;
+    --info-blue: 217 91% 60%;
+  }
+
+  .dark {
+    --brand-yellow-light: 44 97% 78%;   /* Use bright yellow in dark mode */
+    --brand-yellow-dark: 44 97% 78%;
+  }
+
+  .light {
+    --brand-yellow-light: 45 97% 77%;   /* Use standard yellow in light mode */
+    --brand-yellow-dark: 45 97% 77%;
+  }
+}
+
+/* Utility Classes for Colors */
+@layer utilities {
+  .text-brand-yellow {
+    @apply text-yellow-400 dark:text-yellow-300;
+  }
+
+  .text-brand-yellow-light {
+    @apply text-yellow-400;
+  }
+
+  .text-brand-yellow-dark {
+    @apply text-yellow-300;
+  }
+
+  .bg-brand-yellow {
+    @apply bg-yellow-400 dark:bg-yellow-300;
+  }
+
+  .border-brand-yellow {
+    @apply border-yellow-400 dark:border-yellow-300;
+  }
+
+  .from-brand-yellow {
+    @apply from-yellow-400 dark:from-yellow-300;
+  }
+
+  .to-brand-yellow {
+    @apply to-yellow-400 dark:to-yellow-300;
+  }
+
+  .text-success {
+    @apply text-green-600 dark:text-green-400;
+  }
+
+  .text-error {
+    @apply text-red-600 dark:text-red-400;
+  }
+
+  .text-warning {
+    @apply text-orange-600 dark:text-orange-400;
+  }
+
+  .text-info {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+}
