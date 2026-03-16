@@ -5,7 +5,7 @@ import { RafflePrizes } from "@/components/general/raffle-prizes";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
 import { ShieldCheck, ChevronRight } from "lucide-react";
-import seedIconImg from "@/assets/seed-icon-nobg.png";
+import seedIconImg from "@assets/WhatsApp_Image_2026-03-16_at_13.47.02_1773690735412.jpeg";
 import { useI18n } from "@/lib/i18n";
 
 interface Raffle {

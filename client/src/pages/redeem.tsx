@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
-import seedIconImg from "@/assets/seed-icon-nobg.png";
+import seedIconImg from "@assets/WhatsApp_Image_2026-03-16_at_13.47.02_1773690735412.jpeg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useI18n } from "@/lib/i18n";
