@@ -61,7 +61,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         onMouseLeave={() => setIsHovered(false)}
         layout
       >
-        <div className={`relative overflow-hidden ${featured ? 'h-[250px] sm:h-full sm:min-h-[350px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
+        <div className={`relative overflow-hidden ${featured ? 'h-[280px] sm:h-full sm:min-h-[380px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
           <div className="absolute inset-0 z-10 hidden dark:md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
           
           <motion.img
