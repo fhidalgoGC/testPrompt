@@ -7,7 +7,7 @@ export function RafflePrizes() {
         <div className="space-y-3 text-xs">
           <div>
             <p className="font-bold text-foreground">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
-            <p className="text-muted-foreground leading-relaxed">El ganador será el resultado de las 10PM de Súper Gana un día después de agotarse las semillas</p>
+            <p className="text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">10PM de Súper Gana un día después de agotarse las semillas</span></p>
           </div>
           <div>
             <p className="font-bold text-foreground">2do lugar - 300 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
