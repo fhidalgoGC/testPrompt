@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
 import { usePurchase } from "@/providers/purchase-provider";
-import { BrandHeader } from "./brand-header";
+import { BrandHeader } from "@/components/general/brand-header";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";

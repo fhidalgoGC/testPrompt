@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrandHeader } from "@/components/brand-header";
+import { BrandHeader } from "@/components/general/brand-header";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, FileText, Trophy, HelpCircle, MessageCircle, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
