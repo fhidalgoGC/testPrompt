@@ -4,7 +4,7 @@ import { RaffleTitle } from "@/components/raffle-title";
 import { Navbar } from "@/components/navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, Search, Sparkles, Zap, ShieldCheck, MessageCircle, User, Mail } from "lucide-react";
-import seedIconImg from "@assets/WhatsApp_Image_2026-03-16_at_13.47.02_1773690735412.jpeg";
+import seedIconImg from "@/assets/seed-icon-nobg.png";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
