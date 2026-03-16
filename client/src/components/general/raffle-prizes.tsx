@@ -15,6 +15,7 @@ export function RafflePrizes() {
           </div>
           <div>
             <p className="font-bold text-foreground">3er lugar - 100 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+            <p className="text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">1PM de Súper Gana un día después de agotarse las semillas</span></p>
           </div>
         </div>
       </div>
