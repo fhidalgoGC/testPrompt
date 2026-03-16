@@ -5,7 +5,7 @@ export function RafflePrizes() {
     <div className="space-y-4">
       <div>
         <h4 className="text-sm font-bold text-foreground mb-2">Top de Compras</h4>
-        <div className="space-y-1 text-xs text-foreground">
+        <div className="space-y-1 text-xs text-foreground font-bold">
           <p>1er Lugar 600 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span></p>
           <p>2do Lugar 300 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span></p>
           <p>3er Lugar 100 <span className="!text-green-700 dark:!text-green-400">Lechuguitas$</span></p>
