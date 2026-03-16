@@ -4,7 +4,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Ticket, CheckCircle2, AlertCircle, ChevronLeft, Mail, Sparkles, Phone, CreditCard, ShieldCheck, Minus, Plus, Copy, Check, X, Upload, FileCheck, Loader2, Eye } from "lucide-react";
-import seedIconImg from "@/assets/seed-icon-nobg.png";
+import seedIconImg from "@assets/WhatsApp_Image_2026-03-16_at_13.47.02_1773690568627.jpeg";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
@@ -579,6 +579,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 setStep("payment-details");
               }}
               disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.length < 7 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
+              iconPosition="left"
             />
           </motion.div>
         ) : step === "quantity" ? (
@@ -663,6 +664,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 text={quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
                 onClick={handleProceedToInfo}
                 disabled={quantity < 1}
+                iconPosition="left"
               />
             </div>
 
