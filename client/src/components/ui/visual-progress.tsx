@@ -117,7 +117,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       
       <div className="mt-2 text-center">
         <span className="text-xs font-bold text-foreground">
-          → {percentage.toFixed(2)}% Semillas disponibles
+          {percentage.toFixed(2)}% Semillas disponibles
         </span>
       </div>
     </div>

@@ -25,8 +25,8 @@ const staticRaffles = [
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=2000&auto=format&fit=crop",
     ],
-    totalTickets: 9999,
-    soldTickets: 437,
+    totalTickets: 10000,
+    soldTickets: 9989,
   },
   {
     id: 2,
