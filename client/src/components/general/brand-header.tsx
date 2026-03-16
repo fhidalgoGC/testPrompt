@@ -14,7 +14,7 @@ export function BrandHeader({ size = "default" }: { size?: "default" | "small" }
     return () => clearInterval(interval);
   }, []);
 
-  const imgSize = size === "small" ? "h-10 w-10" : "h-11 w-11 sm:h-12 sm:w-12";
+  const imgSize = size === "small" ? "h-12 w-12" : "h-16 w-16 sm:h-20 sm:w-20";
   const titleSize = size === "small" ? "text-base" : "text-base sm:text-lg";
   const subSize = size === "small" ? "text-[10px]" : "text-xs sm:text-sm";
 
