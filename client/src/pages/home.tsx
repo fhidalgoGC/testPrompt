@@ -74,7 +74,7 @@ export default function Home() {
           transition={{ duration: 0.7, delay: 0.3 }}
         >
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-lg sm:text-xl font-display font-bold uppercase tracking-wider flex items-center gap-2">
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-primary tracking-wide flex items-center gap-3">
               <img src={seedIconImg} alt="Semilla" className="w-12 h-12 object-contain" /> 
               {t.raffle.priorityCampaign}
             </h2>
