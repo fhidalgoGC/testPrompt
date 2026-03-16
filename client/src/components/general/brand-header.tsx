@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import mareAvatar1 from "@/assets/logos/mare-avatar.jpg";
-import mareAvatar2 from "@/assets/logos/mare-avatar2.jpg";
+import mareAvatar1 from "@/assets/logos/mare-avatar-nobg.png";
+import mareAvatar2 from "@/assets/logos/mare-avatar2-nobg.png";
 
 const avatarImages = [mareAvatar1, mareAvatar2];
 
