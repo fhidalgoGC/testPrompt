@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { BrandHeader } from "@/components/brand-header";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Menu, X, FileText, Trophy, HelpCircle, MessageCircle, Sun, Moon } from "lucide-react";
+import { Menu, X, FileText, Trophy, HelpCircle, MessageCircle, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme-context";
 import { Link } from "wouter";
 
 export function Navbar() {
-  const { t, locale, setLocale } = useI18n();
+  const { t } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -33,32 +32,6 @@ export function Navbar() {
               </Link>
               <a href="#contacto" className="hover:text-foreground transition-colors" data-testid="link-contact">Contáctanos</a>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="h-9 w-9 rounded-full border border-border bg-secondary/50 hover:bg-muted flex items-center justify-center transition-colors shrink-0"
-                  data-testid="button-lang-switch"
-                >
-                  <Globe className="h-4 w-4 text-muted-foreground" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[140px] bg-card border-border">
-                <DropdownMenuItem
-                  onClick={() => setLocale("es")}
-                  className={`gap-2 text-sm cursor-pointer ${locale === "es" ? "text-primary font-bold" : ""}`}
-                  data-testid="button-lang-es"
-                >
-                  <span className="text-base">🇪🇸</span> Español
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => setLocale("en")}
-                  className={`gap-2 text-sm cursor-pointer ${locale === "en" ? "text-primary font-bold" : ""}`}
-                  data-testid="button-lang-en"
-                >
-                  <span className="text-base">🇺🇸</span> English
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
             <button
               onClick={toggleTheme}
               className="h-9 w-9 rounded-full border border-border bg-secondary/50 hover:bg-muted flex items-center justify-center transition-colors shrink-0"
