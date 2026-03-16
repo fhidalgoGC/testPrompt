@@ -21,9 +21,7 @@ const staticRaffles = [
     title: "Tus Lechuguitas # 1",
     description: "",
     imageUrls: [
-      "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=2000&auto=format&fit=crop",
+      new URL("@assets/WhatsApp_Image_2026-03-15_at_14.31.59_1773672854861.jpeg", import.meta.url).href,
     ],
     totalTickets: 10000,
     soldTickets: 9989,
