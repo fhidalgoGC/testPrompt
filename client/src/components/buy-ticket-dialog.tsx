@@ -290,12 +290,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <span className="text-black dark:text-foreground font-semibold">{t.picker.ticketCount}</span>
                 <span className="text-primary font-display font-bold text-lg" data-testid="text-confirm-count">{quantity}</span>
               </div>
-              <div className="border-t border-border pt-2 mt-2 space-y-1 text-xs text-foreground font-medium">
-                {buyerName.trim() && <div className="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> {buyerName}</div>}
-                {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> {buyerIdNumber}</div>}
-                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
-                <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> {buyerEmail}</div>
-                {referencia.trim() && <div className="flex items-center gap-2"><ShieldCheck className="h-3 w-3" /> {referencia}</div>}
+              <div className="border-t border-border pt-2 mt-2 space-y-1 text-xs text-foreground">
+                {buyerName.trim() && <div className="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <span className="font-bold">Nombre:</span> {buyerName}</div>}
+                {buyerIdNumber.trim() && <div className="flex items-center gap-2"><CreditCard className="h-3 w-3" /> <span className="font-bold">Cédula:</span> {buyerIdNumber}</div>}
+                <div className="flex items-center gap-2"><Phone className="h-3 w-3" /> <span className="font-bold">Teléfono:</span> {PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode} {buyerPhone}</div>
+                <div className="flex items-center gap-2"><Mail className="h-3 w-3" /> <span className="font-bold">Email:</span> {buyerEmail}</div>
+                {referencia.trim() && <div className="flex items-center gap-2"><ShieldCheck className="h-3 w-3" /> <span className="font-bold">Referencia:</span> {referencia}</div>}
               </div>
             </div>
             <div className="flex gap-3">
