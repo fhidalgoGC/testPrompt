@@ -20,12 +20,16 @@ export function BrandHeader({ size = "default" }: { size?: "default" | "small" }
 
   return (
     <div className="flex items-center gap-2.5">
-      <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className={`${imgSize} rounded-xl bg-muted flex items-center justify-center overflow-hidden`}>
+      <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`${imgSize} rounded-xl bg-muted flex items-center justify-center overflow-hidden`}>
         <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
       </a>
       <div className="leading-tight">
         <span className={`font-display font-bold ${titleSize} tracking-wide text-primary block`}>GANA CON MARE</span>
-        <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className={`${subSize} text-muted-foreground hover:text-primary transition-colors`}>@maredorazio</a>
+        <div className={`${subSize} text-muted-foreground flex gap-2`}>
+          <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@ganaconmare</a>
+          <span>•</span>
+          <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@maredorazio</a>
+        </div>
       </div>
     </div>
   );
