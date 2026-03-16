@@ -45,7 +45,7 @@ export function RafflePrizes() {
               key={i} 
               src={isDark ? seedDarkImg : seedLightImg}
               alt="Semilla premiada"
-              className="h-12 w-12 object-contain"
+              className="h-10 w-10 object-contain"
             />
           ))}
         </div>
