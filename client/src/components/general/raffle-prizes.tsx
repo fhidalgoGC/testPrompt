@@ -39,7 +39,7 @@ export function RafflePrizes() {
 
       <div>
         <h4 className="text-lg font-bold text-foreground mb-2">8 SEMILLAS premiadas de 25 <span className="!text-green-700 dark:!text-green-400">$</span> c/u</h4>
-        <div className="flex flex-nowrap gap-1 justify-center">
+        <div className="flex flex-nowrap gap-0 justify-center">
           {Array.from({ length: 8 }).map((_, i) => (
             <img 
               key={i} 
