@@ -304,7 +304,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
               <ContinueButton 
-                icon={isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-5 w-5 object-contain" />}
+                icon={isSubmitting ? <Loader2 className="h-6 w-6 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
                 text={isSubmitting ? t.picker.processing : t.picker.confirmBtn}
                 onClick={handleConfirmBuy}
                 disabled={isSubmitting}
@@ -358,7 +358,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
             <ContinueButton 
-              icon={<img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
+              icon={<img src={seedIconImg} alt="Semilla" className="h-8 w-8 object-contain" />}
               text={t.picker.continueButton}
               onClick={() => setStep("quantity")}
               disabled={!selectedPaymentMethod}
@@ -660,7 +660,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
             <div className="pt-1">
               <ContinueButton 
-                icon={<img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
+                icon={<img src={seedIconImg} alt="Semilla" className="h-8 w-8 object-contain" />}
                 text={quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
                 onClick={handleProceedToInfo}
                 disabled={quantity < 1}
