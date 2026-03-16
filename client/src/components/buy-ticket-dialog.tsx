@@ -12,6 +12,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
 import { usePurchase } from "@/providers/purchase-provider";
 import { BrandHeader } from "@/components/general/brand-header";
+import { ContinueButton } from "@/components/general/continue-button";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";
@@ -302,17 +303,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <Button variant="outline" className="flex-1 border-border" onClick={() => setStep("payment-details")} data-testid="button-back-to-payment-details">
                 <ChevronLeft className="h-4 w-4 mr-1" />
               </Button>
-              <Button
-                className="flex-1 font-bold bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+              <ContinueButton 
+                icon={isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-5 w-5 object-contain" />}
+                text={isSubmitting ? t.picker.processing : t.picker.confirmBtn}
                 onClick={handleConfirmBuy}
                 disabled={isSubmitting}
-                data-testid="button-final-confirm"
-              >
-                <span className="flex items-center gap-2">
-                  {isSubmitting ? <Loader2 className="h-6 w-6 animate-spin" /> : <img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
-                  {isSubmitting ? t.picker.processing : t.picker.confirmBtn}
-                </span>
-              </Button>
+              />
             </div>
           </motion.div>
         ) : step === "payment" ? (
@@ -361,17 +357,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               ))}
             </div>
 
-            <Button
-              className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
+            <ContinueButton 
+              icon={<img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
+              text={t.picker.continueButton}
               onClick={() => setStep("quantity")}
               disabled={!selectedPaymentMethod}
-              data-testid="button-continue-to-quantity"
-            >
-              <span className="flex items-center gap-2">
-                <img src={seedIconImg} alt="Semilla" className="h-7 w-7 object-contain" />
-                {t.picker.continueButton}
-              </span>
-            </Button>
+            />
           </motion.div>
         ) : step === "payment-details" ? (
           <motion.div key="payment-details" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 py-2">
@@ -477,17 +468,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                       </div>
                     )}
 
-                    <Button
-                      className="w-full font-bold h-10 text-sm bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98] disabled:opacity-40"
+                    <ContinueButton 
+                      icon={<CheckCircle2 className="h-5 w-5" />}
+                      text={t.picker.continueAfterPayment}
                       onClick={() => setStep("confirm")}
                       disabled={!uploadedFile}
-                      data-testid="button-payment-done"
-                    >
-                      <span className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4" />
-                        {t.picker.continueAfterPayment}
-                      </span>
-                    </Button>
+                    />
                   </div>
                 </div>
               );
