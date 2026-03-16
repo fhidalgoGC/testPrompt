@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { RaffleCard } from "@/components/raffle-card";
 import { RaffleTitle } from "@/components/raffle-title";
-import { RaffleStats } from "@/components/raffle-stats";
 import { Navbar } from "@/components/navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, Search, Sparkles, Zap, ShieldCheck, MessageCircle, User, Mail } from "lucide-react";
@@ -73,11 +72,8 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <div className="mb-6">
+          <div className="mb-4">
             <RaffleTitle text={t.raffle.priorityCampaign} icon={seedIconImg} />
-          </div>
-          <div className="mb-6">
-            <RaffleStats viewersCount={256} sold={featuredRaffle.soldTickets} total={featuredRaffle.totalTickets} />
           </div>
           <RaffleCard raffle={featuredRaffle} featured={true} badgeLabel={t.raffle.badgeLabels[0]} />
         </motion.div>

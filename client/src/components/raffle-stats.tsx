@@ -1,26 +1,40 @@
 import { Eye } from "lucide-react";
 import { VisualProgress } from "@/components/ui/visual-progress";
+import { useI18n } from "@/lib/i18n";
 
 interface RaffleStatsProps {
   viewersCount: number;
   sold: number;
   total: number;
+  isComplete: boolean;
 }
 
-export function RaffleStats({ viewersCount, sold, total }: RaffleStatsProps) {
-  return (
-    <div className="w-full space-y-3">
-      {/* Viewers Badge */}
-      <div className="flex items-center justify-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-950/30 border border-green-300 dark:border-green-700/50 rounded-full w-fit mx-auto">
-        <div className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full animate-pulse" />
-        <Eye className="w-4 h-4 text-green-700 dark:text-green-400" />
-        <span className="text-sm font-semibold text-green-900 dark:text-green-300">
-          {viewersCount} Personas están viendo este item
-        </span>
-      </div>
+export function RaffleStats({ viewersCount, sold, total, isComplete }: RaffleStatsProps) {
+  const { t } = useI18n();
 
-      {/* Progress Bar and Percentage */}
-      <VisualProgress sold={sold} total={total} size="lg" />
-    </div>
+  return (
+    <>
+      {!isComplete && (
+        <div className="flex items-center gap-2 mb-3 sm:mb-4" data-testid="viewers-counter">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-600/10 dark:bg-green-500/10 border border-green-600/30 dark:border-green-500/20">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 dark:bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600 dark:bg-green-500"></span>
+            </span>
+            <Eye className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
+            <span className="text-xs font-bold text-green-700 dark:text-green-400">{viewersCount}</span>
+          </div>
+          <span className="text-xs text-foreground font-bold">
+            {t.raffle.viewersWatching}
+          </span>
+        </div>
+      )}
+
+      <VisualProgress 
+        sold={sold} 
+        total={total} 
+        className="mt-auto space-y-6"
+      />
+    </>
   );
 }
