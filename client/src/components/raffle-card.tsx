@@ -109,7 +109,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               isComplete={isComplete}
             />
             
-            <div className="border-t border-border pt-4">
+            <div className="border-t border-border pt-4 mt-6">
               <RafflePrizes />
             </div>
           </div>
