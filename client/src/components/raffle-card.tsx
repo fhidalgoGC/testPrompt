@@ -55,13 +55,13 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
           group relative overflow-hidden rounded-2xl bg-card border border-border
           transition-all duration-500 hover:border-primary/30 box-glow-hover
           shadow-lg dark:shadow-none dark:border-white/5
-          ${featured ? 'md:grid md:grid-cols-2 md:gap-0' : 'flex flex-col'}
+          flex flex-col
         `}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         layout
       >
-        <div className={`relative overflow-hidden ${featured ? 'h-[280px] sm:h-full sm:min-h-[380px]' : 'h-[180px] sm:h-[240px] w-full'}`}>
+        <div className={`relative overflow-hidden ${featured ? 'h-[350px] sm:h-[420px]' : 'h-[180px] sm:h-[240px]'} w-full`}>
           <div className="absolute inset-0 z-10 hidden dark:md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
           
           <motion.img
@@ -82,7 +82,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
           </div>
         </div>
 
-        <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'md:p-10' : ''}`}>
+        <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'p-6 sm:p-8' : ''}`}>
           <div>
             
             <h3 className={`mb-2 sm:mb-3 font-extrabold tracking-wide raffle-title ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Playfair Display', serif"}}>
