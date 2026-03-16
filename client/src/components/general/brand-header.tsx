@@ -20,7 +20,7 @@ export function BrandHeader({ size = "default" }: { size?: "default" | "small" }
 
   return (
     <div className="flex items-center gap-2.5">
-      <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`${imgSize} rounded-xl bg-muted flex items-center justify-center overflow-hidden`}>
+      <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`${imgSize} rounded-xl bg-white dark:bg-white flex items-center justify-center overflow-hidden`}>
         <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
       </a>
       <div className="leading-tight">
