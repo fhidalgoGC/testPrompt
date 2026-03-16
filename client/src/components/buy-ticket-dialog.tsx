@@ -47,7 +47,7 @@ interface PaymentMethod {
 
 const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: string; price: number; paymentMethods: PaymentMethod[] }> = {
   VE: {
-    name: "Venezuela", flag: "🇻🇪", currency: "USD", price: 1,
+    name: "Venezuela", flag: "🇻🇪", currency: "USD", price: 0.25,
     paymentMethods: [
       {
         id: "pago_movil", name: "Pago Móvil", icon: "📱",
@@ -60,7 +60,7 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
     ],
   },
   MX: {
-    name: "México", flag: "🇲🇽", currency: "MXN", price: 18,
+    name: "México", flag: "🇲🇽", currency: "MXN", price: 4.5,
     paymentMethods: [
       {
         id: "spei", name: "Transferencia SPEI", icon: "🏦",
@@ -72,7 +72,7 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
     ],
   },
   CO: {
-    name: "Colombia", flag: "🇨🇴", currency: "COP", price: 4200,
+    name: "Colombia", flag: "🇨🇴", currency: "COP", price: 925,
     paymentMethods: [
       {
         id: "transferencia_co", name: "Bancolombia (Transferencia)", icon: "🏦",
@@ -90,7 +90,7 @@ const COUNTRY_CONFIG: Record<Country, { name: string; flag: string; currency: st
 const GLOBAL_PAYMENT_METHODS: (PaymentMethod & { countryName: string; countryFlag: string; currency: string; price: number })[] = [
   {
     id: "binance", name: "Binance Pay", icon: "💰",
-    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 1,
+    countryName: "Global", countryFlag: "🌎", currency: "USD", price: 0.25,
     details: [
       { label: "Binance ID", value: "91914887" },
     ],
