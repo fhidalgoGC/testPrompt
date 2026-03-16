@@ -23,15 +23,15 @@ export function RafflePrizes() {
       <div>
         <div className="space-y-3">
           <div>
-            <p className="font-bold text-foreground text-xs">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
+            <p className="font-bold text-foreground text-sm">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
             <p className="text-xs text-muted-foreground leading-relaxed text-[0.65rem]">El ganador será el resultado de las <span className="font-bold text-foreground">10PM de Súper Gana</span><br /><span className="font-bold text-foreground">un día después de agotarse las semillas</span></p>
           </div>
           <div>
-            <p className="font-bold text-foreground text-xs">2do lugar - 300 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
+            <p className="font-bold text-foreground text-sm">2do lugar - 300 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
             <p className="text-xs text-muted-foreground leading-relaxed text-[0.65rem]">El ganador será el resultado de las <span className="font-bold text-foreground">4PM de Súper Gana</span><br /><span className="font-bold text-foreground">un día después de agotarse las semillas</span></p>
           </div>
           <div>
-            <p className="font-bold text-foreground text-xs">3er lugar - 100 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
+            <p className="font-bold text-foreground text-sm">3er lugar - 100 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
             <p className="text-xs text-muted-foreground leading-relaxed text-[0.65rem]">El ganador será el resultado de las <span className="font-bold text-foreground">1PM de Súper Gana</span><br /><span className="font-bold text-foreground">un día después de agotarse las semillas</span></p>
           </div>
         </div>
