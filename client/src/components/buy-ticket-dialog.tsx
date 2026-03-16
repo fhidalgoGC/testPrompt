@@ -567,8 +567,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               </div>
             </div>
 
-            <Button
-              className="w-full font-bold h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
+            <ContinueButton 
+              icon={<CheckCircle2 className="h-5 w-5" />}
+              text={t.picker.continueButton}
               onClick={() => {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(buyerEmail.trim())) {
@@ -578,13 +579,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 setStep("payment-details");
               }}
               disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.length < 7 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
-              data-testid="button-continue-to-payment-details"
-            >
-              <span className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5" />
-                {t.picker.continueButton}
-              </span>
-            </Button>
+            />
           </motion.div>
         ) : step === "quantity" ? (
           <motion.div key="quantity" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
@@ -663,16 +658,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             })()}
 
             <div className="pt-1">
-              <Button
-                className="w-full font-bold text-base h-12 bg-gradient-to-r from-primary to-yellow-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300 active:scale-[0.98]"
-                onClick={handleProceedToInfo} disabled={quantity < 1}
-                data-testid="button-proceed-contact"
-              >
-                <span className="flex items-center gap-2">
-                  <img src={seedIconImg} alt="Semilla" className="h-7 w-7 object-contain" />
-                  {quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
-                </span>
-              </Button>
+              <ContinueButton 
+                icon={<img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
+                text={quantity === 1 ? t.picker.buyButton : t.picker.buyButtonPlural.replace("{count}", String(quantity))}
+                onClick={handleProceedToInfo}
+                disabled={quantity < 1}
+              />
             </div>
 
           </motion.div>
