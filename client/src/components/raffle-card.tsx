@@ -98,7 +98,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         <div className={`relative z-20 flex flex-col justify-between p-4 sm:p-6 ${featured ? 'p-6 sm:p-8' : ''}`}>
           <div>
             
-            <h3 className={`mb-2 sm:mb-3 font-extrabold tracking-wide raffle-title ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Playfair Display', serif"}}>
+            <h3 className={`mb-2 sm:mb-3 font-extrabold tracking-wide raffle-title text-center ${featured ? 'text-2xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-3xl'}`} style={{fontFamily: "'Playfair Display', serif"}}>
               {raffle.title}
             </h3>
             
