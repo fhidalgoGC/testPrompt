@@ -2,7 +2,7 @@ export function RafflePrizes() {
   const specialNumbers = ["2222", "0241", "5555", "9999", "1994", "2000", "2026", "0101", "1111", "0422"];
 
   return (
-    <div className="space-y-4 text-center">
+    <div className="space-y-4 text-left">
       <div>
         <div className="space-y-3 text-xs">
           <div>
