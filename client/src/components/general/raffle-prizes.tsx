@@ -1,4 +1,3 @@
-import seedLightImg from "@assets/WhatsApp_Image_2026-03-16_at_13.26.38_1773689245177.jpeg";
 import seedDarkImg from "@assets/WhatsApp_Image_2026-03-16_at_13.24.30_1773689374715.jpeg";
 
 export function RafflePrizes() {
@@ -27,7 +26,7 @@ export function RafflePrizes() {
           {Array.from({ length: 8 }).map((_, i) => (
             <img 
               key={i} 
-              src={window.matchMedia("(prefers-color-scheme: dark)").matches ? seedDarkImg : seedLightImg}
+              src={seedDarkImg}
               alt="Semilla premiada"
               className="h-16 w-16 object-contain"
             />
