@@ -70,7 +70,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
 
   return (
     <div className={`w-full ${className}`}>
-      <div className="flex justify-between items-end mb-2">
+      <div className="mb-2">
         <span className="text-sm font-medium tracking-wider text-muted-foreground flex items-center gap-2">
           {isComplete ? (
             <span className="text-primary font-bold text-glow">{t.progress.targetReached}</span>
@@ -80,12 +80,6 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
             <span>{t.progress.fundingProgress}</span>
           )}
         </span>
-        <motion.span
-          className={`font-display font-bold ${size === 'lg' ? 'text-3xl' : 'text-xl'} ${isAlmostComplete ? 'text-primary' : 'text-foreground'}`}
-          animate={percentControls}
-        >
-          {percentage.toFixed(2)}%
-        </motion.span>
       </div>
       
       <div className={`w-full bg-secondary/50 rounded-full overflow-hidden relative border border-border backdrop-blur-sm ${heights[size]}`}>
@@ -121,22 +115,10 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
         />
       </div>
       
-      <div className="mt-3 text-xs text-foreground">
-        <span className="font-bold">{t.progress.drawTrigger} </span>
-        <motion.span
-          className="inline-block text-red-500 font-bold"
-          animate={{
-            x: [0, -2, 2, -2, 2, 0],
-            scale: [1, 1.02, 1, 1.02, 1],
-          }}
-          transition={{
-            duration: 0.5,
-            repeat: Infinity,
-            repeatDelay: 2.5,
-          }}
-        >
-          {t.progress.drawUrgent}
-        </motion.span>
+      <div className="mt-2 text-center">
+        <span className={`font-display font-bold ${size === 'lg' ? 'text-3xl' : 'text-xl'} ${isAlmostComplete ? 'text-primary' : 'text-foreground'}`}>
+          {percentage.toFixed(2)}% disponibles
+        </span>
       </div>
     </div>
   );
