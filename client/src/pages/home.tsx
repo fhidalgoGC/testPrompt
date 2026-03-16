@@ -58,9 +58,6 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <div className="mb-4">
-            <RaffleTitle text={t.raffle.priorityCampaign} />
-          </div>
           <RaffleCard raffle={featuredRaffle} featured={true} badgeLabel={t.raffle.badgeLabels[0]} />
         </motion.div>
       </section>
