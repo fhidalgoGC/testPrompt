@@ -69,13 +69,19 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - `client/src/components/ui/visual-progress.tsx` - Animated progress bar
 
 ## Styling System
-- `client/src/styles/colors.css` - Centralized color variables (brand yellow: #FBBF24 light / #FCD34D dark, grayscale, status colors)
+- `client/src/styles/theme.css` - Brand & primary colors (Yellow: #FBBF24 light / #FCD34D dark; Green: #22c55e light / green-500 dark)
+- `client/src/styles/colors.css` - Centralized color variables (grayscale, status colors)
 - `client/src/styles/globals.css` - Global typography, spacing, elevation, animations, and utility classes
 - `client/src/styles/components.css` - Component-specific styles (brand-header, raffle-card, buttons, badges, cards, etc.)
 - All styles are imported in `client/src/index.css` and organized with @layer base/components/utilities
 
 ## Brand Colors
-- **Brand Yellow**: `text-brand-yellow` (or `text-yellow-400` light / `text-yellow-300` dark)
+- **Brand Yellow**: `text-yellow-brand` (or `text-yellow-400` light / `text-yellow-300` dark)
   - Light Mode: #FBBF24 (HSL: 45 97% 77%)
   - Dark Mode: #FCD34D (HSL: 44 97% 78%)
   - Used in: "Gana con Mare" header title with black text-shadow outline
+  
+- **Primary Green**: `text-green-primary` (or `text-green-600` light / `text-green-500` dark)
+  - Light Mode: #22c55e (green-600)
+  - Dark Mode: #22c55e (green-500)
+  - Used in: Progress bar, "Quiero mis Semillas" button, "Comprar/Secure Entry" button
