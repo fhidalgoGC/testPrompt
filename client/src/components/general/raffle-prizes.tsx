@@ -21,7 +21,7 @@ export function RafflePrizes() {
       </div>
 
       <div>
-        <h4 className="text-lg font-bold text-foreground mb-2">8 SEMILLAS premiadas de 25 <span className="!text-green-700 dark:!text-green-400">$</span> C/U</h4>
+        <h4 className="text-lg font-bold text-foreground mb-2">8 SEMILLAS premiadas de 25 <span className="!text-green-700 dark:!text-green-400">$</span> c/u</h4>
         <p className="text-xs text-foreground leading-relaxed">
           {specialNumbers.join(" - ")}
         </p>
