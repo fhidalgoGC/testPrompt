@@ -26,7 +26,7 @@ const translations = {
       subtitle: "Oportunidades exclusivas de vivir tus sueños mas deseados. Tu sueño se activa en el momento exacto en que se venden el 100% de las semillas.",
     },
     raffle: {
-      priorityCampaign: "Sueño Principal",
+      priorityCampaign: "Tus Lechuguitas # 1",
       activeAllocations: "Sueños Activos",
       searchAssets: "Buscar vehiculos...",
       verifiedAsset: "Vehiculo Verificado",
