@@ -4,18 +4,18 @@ export function RafflePrizes() {
   return (
     <div className="space-y-4 text-left">
       <div>
-        <div className="space-y-3 text-xs">
+        <div className="space-y-3">
           <div>
-            <p className="font-bold text-foreground">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
-            <p className="text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">10PM de Súper Gana un día después de agotarse las semillas</span></p>
+            <p className="font-bold text-foreground text-base">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+            <p className="text-xs text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">10PM de Súper Gana un día después de agotarse las semillas</span></p>
           </div>
           <div>
-            <p className="font-bold text-foreground">2do lugar - 300 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
-            <p className="text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">4PM de Súper Gana un día después de agotarse las semillas</span></p>
+            <p className="font-bold text-foreground text-base">2do lugar - 300 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+            <p className="text-xs text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">4PM de Súper Gana un día después de agotarse las semillas</span></p>
           </div>
           <div>
-            <p className="font-bold text-foreground">3er lugar - 100 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
-            <p className="text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">1PM de Súper Gana un día después de agotarse las semillas</span></p>
+            <p className="font-bold text-foreground text-base">3er lugar - 100 <span className="!text-green-700 dark:!text-green-400">lechuguita$</span></p>
+            <p className="text-xs text-muted-foreground leading-relaxed">El ganador será el resultado de las <span className="font-bold text-foreground">1PM de Súper Gana un día después de agotarse las semillas</span></p>
           </div>
         </div>
       </div>
