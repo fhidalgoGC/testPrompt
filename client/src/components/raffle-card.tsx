@@ -61,17 +61,30 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
         onMouseLeave={() => setIsHovered(false)}
         layout
       >
-        <div className={`relative overflow-hidden ${featured ? 'h-[400px] sm:h-[470px]' : 'h-[180px] sm:h-[240px]'} w-full`}>
-          <div className="absolute inset-0 z-10 hidden dark:md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
-          
-          <motion.img
-            src={images[0]}
-            alt={raffle.title}
-            className="absolute inset-0 w-full h-full object-cover"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          />
+        <div className={`relative w-full ${featured ? '' : 'h-[180px] sm:h-[240px]'}`}>
+          {featured && (
+            <motion.img
+              src={images[0]}
+              alt={raffle.title}
+              className="w-full h-auto object-contain"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            />
+          )}
+          {!featured && (
+            <>
+              <div className="absolute inset-0 z-10 hidden dark:md:block md:bg-gradient-to-r md:from-transparent md:to-card" />
+              <motion.img
+                src={images[0]}
+                alt={raffle.title}
+                className="absolute inset-0 w-full h-full object-cover"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+            </>
+          )}
           
           <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
             {isComplete ? (
