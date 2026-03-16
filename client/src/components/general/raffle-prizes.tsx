@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import seedLightImg from "@assets/WhatsApp_Image_2026-03-16_at_13.26.38_1773689508178.jpeg";
+import seedLightImg from "@assets/WhatsApp_Image_2026-03-16_at_13.37.15_1773689852230.jpeg";
 import seedDarkImg from "@assets/WhatsApp_Image_2026-03-16_at_13.24.30_1773689374715.jpeg";
 
 export function RafflePrizes() {
