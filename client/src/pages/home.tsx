@@ -49,7 +49,7 @@ export default function Home() {
     <div className="min-h-screen bg-background pb-24 text-foreground selection:bg-primary/30 selection:text-white">
       <Navbar />
 
-      <section className="pt-32 sm:pt-48 pb-32 sm:pb-64 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+      <section className="pt-32 sm:pt-48 pb-16 sm:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
         <div className="absolute top-40 left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute top-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
