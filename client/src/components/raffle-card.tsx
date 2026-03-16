@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RaffleStats } from "@/components/general/raffle-stats";
+import { RafflePrizes } from "@/components/general/raffle-prizes";
 import { Button } from "@/components/ui/button";
 import { BuyTicketDialog } from "./buy-ticket-dialog";
 import { ShieldCheck, ChevronRight } from "lucide-react";
@@ -112,6 +113,10 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               total={raffle.totalTickets}
               isComplete={isComplete}
             />
+            
+            <div className="border-t border-border pt-4">
+              <RafflePrizes />
+            </div>
           </div>
 
           <div className="mt-auto space-y-4 sm:space-y-5 pt-4 sm:pt-6">
