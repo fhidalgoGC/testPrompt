@@ -25,11 +25,8 @@ export function BrandHeader({ size = "default" }: { size?: "default" | "small" }
       </a>
       <div className="leading-tight">
         <span className={`font-display font-bold ${titleSize} tracking-wide text-primary block`}>GANA CON MARE</span>
-        <div className={`${subSize} text-muted-foreground flex gap-2`}>
-          <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@ganaconmare</a>
-          <span>•</span>
-          <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@maredorazio</a>
-        </div>
+        <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`${subSize} text-muted-foreground hover:text-primary transition-colors block`}>@ganaconmare</a>
+        <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className={`${subSize} text-muted-foreground hover:text-primary transition-colors block`}>@maredorazio</a>
       </div>
     </div>
   );
