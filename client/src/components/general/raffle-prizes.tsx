@@ -6,9 +6,9 @@ export function RafflePrizes() {
       <div>
         <h4 className="text-sm font-bold text-foreground mb-2">Top de Compras</h4>
         <div className="space-y-1 text-xs text-muted-foreground">
-          <p>1er Lugar 600 Semillas</p>
-          <p>2do Lugar 300 Semillas</p>
-          <p>3er Lugar 100 Semillas</p>
+          <p>1er Lugar 600 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span></p>
+          <p>2do Lugar 300 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span></p>
+          <p>3er Lugar 100 <span className="text-green-700 dark:text-green-400">Lechuguitas$</span></p>
         </div>
       </div>
 
