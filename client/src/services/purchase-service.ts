@@ -11,6 +11,7 @@ export interface PurchaseRequest {
   cantidad: string;
   total: string;
   metodoPago: string;
+  referencia: string;
   file: File | null;
 }
 
@@ -56,6 +57,7 @@ export async function submitPurchase(data: PurchaseRequest): Promise<PurchaseRes
   formData.append("cantidad", data.cantidad);
   formData.append("total", data.total);
   formData.append("metodoPago", data.metodoPago);
+  formData.append("referencia", data.referencia);
   if (data.file) {
     formData.append("file", data.file);
   }

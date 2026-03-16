@@ -13,6 +13,7 @@ export interface SubmitPurchaseParams {
   buyerPhone: string;
   buyerEmail: string;
   buyerIdNumber: string;
+  referencia: string;
 }
 
 interface PurchaseContextType {
@@ -50,6 +51,7 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
       cantidad: String(params.quantity),
       total: params.totalAmount,
       metodoPago: params.paymentMethod,
+      referencia: params.referencia,
       file: proofFileRef.current,
     };
 
