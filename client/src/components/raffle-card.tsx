@@ -115,7 +115,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
             />
           </div>
 
-          <div className="mt-auto space-y-4 sm:space-y-6">
+          <div className="mt-auto space-y-3 sm:space-y-4">
             
             <Button 
               className={`
