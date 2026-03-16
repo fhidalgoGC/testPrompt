@@ -13,7 +13,7 @@ export function RafflePrizes() {
       </div>
 
       <div>
-        <h4 className="text-sm font-bold text-foreground mb-2">8 Semillas Especiales de 100 Semillas C/U</h4>
+        <h4 className="text-sm font-bold text-foreground mb-2">8 semillas especiales de 25 Lechuguitas$ cada una</h4>
         <p className="text-xs text-muted-foreground leading-relaxed">
           {specialNumbers.join(" - ")}
         </p>
