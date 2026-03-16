@@ -30,7 +30,7 @@ export function BrandHeader({ size = "default" }: { size?: "default" | "small" }
         <img src={avatarImages[avatarIndex]} alt="Gana Con Mare" className="h-full w-full object-cover transition-opacity duration-300" />
       </a>
       <div className="leading-tight">
-        <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`font-display font-bold ${titleSize} tracking-wide text-yellow-400 dark:text-yellow-300 block hover:opacity-80 transition-all`} style={{ textShadow: '1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black' }}>GANA CON MARE</a>
+        <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`font-display font-bold ${titleSize} tracking-wide text-yellow-400 dark:text-yellow-300 block hover:opacity-80 transition-all`} style={{ textShadow: '1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black' }}>GANA CON MARE</a>
         <a href="https://www.instagram.com/ganaconmare" target="_blank" rel="noopener noreferrer" className={`${subSize} text-muted-foreground hover:text-primary transition-colors block`}>@ganaconmare</a>
         <a href="https://www.instagram.com/maredorazio" target="_blank" rel="noopener noreferrer" className={`${subSize} text-muted-foreground hover:text-primary transition-colors block`}>@maredorazio</a>
       </div>
