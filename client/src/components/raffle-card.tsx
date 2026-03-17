@@ -123,7 +123,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               disabled={isComplete}
               data-testid={`button-secure-entry-${raffle.id}`}
             >
-              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<img src={seedIconImg} alt="Semilla" className="w-5 h-5 ml-1 object-contain" /></>)}
+              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<img src={seedIconImg} alt="Semilla" className="w-8 h-8 ml-1 object-contain" /></>)}
               {!isComplete && (
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               )}

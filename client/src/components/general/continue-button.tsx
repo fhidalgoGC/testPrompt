@@ -26,7 +26,7 @@ export function ContinueButton({
       {loading ? (
         <Loader2 className="h-5 w-5 animate-spin text-white" />
       ) : (
-        <img src={seedIconImg} alt="Semilla" className="h-7 w-7 object-contain" />
+        <img src={seedIconImg} alt="Semilla" className="h-8 w-8 object-contain" />
       )}
       <span className="text-base font-bold text-white">{text}</span>
     </button>
