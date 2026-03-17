@@ -114,7 +114,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
             
             <Button 
               className={`
-                w-full h-14 font-bold text-base group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-300 border border-black
+                w-full h-12 font-bold text-base group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-300 border border-black
                 ${isComplete 
                   ? 'bg-secondary text-secondary-foreground hover:bg-secondary cursor-not-allowed opacity-80' 
                   : 'bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600'}
@@ -123,7 +123,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
               disabled={isComplete}
               data-testid={`button-secure-entry-${raffle.id}`}
             >
-              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<img src={seedIconImg} alt="Semilla" className="w-6 h-6 ml-1 object-contain" /></>)}
+              {isComplete ? t.raffle.allocationFull : (<>{t.raffle.secureEntry}<img src={seedIconImg} alt="Semilla" className="w-5 h-5 ml-1 object-contain" /></>)}
               {!isComplete && (
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               )}
