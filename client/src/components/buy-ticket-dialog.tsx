@@ -272,6 +272,23 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   )}
                 </button>
               </div>
+              {referencia.trim() && (
+                <div className="flex items-center justify-center gap-2 pt-1">
+                  <span className="text-sm text-black dark:text-muted-foreground">Referencia:</span>
+                  <span className="text-sm font-mono font-bold text-black dark:text-foreground" data-testid="text-referencia">{referencia}</span>
+                  <button
+                    onClick={() => handleCopyValue(referencia, "ref")}
+                    className="p-1 rounded hover:bg-white/10 transition-colors"
+                    data-testid="button-copy-referencia"
+                  >
+                    {copiedField === "ref" ? (
+                      <Check className="h-3.5 w-3.5 text-green-700 dark:text-green-400" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                    )}
+                  </button>
+                </div>
+              )}
               <p className="text-xs text-black dark:text-primary/80 font-medium">{t.picker.saveTransactionNote}</p>
             </div>
             <Button variant="outline" className="mt-2 border-border" onClick={handleClose} data-testid="button-close-success">
