@@ -2,16 +2,26 @@ import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { VisualProgress } from "@/components/ui/visual-progress";
 import { useI18n } from "@/lib/i18n";
+import { fetchRaffleStats, type RaffleStatsData } from "@/services/progressBar.service";
 
-interface RaffleStatsProps {
-  sold: number;
-  total: number;
-  isComplete: boolean;
-}
-
-export function RaffleStats({ sold, total, isComplete }: RaffleStatsProps) {
+export function RaffleStats() {
   const { t } = useI18n();
+  const [stats, setStats] = useState<RaffleStatsData | null>(null);
   const [viewersCount, setViewersCount] = useState(Math.floor(Math.random() * (150 - 20 + 1) + 20));
+
+  useEffect(() => {
+    fetchRaffleStats()
+      .then(setStats)
+      .catch((err) => console.error("Error fetching raffle stats:", err));
+
+    const polling = setInterval(() => {
+      fetchRaffleStats()
+        .then(setStats)
+        .catch((err) => console.error("Error polling raffle stats:", err));
+    }, 30000);
+
+    return () => clearInterval(polling);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,6 +36,20 @@ export function RaffleStats({ sold, total, isComplete }: RaffleStatsProps) {
 
     return () => clearInterval(interval);
   }, []);
+
+  const sold = stats?.vendidos ?? 0;
+  const total = stats?.total ?? 0;
+  const isComplete = total > 0 && sold >= total;
+  const isLoading = stats === null;
+
+  if (isLoading) {
+    return (
+      <div className="w-full animate-pulse" data-testid="stats-loading">
+        <div className="h-3 bg-secondary/50 rounded-full mb-2" />
+        <div className="h-4 bg-secondary/30 rounded w-1/3 mx-auto" />
+      </div>
+    );
+  }
 
   return (
     <>

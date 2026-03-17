@@ -11,7 +11,7 @@ interface VisualProgressProps {
 
 export function VisualProgress({ sold, total, className = "", size = "md" }: VisualProgressProps) {
   const { t } = useI18n();
-  const percentage = 99.9;
+  const percentage = total > 0 ? (sold / total) * 100 : 0;
   const isAlmostComplete = percentage >= 90;
   const isComplete = percentage >= 100;
 
@@ -61,7 +61,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       
       <div className="mt-1 text-center">
         <span className="text-xs font-bold text-foreground">
-          {percentage.toFixed(2)}% Semillas disponibles
+          {sold} / {total} ({percentage.toFixed(2)}%)
         </span>
       </div>
     </div>

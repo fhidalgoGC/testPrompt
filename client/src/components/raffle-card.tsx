@@ -103,11 +103,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
                 {raffle.description}
               </p>
             )}
-            <RaffleStats 
-              sold={raffle.soldTickets}
-              total={raffle.totalTickets}
-              isComplete={isComplete}
-            />
+            <RaffleStats />
             
             <div className="border-t border-border pt-4 mt-6">
               <RafflePrizes />

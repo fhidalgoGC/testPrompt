@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from "react";
 import { submitPurchase as submitPurchaseService, type PurchaseRequest } from "@/services/purchase-service";
+import { environment } from "@/enviroments/enviroment";
 
 export interface SubmitPurchaseParams {
   raffleId: number;
@@ -38,7 +39,7 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
       throw new Error("Debes adjuntar el comprobante de pago");
     }
 
-    const rifaId = "GM1";
+    const rifaId = environment.rifaId;
 
     const request: PurchaseRequest = {
       rifaId,

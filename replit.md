@@ -41,10 +41,23 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - `coupons`: id, code, credits, used, usedByEmail
 - `purchases`: id, transactionId, raffleId, quantity, buyerName, buyerPhone, buyerEmail, buyerIdNumber, paymentMethod, paymentCurrency, totalAmount, proofFilename, status
 
-## API Endpoints
+## Environment Config
+- `client/src/enviroments/enviroment.ts` - Centralized config with `rifaId` and `apiBaseUrl`
+- Used by `progressBar.service.ts` (stats endpoint) and `purchase-provider.tsx` (purchase endpoint)
+
+## External API Endpoints (AWS)
+- `GET /rifa/estadisticas?rifaId=` - Fetch raffle statistics (total, vendidos, disponibles, porcentajes)
+- `POST /rifa/registro-completo` - Submit purchase with form data
+
+## Internal API Endpoints
 - `POST /api/upload-comprobante` - Upload payment proof image (multipart, max 10MB)
 - `POST /api/purchase` - Submit purchase with all data, returns { transactionId }
 - `GET /robots.txt` - Returns disallow-all robots.txt
+
+## Services
+- `client/src/services/progressBar.service.ts` - Fetches raffle stats from AWS endpoint, used by RaffleStats component
+- `client/src/services/purchase-service.ts` - Submits purchase to AWS endpoint
+- `client/src/services/exchange.ts` - Local exchange rate calculation
 
 ## Pages
 - `/` - Home page with campaign listings
