@@ -469,7 +469,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     )}
 
                     <ContinueButton 
-                      icon={<CheckCircle2 className="h-6 w-6 text-white" />}
+                      icon={<img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
                       text={t.picker.continueAfterPayment}
                       onClick={() => setStep("confirm")}
                       disabled={!uploadedFile}
@@ -568,7 +568,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
             <ContinueButton 
-              icon={<CheckCircle2 className="h-6 w-6 text-white" />}
+              icon={<img src={seedIconImg} alt="Semilla" className="h-6 w-6 object-contain" />}
               text={t.picker.continueButton}
               onClick={() => {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
