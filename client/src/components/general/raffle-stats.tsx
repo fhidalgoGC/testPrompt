@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { VisualProgress } from "@/components/ui/visual-progress";
 import { useI18n } from "@/lib/i18n";
-import { fetchRaffleStats, type RaffleStatsData } from "@/services/progressBar.service";
+import { fetchRaffleStats } from "@/services/progressBar.service";
+import type { RaffleStatsData } from "@/services/types/progressBar.types";
 
 export function RaffleStats() {
   const { t } = useI18n();

@@ -1,20 +1,5 @@
 import { environment } from "@/enviroments/enviroment";
-
-export interface RaffleStatsData {
-  rifaId: string;
-  total: number;
-  vendidos: number;
-  disponibles: number;
-  porcentajeVendido: number;
-  porcentajeDisponible: number;
-}
-
-interface ApiResponse {
-  path: string;
-  status: number;
-  messages: { code: string; name: string; value: string }[];
-  data: RaffleStatsData;
-}
+import type { RaffleStatsData, RaffleStatsApiResponse } from "@/services/types/progressBar.types";
 
 export async function fetchRaffleStats(): Promise<RaffleStatsData> {
   const url = `${environment.apiBaseUrl}/rifa/estadisticas?rifaId=${encodeURIComponent(environment.rifaId)}`;
@@ -25,6 +10,6 @@ export async function fetchRaffleStats(): Promise<RaffleStatsData> {
     throw new Error(`Error al obtener estadísticas: ${res.status}`);
   }
 
-  const json: ApiResponse = await res.json();
+  const json: RaffleStatsApiResponse = await res.json();
   return json.data;
 }
