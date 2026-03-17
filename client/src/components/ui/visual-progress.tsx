@@ -3,15 +3,14 @@ import { motion, useAnimation } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 
 interface VisualProgressProps {
-  sold: number;
-  total: number;
+  porcentajeDisponible: number;
   className?: string;
   size?: "sm" | "md" | "lg";
 }
 
-export function VisualProgress({ sold, total, className = "", size = "md" }: VisualProgressProps) {
+export function VisualProgress({ porcentajeDisponible, className = "", size = "md" }: VisualProgressProps) {
   const { t } = useI18n();
-  const percentage = total > 0 ? (sold / total) * 100 : 0;
+  const percentage = porcentajeDisponible;
   const isAlmostComplete = percentage >= 90;
   const isComplete = percentage >= 100;
 
@@ -61,7 +60,7 @@ export function VisualProgress({ sold, total, className = "", size = "md" }: Vis
       
       <div className="mt-1 text-center">
         <span className="text-xs font-bold text-foreground">
-          {sold} / {total} ({percentage.toFixed(2)}%)
+          {percentage.toFixed(2)}% Semillas disponibles
         </span>
       </div>
     </div>

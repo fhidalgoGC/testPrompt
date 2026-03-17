@@ -71,8 +71,7 @@ export function RaffleStats() {
       )}
 
       <VisualProgress 
-        sold={sold} 
-        total={total}
+        porcentajeDisponible={stats.porcentajeDisponible}
       />
     </>
   );
