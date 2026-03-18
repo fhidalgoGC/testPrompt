@@ -1,4 +1,6 @@
-const AWS_ENDPOINT = "https://qtriav9nzf.execute-api.us-east-1.amazonaws.com/dev/rifa/registro-completo";
+import { environment } from "../enviroments/enviroment";
+
+const AWS_ENDPOINT = `${environment.apiBaseUrl}/rifa/registro-completo`;
 
 export interface PurchaseRequest {
   rifaId: string;
