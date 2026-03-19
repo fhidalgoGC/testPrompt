@@ -19,8 +19,9 @@ export function RafflePrizes() {
   }, []);
 
   return (
-    <div className="space-y-4 text-left">
+    <div className="space-y-6 text-left">
       <div>
+        <br/>
         <div className="space-y-3">
           <div>
             <p className="font-bold text-foreground text-xs">1er lugar - 600 <span className="!text-green-700 dark:!text-green-400">Lechuguita$</span></p>
