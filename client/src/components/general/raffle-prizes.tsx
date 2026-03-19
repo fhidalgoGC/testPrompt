@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import seedLightImg from "@assets/WhatsApp_Image_2026-03-16_at_13.37.15_1773689852230.jpeg";
 import seedDarkImg from "@assets/WhatsApp_Image_2026-03-16_at_13.24.30_1773689374715.jpeg";
-import { PrizeItem } from "./prize-item";
 
 export function RafflePrizes() {
   const [isDark, setIsDark] = useState(false);
@@ -27,9 +26,60 @@ export function RafflePrizes() {
       <div>
         <br />
         <div className="space-y-3">
-          <PrizeItem place="1er lugar" amount={600} time="10PM" />
-          <PrizeItem place="2do lugar" amount={300} time="4PM" />
-          <PrizeItem place="3er lugar" amount={100} time="1PM" />
+          <div>
+            <p className="font-bold text-foreground text-xs">
+              1er lugar - 600{" "}
+              <span className="!text-green-700 dark:!text-green-400">
+                Lechuguita$
+              </span>
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed text-[0.5rem]">
+              El ganador será el resultado de las{" "}
+              <span className="font-bold text-foreground">
+                10PM de Súper Gana
+              </span>
+              <br />
+              <span className="font-bold text-foreground">
+                un día después de agotarse las semillas
+              </span>
+            </p>
+          </div>
+          <div>
+            <p className="font-bold text-foreground text-xs">
+              2do lugar - 300{" "}
+              <span className="!text-green-700 dark:!text-green-400">
+                Lechuguita$
+              </span>
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed text-[0.5rem]">
+              El ganador será el resultado de las{" "}
+              <span className="font-bold text-foreground">
+                4PM de Súper Gana
+              </span>
+              <br />
+              <span className="font-bold text-foreground">
+                un día después de agotarse las semillas
+              </span>
+            </p>
+          </div>
+          <div>
+            <p className="font-bold text-foreground text-xs">
+              3er lugar - 100{" "}
+              <span className="!text-green-700 dark:!text-green-400">
+                Lechuguita$
+              </span>
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed text-[0.5rem]">
+              El ganador será el resultado de las{" "}
+              <span className="font-bold text-foreground">
+                1PM de Súper Gana
+              </span>
+              <br />
+              <span className="font-bold text-foreground">
+                un día después de agotarse las semillas
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
