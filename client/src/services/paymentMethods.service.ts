@@ -1,5 +1,5 @@
 import { environment } from "@/enviroments/enviroment";
-import type { PaymentMethodData, PaymentMethodsApiResponse } from "@/services/types/raffleConfig.types";
+import type { PaymentMethodData, PaymentMethodsApiResponse } from "@/services/types/paymentMethods.types";
 
 const ALLOWED_METHOD_IDS = [
   "pagomovil",

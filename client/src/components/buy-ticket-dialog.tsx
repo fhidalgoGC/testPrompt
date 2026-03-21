@@ -15,7 +15,7 @@ import { useRaffleConfig } from "@/providers/raffle-config-provider";
 import { BrandHeader } from "@/components/general/brand-header";
 import { ContinueButton } from "@/components/general/continue-button";
 import { fetchFilteredPaymentMethods } from "@/services/paymentMethods.service";
-import type { PaymentMethodData } from "@/services/types/raffleConfig.types";
+import type { PaymentMethodData } from "@/services/types/paymentMethods.types";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";

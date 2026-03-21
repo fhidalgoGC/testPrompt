@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { fetchRaffleConfig, fetchPaymentMethods } from "@/services/raffleConfig.service";
-import type { RaffleConfigData, PaymentMethodData } from "@/services/types/raffleConfig.types";
+import type { RaffleConfigData } from "@/services/types/raffleConfig.types";
+import type { PaymentMethodData } from "@/services/types/paymentMethods.types";
 
 interface RaffleConfigState {
   raffle_config: RaffleConfigData | null;

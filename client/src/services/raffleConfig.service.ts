@@ -2,9 +2,11 @@ import { environment } from "@/enviroments/enviroment";
 import type {
   RaffleConfigData,
   RaffleConfigApiResponse,
+} from "@/services/types/raffleConfig.types";
+import type {
   PaymentMethodData,
   PaymentMethodsApiResponse,
-} from "@/services/types/raffleConfig.types";
+} from "@/services/types/paymentMethods.types";
 
 export async function fetchRaffleConfig(): Promise<RaffleConfigData> {
   const url = `${environment.apiBaseUrl}/admin-raffle-config/${encodeURIComponent(environment.rifaId)}`;
