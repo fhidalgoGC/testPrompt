@@ -1,16 +1,21 @@
 import { CheckCircle2 } from "lucide-react";
+import type { ExchangeData } from "@/services/types/exchange.types";
 
 interface PaymentMethodItemProps {
   logo: string;
   name: string;
   priceSeed: number;
   coinId: string;
+  exchangeData?: ExchangeData | null;
   selected: boolean;
   onClick: () => void;
   testId?: string;
 }
 
-export function PaymentMethodItem({ logo, name, priceSeed, coinId, selected, onClick, testId }: PaymentMethodItemProps) {
+export function PaymentMethodItem({ logo, name, priceSeed, coinId, exchangeData, selected, onClick, testId }: PaymentMethodItemProps) {
+  const displayPrice = exchangeData ? exchangeData.priceUnit : priceSeed;
+  const displayCoin = exchangeData ? exchangeData.coinId.toUpperCase() : coinId.toUpperCase();
+
   return (
     <button
       onClick={onClick}
@@ -20,7 +25,7 @@ export function PaymentMethodItem({ logo, name, priceSeed, coinId, selected, onC
       <img src={logo} alt={name} className="w-7 h-7 rounded object-contain" />
       <div className="flex-1 text-left">
         <span className="font-medium text-foreground">{name}</span>
-        <span className="block text-xs text-muted-foreground">Precio por semilla: {priceSeed} {coinId.toUpperCase()}</span>
+        <span className="block text-xs text-muted-foreground">Precio por semilla: {displayPrice} {displayCoin}</span>
       </div>
       {selected ? (
         <CheckCircle2 className="h-5 w-5 text-primary" />

@@ -1,11 +1,14 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { fetchRaffleConfig, fetchPaymentMethods } from "@/services/raffleConfig.service";
+import { fetchExchangeRate } from "@/services/exchange.service";
 import type { RaffleConfigData } from "@/services/types/raffleConfig.types";
 import type { PaymentMethodData } from "@/services/types/paymentMethods.types";
+import type { ExchangeData } from "@/services/types/exchange.types";
 
 interface RaffleConfigState {
   raffle_config: RaffleConfigData | null;
   method_payments: PaymentMethodData[];
+  exchange: Record<string, ExchangeData>;
   loading: boolean;
   error: string | null;
 }
@@ -16,6 +19,7 @@ export function RaffleConfigProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<RaffleConfigState>({
     raffle_config: null,
     method_payments: [],
+    exchange: {},
     loading: true,
     error: null,
   });
@@ -40,6 +44,21 @@ export function RaffleConfigProvider({ children }: { children: ReactNode }) {
         ? paymentsResult.value
         : (() => { errors.push(paymentsResult.reason?.message || "Error al obtener métodos de pago"); return []; })();
 
+      const priceSeed = raffleConfig?.priceSeed ?? 1;
+      const uniqueCoinIds = [...new Set(paymentMethods.map((m) => m.coinId))];
+
+      const exchangeResults = await Promise.allSettled(
+        uniqueCoinIds.map((coinId) => fetchExchangeRate(coinId, priceSeed))
+      );
+
+      const exchangeMap: Record<string, ExchangeData> = {};
+      exchangeResults.forEach((result, index) => {
+        const coinId = uniqueCoinIds[index];
+        if (result.status === "fulfilled" && result.value) {
+          exchangeMap[coinId] = result.value;
+        }
+      });
+
       if (errors.length > 0) {
         console.error("Error cargando configuración de rifa:", errors.join("; "));
       }
@@ -47,6 +66,7 @@ export function RaffleConfigProvider({ children }: { children: ReactNode }) {
       setState({
         raffle_config: raffleConfig,
         method_payments: paymentMethods,
+        exchange: exchangeMap,
         loading: false,
         error: errors.length > 0 ? errors.join("; ") : null,
       });

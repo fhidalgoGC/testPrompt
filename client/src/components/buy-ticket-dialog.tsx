@@ -138,7 +138,7 @@ function formatTime(seconds: number): string {
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const { country: globalCountry } = useI18n();
   const purchase = usePurchase();
-  const { raffle_config } = useRaffleConfig();
+  const { raffle_config, exchange } = useRaffleConfig();
   const [selectedCountry] = useState<Country>((globalCountry === "OTHER" ? "VE" : globalCountry) as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -224,9 +224,11 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     setIsSubmitting(true);
 
     const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
-    const total = String(priceSeed * quantity);
-    const currency = method?.coinId.toUpperCase() || coinId.toUpperCase();
-    const precioUnitario = String(priceSeed);
+    const methodExchange = method ? exchange[method.coinId] : null;
+    const unitPrice = methodExchange ? methodExchange.priceUnit : priceSeed;
+    const total = String(unitPrice * quantity);
+    const currency = methodExchange ? methodExchange.coinId.toUpperCase() : (method?.coinId.toUpperCase() || coinId.toUpperCase());
+    const precioUnitario = String(unitPrice);
     const dialCode = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode || "";
     const fullPhone = `${dialCode} ${buyerPhone}`;
 
@@ -352,6 +354,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   name={method.methodPaymentName}
                   priceSeed={priceSeed}
                   coinId={method.coinId}
+                  exchangeData={exchange[method.coinId] || null}
                   selected={selectedPaymentMethod === method.methodPaymentId}
                   onClick={() => { setSelectedPaymentMethod(method.methodPaymentId); setUploadedFile(null); purchase.setProofFile(null); }}
                   testId={`button-payment-${method.methodPaymentId}`}
@@ -376,6 +379,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             {(() => {
               const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
               if (!method) return null;
+              const methodExchange = exchange[method.coinId];
+              const detailUnitPrice = methodExchange ? methodExchange.priceUnit : priceSeed;
+              const detailCoin = methodExchange ? methodExchange.coinId.toUpperCase() : method.coinId.toUpperCase();
               return (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-primary bg-primary/10">
@@ -387,7 +393,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
                     <span className="text-xs font-medium text-black dark:text-primary">Total a pagar</span>
                     <span className="text-sm font-bold text-black dark:text-primary" data-testid={`text-price-${method.methodPaymentId}`}>
-                      {(priceSeed * quantity).toLocaleString()} {method.coinId.toUpperCase()}
+                      {(detailUnitPrice * quantity).toLocaleString()} {detailCoin}
                     </span>
                   </div>
 
