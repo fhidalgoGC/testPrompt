@@ -3,6 +3,8 @@ import { submitPurchase as submitPurchaseService, type PurchaseRequest } from "@
 import { environment } from "@/enviroments/enviroment";
 
 export interface SubmitPurchaseParams {
+  raffleId: number;
+  raffleTitle: string;
   quantity: number;
   paymentMethod: string;
   paymentCurrency: string;

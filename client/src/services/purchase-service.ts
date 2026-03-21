@@ -50,6 +50,7 @@ export interface PurchaseResponse {
 export async function submitPurchase(data: PurchaseRequest): Promise<PurchaseResponse> {
   const formData = new FormData();
   formData.append("rifaId", data.rifaId);
+  formData.append("raffleId", data.rifaId);
   formData.append("name", data.name);
   formData.append("email", data.email);
   formData.append("telefono", data.telefono);
