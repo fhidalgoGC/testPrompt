@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
@@ -11,18 +11,21 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useI18n } from "@/lib/i18n";
 import { usePurchase } from "@/providers/purchase-provider";
+import { useRaffleConfig } from "@/providers/raffle-config-provider";
 import { BrandHeader } from "@/components/general/brand-header";
 import { ContinueButton } from "@/components/general/continue-button";
+import { fetchFilteredPaymentMethods } from "@/services/paymentMethods.service";
+import type { PaymentMethodData } from "@/services/types/raffleConfig.types";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";
 import binanceLogo from "@/assets/logos/binance.png";
 
 const PAYMENT_LOGOS: Record<string, string> = {
-  pago_movil: pagoMovilLogo,
-  spei: speiLogo,
-  transferencia_co: transferenciaLogo,
-  binance: binanceLogo,
+  pagomovil: pagoMovilLogo,
+  transferSpei: speiLogo,
+  transferBancolombia: transferenciaLogo,
+  binancePay: binanceLogo,
 };
 
 interface BuyTicketDialogProps {
@@ -134,6 +137,7 @@ function formatTime(seconds: number): string {
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const { country: globalCountry } = useI18n();
   const purchase = usePurchase();
+  const { raffle_config } = useRaffleConfig();
   const [selectedCountry] = useState<Country>((globalCountry === "OTHER" ? "VE" : globalCountry) as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -150,8 +154,28 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
   const [referencia, setReferencia] = useState("");
+  const [apiPaymentMethods, setApiPaymentMethods] = useState<PaymentMethodData[]>([]);
+  const [loadingMethods, setLoadingMethods] = useState(true);
   const { toast } = useToast();
   const { t } = useI18n();
+
+  const priceSeed = raffle_config?.priceSeed ?? 0.25;
+  const coinId = raffle_config?.coinId ?? "usd";
+
+  useEffect(() => {
+    async function loadMethods() {
+      try {
+        setLoadingMethods(true);
+        const methods = await fetchFilteredPaymentMethods();
+        setApiPaymentMethods(methods);
+      } catch (err) {
+        console.error("Error cargando métodos de pago:", err);
+      } finally {
+        setLoadingMethods(false);
+      }
+    }
+    loadMethods();
+  }, []);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -198,14 +222,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const handleConfirmBuy = async () => {
     setIsSubmitting(true);
 
-    const allMethods = (Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
-      const cfg = COUNTRY_CONFIG[countryCode];
-      return cfg.paymentMethods.map((method) => ({ ...method, countryCode, countryName: cfg.name, countryFlag: cfg.flag, currency: cfg.currency, price: cfg.price }));
-    }).concat(GLOBAL_PAYMENT_METHODS);
-    const method = allMethods.find(m => m.id === selectedPaymentMethod);
-    const total = method ? String(method.price * quantity) : "0";
-    const currency = method?.currency || "";
-    const precioUnitario = method ? String(method.price) : "0";
+    const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
+    const total = String(priceSeed * quantity);
+    const currency = coinId.toUpperCase();
+    const precioUnitario = String(priceSeed);
     const dialCode = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode || "";
     const fullPhone = `${dialCode} ${buyerPhone}`;
 
@@ -317,44 +337,32 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             <p className="text-sm text-muted-foreground leading-relaxed">{t.picker.paymentMethodsDesc}</p>
 
             <div className="space-y-3">
-              {(Object.keys(COUNTRY_CONFIG) as Country[])
-                .sort((a, b) => {
-                  const preferred = globalCountry === "OTHER" ? null : globalCountry;
-                  if (preferred) {
-                    if (a === preferred && b !== preferred) return -1;
-                    if (b === preferred && a !== preferred) return 1;
-                  }
-                  return 0;
-                })
-                .flatMap((countryCode) => {
-                  const cfg = COUNTRY_CONFIG[countryCode];
-                  return cfg.paymentMethods.map((method) => ({
-                    ...method,
-                    countryCode,
-                    countryName: cfg.name,
-                    countryFlag: cfg.flag,
-                    currency: cfg.currency,
-                    price: cfg.price,
-                  }));
-                }).concat(GLOBAL_PAYMENT_METHODS).map((method) => (
+              {loadingMethods ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                </div>
+              ) : apiPaymentMethods.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-4">No hay métodos de pago disponibles</p>
+              ) : (
+                apiPaymentMethods.map((method) => (
                 <button
-                  key={method.id}
-                  onClick={() => { setSelectedPaymentMethod(method.id); setUploadedFile(null); purchase.setProofFile(null); }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.id ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-border hover:bg-muted/50'}`}
-                  data-testid={`button-payment-${method.id}`}
+                  key={method.methodPaymentId}
+                  onClick={() => { setSelectedPaymentMethod(method.methodPaymentId); setUploadedFile(null); purchase.setProofFile(null); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.methodPaymentId ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-border hover:bg-muted/50'}`}
+                  data-testid={`button-payment-${method.methodPaymentId}`}
                 >
-                  <img src={PAYMENT_LOGOS[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
+                  <img src={PAYMENT_LOGOS[method.methodPaymentId] || ""} alt={method.methodPaymentName} className="w-7 h-7 rounded object-contain" />
                   <div className="flex-1 text-left">
-                    <span className="font-medium text-foreground">{method.name}</span>
-                    <span className="block text-xs text-muted-foreground">Precio por semilla: {method.currency === "USD" ? "$" : ""}{method.price} {method.currency}</span>
+                    <span className="font-medium text-foreground">{method.methodPaymentName}</span>
+                    <span className="block text-xs text-muted-foreground">Precio por semilla: ${priceSeed} {coinId.toUpperCase()}</span>
                   </div>
-                  {selectedPaymentMethod === method.id ? (
+                  {selectedPaymentMethod === method.methodPaymentId ? (
                     <CheckCircle2 className="h-5 w-5 text-primary" />
                   ) : (
                     <div className="h-5 w-5 rounded-full border-2 border-border" />
                   )}
                 </button>
-              ))}
+              )))}
             </div>
 
             <ContinueButton 
@@ -372,46 +380,20 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               <h3 className="text-lg font-display font-bold text-foreground">{t.picker.paymentMethods}</h3>
             </div>
             {(() => {
-              const allMethods = (Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
-                const cfg = COUNTRY_CONFIG[countryCode];
-                return cfg.paymentMethods.map((method) => ({ ...method, countryCode, countryName: cfg.name, countryFlag: cfg.flag, currency: cfg.currency, price: cfg.price }));
-              }).concat(GLOBAL_PAYMENT_METHODS);
-              const method = allMethods.find(m => m.id === selectedPaymentMethod);
+              const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
               if (!method) return null;
               return (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-primary bg-primary/10">
-                    <img src={PAYMENT_LOGOS[method.id] || ""} alt={method.name} className="w-7 h-7 rounded object-contain" />
-                    <span className="font-medium text-foreground">{method.name}</span>
+                    <img src={PAYMENT_LOGOS[method.methodPaymentId] || ""} alt={method.methodPaymentName} className="w-7 h-7 rounded object-contain" />
+                    <span className="font-medium text-foreground">{method.methodPaymentName}</span>
                     <CheckCircle2 className="h-5 w-5 text-primary ml-auto" />
-                  </div>
-
-                  <div className="space-y-1">
-                    {method.details.map((detail) => (
-                      <div key={detail.label} className="flex items-center justify-between gap-2 py-0.5">
-                        <span className="text-xs text-muted-foreground">{detail.label}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-mono font-medium text-foreground" data-testid={`text-detail-${method.id}-${detail.label}`}>{detail.value}</span>
-                          <button
-                            onClick={() => handleCopyValue(detail.value, `${method.id}-${detail.label}`)}
-                            className="p-1 rounded hover:bg-white/10 transition-colors"
-                            data-testid={`button-copy-${method.id}-${detail.label}`}
-                          >
-                            {copiedField === `${method.id}-${detail.label}` ? (
-                              <Check className="h-3.5 w-3.5 text-green-700 dark:text-green-400" />
-                            ) : (
-                              <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    ))}
                   </div>
 
                   <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
                     <span className="text-xs font-medium text-black dark:text-primary">Total a pagar</span>
-                    <span className="text-sm font-bold text-black dark:text-primary" data-testid={`text-price-${method.id}`}>
-                      {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
+                    <span className="text-sm font-bold text-black dark:text-primary" data-testid={`text-price-${method.methodPaymentId}`}>
+                      ${(priceSeed * quantity).toLocaleString()} {coinId.toUpperCase()}
                     </span>
                   </div>
 
