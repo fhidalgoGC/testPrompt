@@ -15,8 +15,6 @@ import { useRaffleConfig } from "@/providers/raffle-config-provider";
 import { BrandHeader } from "@/components/general/brand-header";
 import { ContinueButton } from "@/components/general/continue-button";
 import { PaymentMethodItem } from "@/components/general/payment-method-item";
-import { fetchFilteredPaymentMethods } from "@/services/paymentMethods.service";
-import type { PaymentMethodData } from "@/services/types/paymentMethods.types";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";
@@ -138,7 +136,7 @@ function formatTime(seconds: number): string {
 function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<BuyTicketDialogProps, "isOpen">) {
   const { country: globalCountry } = useI18n();
   const purchase = usePurchase();
-  const { raffle_config, exchange } = useRaffleConfig();
+  const { raffle_config, method_payments: apiPaymentMethods, exchange, loading: loadingMethods } = useRaffleConfig();
   const [selectedCountry] = useState<Country>((globalCountry === "OTHER" ? "VE" : globalCountry) as Country);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -155,28 +153,11 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [assignedNumbers, setAssignedNumbers] = useState<number[]>([]);
   const [transactionId, setTransactionId] = useState("");
   const [referencia, setReferencia] = useState("");
-  const [apiPaymentMethods, setApiPaymentMethods] = useState<PaymentMethodData[]>([]);
-  const [loadingMethods, setLoadingMethods] = useState(true);
   const { toast } = useToast();
   const { t } = useI18n();
 
   const priceSeed = raffle_config?.priceSeed ?? 0.25;
   const coinId = raffle_config?.coinId ?? "usd";
-
-  useEffect(() => {
-    async function loadMethods() {
-      try {
-        setLoadingMethods(true);
-        const methods = await fetchFilteredPaymentMethods();
-        setApiPaymentMethods(methods);
-      } catch (err) {
-        console.error("Error cargando métodos de pago:", err);
-      } finally {
-        setLoadingMethods(false);
-      }
-    }
-    loadMethods();
-  }, []);
 
   const handleClose = useCallback(() => {
     onClose();

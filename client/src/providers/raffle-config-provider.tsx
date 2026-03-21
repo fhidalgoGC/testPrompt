@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { fetchRaffleConfig, fetchPaymentMethods } from "@/services/raffleConfig.service";
+import { fetchRaffleConfig } from "@/services/raffleConfig.service";
+import { fetchFilteredPaymentMethods } from "@/services/paymentMethods.service";
 import { fetchExchangeRate } from "@/services/exchange.service";
 import type { RaffleConfigData } from "@/services/types/raffleConfig.types";
 import type { PaymentMethodData } from "@/services/types/paymentMethods.types";
@@ -28,7 +29,7 @@ export function RaffleConfigProvider({ children }: { children: ReactNode }) {
     async function loadConfig() {
       const results = await Promise.allSettled([
         fetchRaffleConfig(),
-        fetchPaymentMethods(),
+        fetchFilteredPaymentMethods(),
       ]);
 
       const raffleResult = results[0];
