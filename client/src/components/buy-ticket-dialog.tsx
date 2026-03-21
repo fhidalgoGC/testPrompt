@@ -602,17 +602,17 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
 
             {(() => {
-              const allMethods = (Object.keys(COUNTRY_CONFIG) as Country[]).flatMap((countryCode) => {
-                const cfg = COUNTRY_CONFIG[countryCode];
-                return cfg.paymentMethods.map((method) => ({ ...method, countryCode, countryName: cfg.name, countryFlag: cfg.flag, currency: cfg.currency, price: cfg.price }));
-              }).concat(GLOBAL_PAYMENT_METHODS);
-              const method = allMethods.find(m => m.id === selectedPaymentMethod);
+              const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
               if (!method) return null;
+              const methodExchange = exchange[method.coinId];
+              const unitPrice = methodExchange ? methodExchange.priceUnit : priceSeed;
+              const totalPrice = unitPrice * quantity;
+              const displayCoin = methodExchange ? methodExchange.coinId.toUpperCase() : method.coinId.toUpperCase();
               return (
                 <div className="flex items-center justify-between gap-2 py-2 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
                   <span className="text-sm font-medium text-black dark:text-primary">Total a pagar</span>
                   <span className="text-lg font-bold text-black dark:text-primary" data-testid="text-quantity-total">
-                    {method.currency === "USD" ? "$" : ""}{(method.price * quantity).toLocaleString()} {method.currency}
+                    {totalPrice.toLocaleString()} {displayCoin}
                   </span>
                 </div>
               );
