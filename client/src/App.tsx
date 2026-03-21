@@ -13,6 +13,7 @@ import Terms from "@/pages/terms";
 import HowItWorks from "@/pages/how-it-works";
 import Redeem from "@/pages/redeem";
 import EmailPreview from "@/pages/email-preview";
+import { DebugProviderButton } from "@/components/debug-provider-button";
 
 function Router() {
   return (
@@ -39,6 +40,7 @@ function App() {
                 <Router />
               </div>
               <Toaster />
+              <DebugProviderButton />
               </TooltipProvider>
             </PurchaseProvider>
           </RaffleConfigProvider>
