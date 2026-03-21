@@ -18,8 +18,9 @@ const PAYMENT_DETAILS: Record<string, PaymentDetail[]> = {
   ],
   transferBancolombia: [
     { label: "Banco", value: "Bancolombia" },
-    { label: "Cuenta", value: "91200009440" },
-    { label: "Tipo", value: "Ahorros" },
+    { label: "Cuenta", value: "00981065221" },
+    { label: "Tipo", value: "Cta de ahorros" },
+    { label: "Titular", value: "Aron Hidalgo" },
   ],
   binancePay: [
     { label: "Binance ID", value: "894529714" },
