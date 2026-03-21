@@ -287,9 +287,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
           <motion.div key="confirm" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5 py-4">
             <div className="flex flex-col items-center text-center space-y-4">
               <img src={seedIconImg} alt="Semilla" className="h-20 w-20 object-contain" />
-              <div>
-                <h3 className="text-xl font-display font-bold text-foreground" data-testid="text-confirm-title">{t.picker.confirmTitle}</h3>
-              </div>
             </div>
             <div className="bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20 rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between text-sm">
