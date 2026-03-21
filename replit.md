@@ -46,6 +46,8 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - Used by `progressBar.service.ts` (stats endpoint) and `purchase-provider.tsx` (purchase endpoint)
 
 ## External API Endpoints (AWS)
+- `POST /admin-raffle-config/{rifaId}` - Fetch raffle configuration
+- `GET /payments-methods?limit=10` - Fetch payment methods
 - `GET /rifa/estadisticas?rifaId=` - Fetch raffle statistics (total, vendidos, disponibles, porcentajes)
 - `POST /rifa/registro-completo` - Submit purchase with form data
 
@@ -55,6 +57,7 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - `GET /robots.txt` - Returns disallow-all robots.txt
 
 ## Services
+- `client/src/services/raffleConfig.service.ts` - Fetches raffle config and payment methods from AWS on app startup
 - `client/src/services/progressBar.service.ts` - Fetches raffle stats from AWS endpoint, used by RaffleStats component
 - `client/src/services/purchase-service.ts` - Submits purchase to AWS endpoint
 - `client/src/services/exchange.ts` - Local exchange rate calculation
@@ -72,6 +75,7 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - `client/src/lib/i18n.tsx` - i18n provider and translations (includes terms + how-it-works content)
 - `client/src/lib/theme-context.tsx` - Dark/light theme provider
 - `client/src/lib/purchase-context.tsx` - Purchase flow state provider
+- `client/src/providers/raffle-config-provider.tsx` - Loads raffle config + payment methods on startup via RaffleConfigProvider, exposes useRaffleConfig() hook
 - `client/src/components/navbar.tsx` - Reusable navbar component (brand, nav links, lang switch, theme toggle)
 - `client/src/components/general/brand-header.tsx` - Brand logo + Instagram links (BrandHeader with "Gana con Mare" in brand yellow)
 - `client/src/pages/home.tsx` - Main landing page

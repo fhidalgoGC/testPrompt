@@ -1,4 +1,4 @@
 export const environment = {
-  rifaId: "LCH01",
+  rifaId: "LCHGA00-",
   apiBaseUrl: "https://api.maredorazio.com/dev",
 };
