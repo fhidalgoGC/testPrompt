@@ -383,17 +383,17 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     </span>
                   </div>
 
-                  <div className="border-t border-white/5 pt-3 mt-2 space-y-3">
-                    <label className="text-lg font-display font-bold text-foreground block mb-2">Referencia</label>
+                  <div className="border-t border-white/5 pt-3 mt-2 space-y-1">
+                    <label className="text-lg font-display font-bold text-foreground block">Referencia</label>
                     <Input
                       placeholder="Ingresa tu referencia de pago"
                       value={referencia}
                       onChange={(e) => setReferencia(e.target.value)}
-                      className="text-sm mb-3"
+                      className="text-sm"
                       data-testid="input-referencia"
                     />
 
-                    <h4 className="text-lg font-display font-bold text-foreground">{t.picker.uploadProof}</h4>
+                    <h4 className="text-lg font-display font-bold text-foreground pt-2">{t.picker.uploadProof}</h4>
 
                     <input
                       ref={fileInputRef}
