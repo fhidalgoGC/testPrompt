@@ -463,7 +463,12 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <Input
                   placeholder="Nombre completo"
                   value={buyerName}
-                  onChange={(e) => setBuyerName(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const cleaned = val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s\-_]/g, "");
+                    const specialCount = (cleaned.match(/[-_]/g) || []).length;
+                    if (specialCount <= 2) setBuyerName(cleaned);
+                  }}
                   className="bg-secondary/50 border-border pl-10"
                   data-testid="input-buyer-name"
                 />
