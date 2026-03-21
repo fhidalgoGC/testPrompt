@@ -15,6 +15,8 @@ import { useRaffleConfig } from "@/providers/raffle-config-provider";
 import { BrandHeader } from "@/components/general/brand-header";
 import { ContinueButton } from "@/components/general/continue-button";
 import { PaymentMethodItem } from "@/components/general/payment-method-item";
+import { SelectCantSeeds } from "@/components/general/select-cant-seeds";
+import { environment } from "@/enviroments/enviroment";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
 import transferenciaLogo from "@/assets/logos/transferencia.png";
@@ -142,7 +144,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<{ name: string; file: File } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [quantity, setQuantity] = useState(4);
+  const [quantity, setQuantity] = useState(environment.seeds.min);
   const [phoneCountry, setPhoneCountry] = useState("VE");
   const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const [buyerPhone, setBuyerPhone] = useState("");
@@ -248,7 +250,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   };
 
 
-  const quickAmounts = [4, 8, 12, 20, 32, 48, 96];
 
   return (
     <div className="space-y-3">
@@ -565,40 +566,14 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             </div>
 
 
-            <div className="flex items-center justify-center gap-4">
-              <Button
-                variant="outline" size="icon"
-                className="h-12 w-12 rounded-full border-border text-foreground"
-                onClick={() => setQuantity(q => Math.max(4, q - 4))}
-                disabled={quantity <= 4}
-                data-testid="button-decrease-qty"
-              >
-                <Minus className="h-5 w-5" />
-              </Button>
-              <div className="w-24 text-center">
-                <span className="block bg-secondary/50 border border-border rounded-md text-center text-3xl font-display font-bold h-14 leading-[3.5rem]" data-testid="text-quantity">{quantity}</span>
-              </div>
-              <Button
-                variant="outline" size="icon"
-                className="h-12 w-12 rounded-full border-border text-foreground"
-                onClick={() => setQuantity(q => Math.min(MAX_TICKETS, q + 4))}
-                disabled={quantity >= MAX_TICKETS}
-                data-testid="button-increase-qty"
-              >
-                <Plus className="h-5 w-5" />
-              </Button>
-            </div>
-
-            <div className="flex flex-wrap gap-2 justify-center">
-              {quickAmounts.map(amt => (
-                <Button
-                  key={amt} variant={quantity === amt ? "default" : "outline"} size="sm"
-                  className={`min-w-[3rem] ${quantity === amt ? "" : "border-border text-muted-foreground"}`}
-                  onClick={() => setQuantity(amt)}
-                  data-testid={`button-quick-${amt}`}
-                >{amt}</Button>
-              ))}
-            </div>
+            <SelectCantSeeds
+              quantity={quantity}
+              onChange={setQuantity}
+              min={environment.seeds.min}
+              step={environment.seeds.step}
+              max={environment.seeds.max}
+              quickAmounts={environment.seeds.quickAmounts}
+            />
 
 
             {(() => {
