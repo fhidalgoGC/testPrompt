@@ -411,7 +411,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     {!uploadedFile ? (
                       <button
                         onClick={() => fileInputRef.current?.click()}
-                        className="w-full border-2 border-dashed border-amber-300 dark:border-white/15 hover:border-primary/40 rounded-lg p-4 flex flex-col items-center gap-2 transition-all bg-amber-50/50 dark:bg-transparent hover:bg-primary/5"
+                        className="w-full border-2 border-dashed border-amber-300 dark:border-white/15 hover:border-primary/40 rounded-lg py-2 px-4 flex flex-col items-center gap-1 transition-all bg-amber-50/50 dark:bg-transparent hover:bg-primary/5"
                         data-testid="button-upload-area"
                       >
                         <Upload className="h-6 w-6 text-black dark:text-muted-foreground" />
