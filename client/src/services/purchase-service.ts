@@ -14,6 +14,10 @@ export interface PurchaseRequest {
   total: string;
   metodoPago: string;
   referencia: string;
+  coinId: string;
+  coinSlug: string;
+  methodPaymentId: string;
+  methodPaymentSlug: string;
   file: File | null;
 }
 
@@ -61,6 +65,10 @@ export async function submitPurchase(data: PurchaseRequest): Promise<PurchaseRes
   formData.append("total", data.total);
   formData.append("metodoPago", data.metodoPago);
   formData.append("referencia", data.referencia);
+  formData.append("coinId", data.coinId);
+  formData.append("coinSlug", data.coinSlug);
+  formData.append("methodPaymentId", data.methodPaymentId);
+  formData.append("methodPaymentSlug", data.methodPaymentSlug);
   if (data.file) {
     formData.append("file", data.file);
   }

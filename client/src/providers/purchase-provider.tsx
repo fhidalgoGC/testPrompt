@@ -15,6 +15,10 @@ export interface SubmitPurchaseParams {
   buyerEmail: string;
   buyerIdNumber: string;
   referencia: string;
+  coinId: string;
+  coinSlug: string;
+  methodPaymentId: string;
+  methodPaymentSlug: string;
 }
 
 interface PurchaseContextType {
@@ -53,6 +57,10 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
       total: params.totalAmount,
       metodoPago: params.paymentMethod,
       referencia: params.referencia,
+      coinId: params.coinId,
+      coinSlug: params.coinSlug,
+      methodPaymentId: params.methodPaymentId,
+      methodPaymentSlug: params.methodPaymentSlug,
       file: proofFileRef.current,
     };
 

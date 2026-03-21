@@ -230,6 +230,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
         buyerEmail,
         buyerIdNumber,
         referencia,
+        coinId: method?.coinId || "",
+        coinSlug: method?.coinSlug || "",
+        methodPaymentId: method?.methodPaymentId || "",
+        methodPaymentSlug: method?.methodPaymentSlug || "",
       });
       setTransactionId(data.transactionId);
       setStep("success");
