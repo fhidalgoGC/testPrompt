@@ -23,7 +23,7 @@ const PAYMENT_DETAILS: Record<string, PaymentDetail[]> = {
     { label: "Titular", value: "Aron Hidalgo" },
   ],
   binancePay: [
-    { label: "Binance ID", value: "894529714" },
+    { label: "Binance ID", value: "91914887" },
   ],
 };
 
