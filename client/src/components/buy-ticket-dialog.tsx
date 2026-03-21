@@ -14,6 +14,7 @@ import { usePurchase } from "@/providers/purchase-provider";
 import { useRaffleConfig } from "@/providers/raffle-config-provider";
 import { BrandHeader } from "@/components/general/brand-header";
 import { ContinueButton } from "@/components/general/continue-button";
+import { PaymentMethodItem } from "@/components/general/payment-method-item";
 import { fetchFilteredPaymentMethods } from "@/services/paymentMethods.service";
 import type { PaymentMethodData } from "@/services/types/paymentMethods.types";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
@@ -345,23 +346,16 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 <p className="text-sm text-muted-foreground text-center py-4">No hay métodos de pago disponibles</p>
               ) : (
                 apiPaymentMethods.map((method) => (
-                <button
+                <PaymentMethodItem
                   key={method.methodPaymentId}
+                  logo={PAYMENT_LOGOS[method.methodPaymentId] || ""}
+                  name={method.methodPaymentName}
+                  priceSeed={priceSeed}
+                  coinId={method.coinId}
+                  selected={selectedPaymentMethod === method.methodPaymentId}
                   onClick={() => { setSelectedPaymentMethod(method.methodPaymentId); setUploadedFile(null); purchase.setProofFile(null); }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 ${selectedPaymentMethod === method.methodPaymentId ? 'border-primary bg-primary/10 shadow-[0_0_12px_rgba(245,158,11,0.15)]' : 'border-border hover:bg-muted/50'}`}
-                  data-testid={`button-payment-${method.methodPaymentId}`}
-                >
-                  <img src={PAYMENT_LOGOS[method.methodPaymentId] || ""} alt={method.methodPaymentName} className="w-7 h-7 rounded object-contain" />
-                  <div className="flex-1 text-left">
-                    <span className="font-medium text-foreground">{method.methodPaymentName}</span>
-                    <span className="block text-xs text-muted-foreground">Precio por semilla: {priceSeed} {method.coinId.toUpperCase()}</span>
-                  </div>
-                  {selectedPaymentMethod === method.methodPaymentId ? (
-                    <CheckCircle2 className="h-5 w-5 text-primary" />
-                  ) : (
-                    <div className="h-5 w-5 rounded-full border-2 border-border" />
-                  )}
-                </button>
+                  testId={`button-payment-${method.methodPaymentId}`}
+                />
               )))}
             </div>
 
