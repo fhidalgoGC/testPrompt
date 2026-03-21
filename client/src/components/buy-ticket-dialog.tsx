@@ -224,7 +224,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
     const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
     const total = String(priceSeed * quantity);
-    const currency = coinId.toUpperCase();
+    const currency = method?.coinId.toUpperCase() || coinId.toUpperCase();
     const precioUnitario = String(priceSeed);
     const dialCode = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.dialCode || "";
     const fullPhone = `${dialCode} ${buyerPhone}`;
@@ -354,7 +354,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   <img src={PAYMENT_LOGOS[method.methodPaymentId] || ""} alt={method.methodPaymentName} className="w-7 h-7 rounded object-contain" />
                   <div className="flex-1 text-left">
                     <span className="font-medium text-foreground">{method.methodPaymentName}</span>
-                    <span className="block text-xs text-muted-foreground">Precio por semilla: ${priceSeed} {coinId.toUpperCase()}</span>
+                    <span className="block text-xs text-muted-foreground">Precio por semilla: ${priceSeed} {method.coinId.toUpperCase()}</span>
                   </div>
                   {selectedPaymentMethod === method.methodPaymentId ? (
                     <CheckCircle2 className="h-5 w-5 text-primary" />
@@ -393,7 +393,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
                     <span className="text-xs font-medium text-black dark:text-primary">Total a pagar</span>
                     <span className="text-sm font-bold text-black dark:text-primary" data-testid={`text-price-${method.methodPaymentId}`}>
-                      ${(priceSeed * quantity).toLocaleString()} {coinId.toUpperCase()}
+                      ${(priceSeed * quantity).toLocaleString()} {method.coinId.toUpperCase()}
                     </span>
                   </div>
 
