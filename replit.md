@@ -46,7 +46,7 @@ A premium vehicle draw/sorteo platform. Users can browse active campaigns, selec
 - Used by `progressBar.service.ts` (stats endpoint) and `purchase-provider.tsx` (purchase endpoint)
 
 ## External API Endpoints (AWS)
-- `POST /admin-raffle-config/{rifaId}` - Fetch raffle configuration
+- `GET /admin-raffle-config/{rifaId}` - Fetch raffle configuration
 - `GET /payments-methods?limit=10` - Fetch payment methods
 - `GET /rifa/estadisticas?rifaId=` - Fetch raffle statistics (total, vendidos, disponibles, porcentajes)
 - `POST /rifa/registro-completo` - Submit purchase with form data

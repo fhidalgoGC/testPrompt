@@ -12,11 +12,10 @@ export async function fetchRaffleConfig(): Promise<RaffleConfig> {
   const url = `${environment.apiBaseUrl}/admin-raffle-config/${encodeURIComponent(environment.rifaId)}`;
 
   const res = await fetch(url, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({}),
   });
 
   if (!res.ok) {
