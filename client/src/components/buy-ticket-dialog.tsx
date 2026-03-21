@@ -218,8 +218,6 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
     try {
       const data = await purchase.submitPurchase({
-        raffleId,
-        raffleTitle: title,
         quantity,
         paymentMethod: selectedPaymentMethod || "",
         paymentCurrency: currency,
