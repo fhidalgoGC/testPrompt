@@ -13,7 +13,7 @@ interface PaymentMethodItemProps {
 }
 
 export function PaymentMethodItem({ logo, name, priceSeed, coinId, exchangeData, selected, onClick, testId }: PaymentMethodItemProps) {
-  const displayPrice = exchangeData ? exchangeData.priceUnit : priceSeed;
+  const displayPrice = exchangeData ? exchangeData.priceTotal : priceSeed;
   const displayCoin = exchangeData ? exchangeData.coinId.toUpperCase() : coinId.toUpperCase();
 
   return (

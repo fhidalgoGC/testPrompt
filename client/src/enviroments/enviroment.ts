@@ -1,10 +1,10 @@
 export const environment = {
-  rifaId: "LCHGA00-",
+  rifaId: "TEST-LCHG00",
   apiBaseUrl: "https://api.maredorazio.com/dev",
   seeds: {
-    min: 3,
-    step: 3,
-    max: 99,
-    quickAmounts: [3, 6, 12, 21, 30, 48, 96],
+    min: 4,
+    step: 4,
+    max: 96,
+    quickAmounts: [4, 8, 12, 20, 32, 48, 96],
   },
 };

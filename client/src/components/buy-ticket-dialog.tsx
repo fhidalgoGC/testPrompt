@@ -209,7 +209,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
     const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
     const methodExchange = method ? exchange[method.coinId] : null;
-    const unitPrice = methodExchange ? methodExchange.priceUnit : priceSeed;
+    const unitPrice = methodExchange ? methodExchange.priceTotal : priceSeed;
     const total = String(unitPrice * quantity);
     const currency = methodExchange ? methodExchange.coinId.toUpperCase() : (method?.coinId.toUpperCase() || coinId.toUpperCase());
     const precioUnitario = String(unitPrice);
@@ -364,7 +364,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
               if (!method) return null;
               const methodExchange = exchange[method.coinId];
-              const detailUnitPrice = methodExchange ? methodExchange.priceUnit : priceSeed;
+              const detailUnitPrice = methodExchange ? methodExchange.priceTotal : priceSeed;
               const detailCoin = methodExchange ? methodExchange.coinId.toUpperCase() : method.coinId.toUpperCase();
               return (
                 <div className="space-y-3">
@@ -589,7 +589,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
               const method = apiPaymentMethods.find(m => m.methodPaymentId === selectedPaymentMethod);
               if (!method) return null;
               const methodExchange = exchange[method.coinId];
-              const unitPrice = methodExchange ? methodExchange.priceUnit : priceSeed;
+              const unitPrice = methodExchange ? methodExchange.priceTotal : priceSeed;
               const totalPrice = unitPrice * quantity;
               const displayCoin = methodExchange ? methodExchange.coinId.toUpperCase() : method.coinId.toUpperCase();
               return (
