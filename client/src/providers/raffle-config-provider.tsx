@@ -1,14 +1,10 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import {
-  fetchRaffleConfig,
-  fetchPaymentMethods,
-  type RaffleConfig,
-  type PaymentMethod,
-} from "@/services/raffleConfig.service";
+import { fetchRaffleConfig, fetchPaymentMethods } from "@/services/raffleConfig.service";
+import type { RaffleConfigData, PaymentMethodData } from "@/services/types/raffleConfig.types";
 
 interface RaffleConfigState {
-  raffle_config: RaffleConfig;
-  method_payments: PaymentMethod[];
+  raffle_config: RaffleConfigData | null;
+  method_payments: PaymentMethodData[];
   loading: boolean;
   error: string | null;
 }
@@ -17,7 +13,7 @@ const RaffleConfigContext = createContext<RaffleConfigState | null>(null);
 
 export function RaffleConfigProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<RaffleConfigState>({
-    raffle_config: {},
+    raffle_config: null,
     method_payments: [],
     loading: true,
     error: null,
@@ -35,11 +31,11 @@ export function RaffleConfigProvider({ children }: { children: ReactNode }) {
 
       const errors: string[] = [];
 
-      const raffleConfig = raffleResult.status === "fulfilled"
+      const raffleConfig: RaffleConfigData | null = raffleResult.status === "fulfilled"
         ? raffleResult.value
-        : (() => { errors.push(raffleResult.reason?.message || "Error al obtener configuración de rifa"); return {}; })();
+        : (() => { errors.push(raffleResult.reason?.message || "Error al obtener configuración de rifa"); return null; })();
 
-      const paymentMethods = paymentsResult.status === "fulfilled"
+      const paymentMethods: PaymentMethodData[] = paymentsResult.status === "fulfilled"
         ? paymentsResult.value
         : (() => { errors.push(paymentsResult.reason?.message || "Error al obtener métodos de pago"); return []; })();
 

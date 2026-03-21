@@ -1,14 +1,12 @@
 import { environment } from "@/enviroments/enviroment";
+import type {
+  RaffleConfigData,
+  RaffleConfigApiResponse,
+  PaymentMethodData,
+  PaymentMethodsApiResponse,
+} from "@/services/types/raffleConfig.types";
 
-export interface RaffleConfig {
-  [key: string]: any;
-}
-
-export interface PaymentMethod {
-  [key: string]: any;
-}
-
-export async function fetchRaffleConfig(): Promise<RaffleConfig> {
+export async function fetchRaffleConfig(): Promise<RaffleConfigData> {
   const url = `${environment.apiBaseUrl}/admin-raffle-config/${encodeURIComponent(environment.rifaId)}`;
 
   const res = await fetch(url, {
@@ -22,11 +20,11 @@ export async function fetchRaffleConfig(): Promise<RaffleConfig> {
     throw new Error(`Error al obtener configuración de rifa: ${res.status}`);
   }
 
-  const json = await res.json();
-  return json.data ?? json;
+  const json: RaffleConfigApiResponse = await res.json();
+  return json.data;
 }
 
-export async function fetchPaymentMethods(): Promise<PaymentMethod[]> {
+export async function fetchPaymentMethods(): Promise<PaymentMethodData[]> {
   const url = `${environment.apiBaseUrl}/payments-methods?limit=10`;
 
   const res = await fetch(url);
@@ -35,7 +33,6 @@ export async function fetchPaymentMethods(): Promise<PaymentMethod[]> {
     throw new Error(`Error al obtener métodos de pago: ${res.status}`);
   }
 
-  const json = await res.json();
-  const result = json.data ?? json;
-  return Array.isArray(result) ? result : [];
+  const json: PaymentMethodsApiResponse = await res.json();
+  return json.data.items;
 }
