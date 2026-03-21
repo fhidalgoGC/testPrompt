@@ -16,6 +16,7 @@ import { BrandHeader } from "@/components/general/brand-header";
 import { ContinueButton } from "@/components/general/continue-button";
 import { PaymentMethodItem } from "@/components/general/payment-method-item";
 import { SelectCantSeeds } from "@/components/general/select-cant-seeds";
+import { PaymentMethodDetails } from "@/components/general/payment-method-details";
 import { environment } from "@/enviroments/enviroment";
 import pagoMovilLogo from "@/assets/logos/pago-movil.png";
 import speiLogo from "@/assets/logos/spei.jpg";
@@ -368,6 +369,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     <span className="font-medium text-foreground">{method.methodPaymentName}</span>
                     <CheckCircle2 className="h-5 w-5 text-primary ml-auto" />
                   </div>
+
+                  <PaymentMethodDetails methodPaymentId={method.methodPaymentId} />
 
                   <div className="flex items-center justify-between gap-2 py-1.5 px-3 rounded-lg bg-amber-100 dark:bg-primary/10 border border-amber-300 dark:border-primary/20">
                     <span className="text-xs font-medium text-black dark:text-primary">Total a pagar</span>
