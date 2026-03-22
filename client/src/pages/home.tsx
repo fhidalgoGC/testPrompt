@@ -14,6 +14,7 @@ import {
   Mail,
 } from "lucide-react";
 import seedIconImg from "@/assets/seed-icon-nobg.png";
+import fremiTechLogoImg from "@assets/Logo_Fremitech_1774159080887.png";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -184,6 +185,19 @@ export default function Home() {
           )}
         </AnimatePresence>
       </section>
+
+      <footer className="mt-4 px-4 py-6 border-t border-border text-center">
+        <p className="text-xs text-muted-foreground mb-3">
+          © 2025 Gana con Mare. Plataforma de rifas construida por
+        </p>
+        <div className="flex justify-center">
+          <img
+            src={fremiTechLogoImg}
+            alt="Fremitech Consulting & Development"
+            className="h-10 object-contain opacity-70 dark:invert"
+          />
+        </div>
+      </footer>
     </div>
   );
 }
