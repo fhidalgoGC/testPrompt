@@ -191,7 +191,7 @@ export default function Home() {
           <span className="font-bold text-foreground">Gana con Mare</span> &nbsp;•&nbsp; © 2025 &nbsp;•&nbsp; Todos los derechos reservados
         </p>
         <p className="text-xs text-muted-foreground mb-4">
-          Plataforma de sorteos diseñada y desarrollada por <span className="font-bold text-foreground">Fremitech</span>
+          Plataforma de sorteos diseñada y desarrollada por <a href="https://www.fremitech.com/" target="_blank" rel="noopener noreferrer" className="font-bold text-foreground hover:underline">Fremitech</a>
         </p>
         <div className="flex justify-center">
           <img
