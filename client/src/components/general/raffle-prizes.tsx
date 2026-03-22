@@ -26,6 +26,7 @@ export function RafflePrizes() {
     <div className="space-y-4 text-left">
       <div>
         <br />
+        <br />
         <div className="space-y-3">
           <PrizeItem place="1er lugar" amount={600} time="10PM" />
           <PrizeItem place="2do lugar" amount={300} time="4PM" />

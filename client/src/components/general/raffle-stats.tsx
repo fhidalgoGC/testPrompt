@@ -8,7 +8,9 @@ import type { RaffleStatsData } from "@/services/types/progressBar.types";
 export function RaffleStats() {
   const { t } = useI18n();
   const [stats, setStats] = useState<RaffleStatsData | null>(null);
-  const [viewersCount, setViewersCount] = useState(Math.floor(Math.random() * (150 - 20 + 1) + 20));
+  const [viewersCount, setViewersCount] = useState(
+    Math.floor(Math.random() * (150 - 20 + 1) + 20),
+  );
 
   useEffect(() => {
     fetchRaffleStats()
@@ -26,11 +28,14 @@ export function RaffleStats() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setViewersCount(prev => {
+      setViewersCount((prev) => {
         const minViewers = 20;
         const maxViewers = 150;
         const change = Math.floor(Math.random() * 20) - 10;
-        const newCount = Math.max(minViewers, Math.min(maxViewers, prev + change));
+        const newCount = Math.max(
+          minViewers,
+          Math.min(maxViewers, prev + change),
+        );
         return newCount;
       });
     }, 3000);
@@ -55,14 +60,20 @@ export function RaffleStats() {
   return (
     <>
       {!isComplete && (
-        <div className="flex items-center gap-2 mb-2" data-testid="viewers-counter">
+        <div
+          className="flex items-center gap-2 mb-2"
+          data-testid="viewers-counter"
+        >
+          <br />
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-600/10 dark:bg-green-500/10 border border-green-600/30 dark:border-green-500/20">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 dark:bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600 dark:bg-green-500"></span>
             </span>
             <Eye className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
-            <span className="text-xs font-bold text-green-700 dark:text-green-400">{viewersCount}</span>
+            <span className="text-xs font-bold text-green-700 dark:text-green-400">
+              {viewersCount}
+            </span>
           </div>
           <span className="text-xs text-foreground font-bold">
             {t.raffle.viewersWatching}
@@ -70,9 +81,8 @@ export function RaffleStats() {
         </div>
       )}
 
-      <VisualProgress 
-        porcentajeDisponible={stats.porcentajeDisponible}
-      />
+      <VisualProgress porcentajeDisponible={stats.porcentajeDisponible} />
+      <br />
     </>
   );
 }
