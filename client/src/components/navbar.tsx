@@ -64,7 +64,7 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="fixed top-[64px] left-0 right-0 z-40 glass border-b border-border md:hidden"
           >
-            <div className="px-4 py-4 space-y-1">
+            <div className="px-4 pt-3 pb-1 space-y-1">
               <Link href="/" className="block">
                 <span
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors cursor-pointer"
