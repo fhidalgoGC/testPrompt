@@ -187,8 +187,11 @@ export default function Home() {
       </section>
 
       <footer className="mt-4 px-4 py-6 border-t border-border text-center">
-        <p className="text-xs text-muted-foreground mb-3">
-          © 2025 Gana con Mare. Plataforma de rifas construida por
+        <p className="text-xs text-muted-foreground mb-1">
+          Gana con Mare &nbsp;•&nbsp; © 2025 &nbsp;•&nbsp; Todos los derechos reservados
+        </p>
+        <p className="text-xs text-muted-foreground mb-4">
+          Plataforma de sorteos diseñada y desarrollada por Fremitech
         </p>
         <div className="flex justify-center">
           <img
