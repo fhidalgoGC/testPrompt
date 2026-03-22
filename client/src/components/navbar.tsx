@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrandHeader } from "@/components/general/brand-header";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, Trophy, HelpCircle, MessageCircle, Sun, Moon } from "lucide-react";
+import { Menu, X, FileText, Trophy, MessageCircle, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme-context";
@@ -23,9 +23,6 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-foreground/70 dark:text-muted-foreground">
               <Link href="/">
                 <span className="hover:text-foreground transition-colors cursor-pointer" data-testid="link-home">Home</span>
-              </Link>
-              <Link href="/how-it-works">
-                <span className="hover:text-foreground transition-colors cursor-pointer" data-testid="link-how">{t.nav.howItWorks}</span>
               </Link>
               <Link href="/terms">
                 <span className="hover:text-foreground transition-colors cursor-pointer" data-testid="link-terms">{t.nav.terms}</span>
@@ -76,16 +73,6 @@ export function Navbar() {
                 >
                   <Trophy className="h-4 w-4 text-primary/70" />
                   Home
-                </span>
-              </Link>
-              <Link href="/how-it-works">
-                <span
-                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors cursor-pointer"
-                  onClick={() => setMenuOpen(false)}
-                  data-testid="mobile-link-how"
-                >
-                  <HelpCircle className="h-4 w-4 text-primary/70" />
-                  {t.nav.howItWorks}
                 </span>
               </Link>
               <Link href="/terms">
