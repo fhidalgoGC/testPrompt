@@ -14,7 +14,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 glass border-b border-border px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300">
+      <nav className="fixed top-0 w-full z-50 glass border-b border-border px-3 sm:px-6 py-3.5 sm:py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="shrink-0">
             <BrandHeader />
