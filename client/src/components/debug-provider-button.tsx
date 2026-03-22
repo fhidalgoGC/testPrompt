@@ -6,11 +6,14 @@ export function DebugProviderButton() {
   const [open, setOpen] = useState(false);
   const state = useRaffleConfig();
 
+  const isDebug = new URLSearchParams(window.location.search).get("debug") === "true";
+  if (!isDebug) return null;
+
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-[9999] w-12 h-12 rounded-full bg-red-600 text-white shadow-lg flex items-center justify-center hover:bg-red-700 transition-colors"
+        className="hidden sm:flex fixed bottom-6 right-6 z-[9999] w-12 h-12 rounded-full bg-red-600 text-white shadow-lg items-center justify-center hover:bg-red-700 transition-colors"
         data-testid="button-debug-provider"
       >
         <Bug className="w-5 h-5" />
