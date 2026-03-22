@@ -188,10 +188,10 @@ export default function Home() {
 
       <footer className="mt-4 px-4 py-6 border-t border-border text-center">
         <p className="text-xs text-muted-foreground mb-1">
-          Gana con Mare &nbsp;•&nbsp; © 2025 &nbsp;•&nbsp; Todos los derechos reservados
+          <span className="font-bold text-foreground">Gana con Mare</span> &nbsp;•&nbsp; © 2025 &nbsp;•&nbsp; Todos los derechos reservados
         </p>
         <p className="text-xs text-muted-foreground mb-4">
-          Plataforma de sorteos diseñada y desarrollada por Fremitech
+          Plataforma de sorteos diseñada y desarrollada por <span className="font-bold text-foreground">Fremitech</span>
         </p>
         <div className="flex justify-center">
           <img
