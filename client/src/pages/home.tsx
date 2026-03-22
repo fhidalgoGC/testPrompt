@@ -197,7 +197,7 @@ export default function Home() {
           <img
             src={fremiTechLogoImg}
             alt="Fremitech Consulting & Development"
-            className="h-10 object-contain opacity-70 dark:invert"
+            className="h-16 object-contain opacity-70 dark:invert"
           />
         </div>
       </footer>
