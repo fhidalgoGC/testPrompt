@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 export type Locale = "es" | "en";
 
@@ -23,7 +29,8 @@ const translations = {
       title2Emoji1: "🥬",
       title2Emoji2: "$$$",
       title2End: "y empieza a cumplir tus sueños",
-      subtitle: "Oportunidades exclusivas de vivir tus sueños mas deseados. Tu sueño se activa en el momento exacto en que se venden el 100% de las semillas.",
+      subtitle:
+        "Oportunidades exclusivas de vivir tus sueños mas deseados. Tu sueño se activa en el momento exacto en que se venden el 100% de las semillas.",
     },
     raffle: {
       priorityCampaign: "Tus Lechuguitas # 1",
@@ -34,8 +41,14 @@ const translations = {
       allocationFull: "Numeros Agotados",
       awaitingDraw: "Sueño en camino",
       almostFree: "Casi gratis",
-      badgeLabels: ["La mejor opcion", "Buenisimo", "No esta nada mal", "Increible", "Imperdible"] as readonly string[],
-      viewersWatching: "Personas estan viendo este item",
+      badgeLabels: [
+        "La mejor opcion",
+        "Buenisimo",
+        "No esta nada mal",
+        "Increible",
+        "Imperdible",
+      ] as readonly string[],
+      viewersWatching: "Personas estan viendo esto",
       dontMissOut: "No te pierdas la oportunidad",
     },
     progress: {
@@ -51,10 +64,12 @@ const translations = {
       subtitle: "Participa por el sueño de",
       selectCountry: "Selecciona tu pais",
       selectCountryDesc: "Elige tu pais para ver los precios disponibles.",
-      quantityDesc: "Cada semilla tiene un numero aleatorio y seran enviados a tu correo despues de comprar.",
+      quantityDesc:
+        "Cada semilla tiene un numero aleatorio y seran enviados a tu correo despues de comprar.",
       pricePerSeed: "Precio por semilla:",
       paymentMethods: "Forma de pago",
-      paymentMethodsDesc: "Selecciona tu metodo de pago y realiza la transferencia.",
+      paymentMethodsDesc:
+        "Selecciona tu metodo de pago y realiza la transferencia.",
       totalToPay: "Total a pagar:",
       copySuccess: "Copiado",
       continueAfterPayment: "Ya realice el pago",
@@ -73,7 +88,8 @@ const translations = {
       emailPlaceholder: "Tu correo electronico",
       idPlaceholder: "Tu numero de identificacion",
       contactModalTitle: "Datos de contacto",
-      verifyInfoDesc: "Tus semillas compradas seran enviadas a tu correo una vez verificado el pago. Este proceso puede tardar unos minutos o un maximo de 24 horas.",
+      verifyInfoDesc:
+        "Tus semillas compradas seran enviadas a tu correo una vez verificado el pago. Este proceso puede tardar unos minutos o un maximo de 24 horas.",
       idPlaceholderVE: "Tu cedula (V-12345678)",
       idPlaceholderMX: "Tu CURP o INE",
       idPlaceholderCO: "Tu cedula de ciudadania",
@@ -81,27 +97,34 @@ const translations = {
       sendingCode: "Enviando...",
       resendCode: "Reenviar codigo",
       verifyTitle: "Verifica tu telefono",
-      verifyDesc: "Te enviamos un codigo de 6 digitos al numero {phone}. Ingresalo a continuacion.",
+      verifyDesc:
+        "Te enviamos un codigo de 6 digitos al numero {phone}. Ingresalo a continuacion.",
       verifyCode: "Verificar",
       verifying: "Verificando...",
       codeInvalid: "Codigo incorrecto",
-      codeInvalidDesc: "El codigo ingresado no es valido o ha expirado. Intenta de nuevo.",
+      codeInvalidDesc:
+        "El codigo ingresado no es valido o ha expirado. Intenta de nuevo.",
       codeSent: "Codigo enviado",
       codeSentToEmail: "Revisa tu correo para el codigo de verificacion.",
-      emailCodeExplanation: "Al continuar, te enviaremos un codigo de 6 digitos a tu correo electronico. Tendras 5 minutos para verificarlo.",
+      emailCodeExplanation:
+        "Al continuar, te enviaremos un codigo de 6 digitos a tu correo electronico. Tendras 5 minutos para verificarlo.",
       sendCodeEmail: "Enviar codigo al correo",
       timerExpiredTitle: "El codigo llegara pronto",
-      timerExpiredDesc: "Tu codigo llegara en los proximos minutos. Verificalo desde la opcion 'Verificar OTP' en el menu.",
+      timerExpiredDesc:
+        "Tu codigo llegara en los proximos minutos. Verificalo desde la opcion 'Verificar OTP' en el menu.",
       confirmTitle: "",
-      confirmDesc: "Al confirmar, te enviaremos un correo con las indicaciones y tus semillas. Revisa tu bandeja de entrada.",
+      confirmDesc:
+        "Al confirmar, te enviaremos un correo con las indicaciones y tus semillas. Revisa tu bandeja de entrada.",
       ticketCount: "Cantidad de semillas:",
-      randomAssignNote: "Cada semilla es un numero que se seleccionara de forma aleatoria.",
+      randomAssignNote:
+        "Cada semilla es un numero que se seleccionara de forma aleatoria.",
       confirmBtn: "Confirmar datos",
       buyButton: "Quiero mis Semillas",
       buyButtonPlural: "Quiero {count} semillas",
       processing: "Procesando...",
       successTitle: "Compra Confirmada",
-      successDesc: "Tu compra ha sido registrada. Recibiras tus semillas en tu correo una vez verificado el pago. La verificacion puede tardar unos minutos o un maximo de 24 horas.",
+      successDesc:
+        "Tu compra ha sido registrada. Recibiras tus semillas en tu correo una vez verificado el pago. La verificacion puede tardar unos minutos o un maximo de 24 horas.",
       transactionLabel: "Numero de transaccion",
       saveTransactionNote: "Guarda este numero como comprobante de tu compra.",
       closeBtn: "Cerrar",
@@ -125,7 +148,8 @@ const translations = {
       successTitle: "Semillas agregadas",
       successDesc: "Se han agregado {credits} creditos a tu cuenta.",
       errorInvalid: "Codigo invalido",
-      errorInvalidDesc: "El codigo ingresado no existe. Verifica e intenta de nuevo.",
+      errorInvalidDesc:
+        "El codigo ingresado no existe. Verifica e intenta de nuevo.",
       errorUsed: "Codigo ya utilizado",
       errorUsedDesc: "Este codigo ya fue utilizado anteriormente.",
       errorGeneric: "Error al aplicar el codigo.",
@@ -134,11 +158,13 @@ const translations = {
     verifyOtp: {
       title: "Verificar OTP",
       subtitle: "Ingresa el codigo que recibiste por SMS.",
-      phoneDesc: "Ingresa el numero de telefono al que enviamos el codigo de verificacion.",
+      phoneDesc:
+        "Ingresa el numero de telefono al que enviamos el codigo de verificacion.",
       enterCodeTitle: "Ingresa tu codigo",
       enterCodeDesc: "Escribe el codigo de 6 digitos que enviamos al {phone}.",
       haveCode: "Ya tengo codigo",
-      alreadyHaveCode: "Si ya recibiste el codigo SMS, puedes ingresar tu telefono y usar el boton 'Ya tengo codigo' para ir directo a verificarlo.",
+      alreadyHaveCode:
+        "Si ya recibiste el codigo SMS, puedes ingresar tu telefono y usar el boton 'Ya tengo codigo' para ir directo a verificarlo.",
       invalidPhone: "Telefono invalido",
       invalidPhoneDesc: "Ingresa un numero de telefono valido.",
       verifiedTitle: "Telefono verificado",
@@ -188,27 +214,33 @@ const translations = {
     },
     howItWorks: {
       title: "Como Funciona",
-      subtitle: "Tu camino hacia el sueno de un vehiculo premium en 5 simples pasos.",
+      subtitle:
+        "Tu camino hacia el sueno de un vehiculo premium en 5 simples pasos.",
       steps: [
         {
           title: "1. Elige tu Sueno",
-          description: "Explora los vehiculos disponibles en nuestra plataforma. Cada campana tiene una capacidad de 9,999 semillas, y tu puedes adquirir las que desees.",
+          description:
+            "Explora los vehiculos disponibles en nuestra plataforma. Cada campana tiene una capacidad de 9,999 semillas, y tu puedes adquirir las que desees.",
         },
         {
           title: "2. Compra tus Semillas",
-          description: "Selecciona la cantidad de semillas que deseas y completa el proceso de pago. Cada semilla tiene un numero aleatorio unico que sera tu oportunidad.",
+          description:
+            "Selecciona la cantidad de semillas que deseas y completa el proceso de pago. Cada semilla tiene un numero aleatorio unico que sera tu oportunidad.",
         },
         {
           title: "3. Realiza tu Pago",
-          description: "Elige tu metodo de pago preferido, realiza la transferencia y sube tu comprobante. Verificaremos tu pago en minutos o hasta un maximo de 24 horas.",
+          description:
+            "Elige tu metodo de pago preferido, realiza la transferencia y sube tu comprobante. Verificaremos tu pago en minutos o hasta un maximo de 24 horas.",
         },
         {
           title: "4. Espera al 100%",
-          description: "El proceso se activa unicamente cuando el 100% de las semillas han sido vendidas. Mientras tanto, puedes seguir el progreso en tiempo real desde la plataforma.",
+          description:
+            "El proceso se activa unicamente cuando el 100% de las semillas han sido vendidas. Mientras tanto, puedes seguir el progreso en tiempo real desde la plataforma.",
         },
         {
           title: "5. Seleccion del Ganador",
-          description: "Una vez vendidas todas las semillas, se realiza una seleccion aleatoria y transparente. El ganador sera notificado por correo electronico y contactado en 48 horas.",
+          description:
+            "Una vez vendidas todas las semillas, se realiza una seleccion aleatoria y transparente. El ganador sera notificado por correo electronico y contactado en 48 horas.",
         },
       ],
     },
@@ -230,7 +262,8 @@ const translations = {
       titleHighlight: "tree",
       titleEmoji: "🤑🤑🤑",
       title2: "your dreams.",
-      subtitle: "Exclusive draws for the world's most sought-after vehicles. The draw activates the exact moment 100% of the numbers are sold.",
+      subtitle:
+        "Exclusive draws for the world's most sought-after vehicles. The draw activates the exact moment 100% of the numbers are sold.",
     },
     raffle: {
       priorityCampaign: "Priority Campaign",
@@ -241,7 +274,13 @@ const translations = {
       allocationFull: "Sold Out",
       awaitingDraw: "Awaiting Draw",
       almostFree: "Almost free",
-      badgeLabels: ["Best choice", "Amazing", "Not bad at all", "Incredible", "Can't miss"] as readonly string[],
+      badgeLabels: [
+        "Best choice",
+        "Amazing",
+        "Not bad at all",
+        "Incredible",
+        "Can't miss",
+      ] as readonly string[],
       viewersWatching: "People are viewing this item",
       dontMissOut: "Don't miss your chance",
     },
@@ -258,7 +297,8 @@ const translations = {
       subtitle: "Enter the draw for",
       selectCountry: "Select your country",
       selectCountryDesc: "Choose your country to see available prices.",
-      quantityDesc: "Each seed has a random number and they will be sent to your email after purchase.",
+      quantityDesc:
+        "Each seed has a random number and they will be sent to your email after purchase.",
       pricePerSeed: "Price per seed:",
       paymentMethods: "Payment method",
       paymentMethodsDesc: "Select your payment method and make the transfer.",
@@ -280,7 +320,8 @@ const translations = {
       emailPlaceholder: "Your email address",
       idPlaceholder: "Your ID number",
       contactModalTitle: "Contact information",
-      verifyInfoDesc: "Your purchased seeds will be sent to your email once payment is verified. This process may take a few minutes or up to 24 hours.",
+      verifyInfoDesc:
+        "Your purchased seeds will be sent to your email once payment is verified. This process may take a few minutes or up to 24 hours.",
       idPlaceholderVE: "Your cedula (V-12345678)",
       idPlaceholderMX: "Your CURP or INE",
       idPlaceholderCO: "Your citizenship ID",
@@ -295,12 +336,15 @@ const translations = {
       codeInvalidDesc: "The code entered is invalid or has expired. Try again.",
       codeSent: "Code sent",
       codeSentToEmail: "Check your email for the verification code.",
-      emailCodeExplanation: "By continuing, we'll send a 6-digit code to your email. You'll have 5 minutes to verify it.",
+      emailCodeExplanation:
+        "By continuing, we'll send a 6-digit code to your email. You'll have 5 minutes to verify it.",
       sendCodeEmail: "Send code to email",
       timerExpiredTitle: "Your code will arrive soon",
-      timerExpiredDesc: "Your code will arrive in the next few minutes. Verify it from the 'Verify OTP' option in the menu.",
+      timerExpiredDesc:
+        "Your code will arrive in the next few minutes. Verify it from the 'Verify OTP' option in the menu.",
       confirmTitle: "",
-      confirmDesc: "Once confirmed, we'll send you an email with instructions and your seeds. Check your inbox.",
+      confirmDesc:
+        "Once confirmed, we'll send you an email with instructions and your seeds. Check your inbox.",
       ticketCount: "Number of seeds:",
       randomAssignNote: "Each seed is a number that will be selected randomly.",
       confirmBtn: "Confirm details",
@@ -308,7 +352,8 @@ const translations = {
       buyButtonPlural: "I want {count} seeds",
       processing: "Processing...",
       successTitle: "Purchase Confirmed",
-      successDesc: "Your purchase has been registered. You will receive your seeds by email once payment is verified. Verification may take a few minutes or up to 24 hours.",
+      successDesc:
+        "Your purchase has been registered. You will receive your seeds by email once payment is verified. Verification may take a few minutes or up to 24 hours.",
       transactionLabel: "Transaction number",
       saveTransactionNote: "Save this number as proof of your purchase.",
       closeBtn: "Close",
@@ -332,7 +377,8 @@ const translations = {
       successTitle: "Seeds added",
       successDesc: "{credits} credits have been added to your account.",
       errorInvalid: "Invalid code",
-      errorInvalidDesc: "The code entered does not exist. Please check and try again.",
+      errorInvalidDesc:
+        "The code entered does not exist. Please check and try again.",
       errorUsed: "Code already used",
       errorUsedDesc: "This code has already been used.",
       errorGeneric: "Error applying the code.",
@@ -345,7 +391,8 @@ const translations = {
       enterCodeTitle: "Enter your code",
       enterCodeDesc: "Type the 6-digit code we sent to {phone}.",
       haveCode: "I have a code",
-      alreadyHaveCode: "If you already received the SMS code, enter your phone and use 'I have a code' to go straight to verification.",
+      alreadyHaveCode:
+        "If you already received the SMS code, enter your phone and use 'I have a code' to go straight to verification.",
       invalidPhone: "Invalid phone",
       invalidPhoneDesc: "Please enter a valid phone number.",
       verifiedTitle: "Phone verified",
@@ -399,23 +446,28 @@ const translations = {
       steps: [
         {
           title: "1. Choose Your Dream",
-          description: "Browse the available vehicles on our platform. Each campaign has a capacity of 9,999 seeds, and you can acquire as many as you want.",
+          description:
+            "Browse the available vehicles on our platform. Each campaign has a capacity of 9,999 seeds, and you can acquire as many as you want.",
         },
         {
           title: "2. Buy Your Seeds",
-          description: "Select the number of seeds you want and complete the payment process. Each seed has a unique random number that represents your chance.",
+          description:
+            "Select the number of seeds you want and complete the payment process. Each seed has a unique random number that represents your chance.",
         },
         {
           title: "3. Make Your Payment",
-          description: "Choose your preferred payment method, make the transfer, and upload your proof of payment. We'll verify your payment in minutes or up to 24 hours.",
+          description:
+            "Choose your preferred payment method, make the transfer, and upload your proof of payment. We'll verify your payment in minutes or up to 24 hours.",
         },
         {
           title: "4. Wait for 100%",
-          description: "The process activates only when 100% of the seeds have been sold. Meanwhile, you can follow the progress in real time on the platform.",
+          description:
+            "The process activates only when 100% of the seeds have been sold. Meanwhile, you can follow the progress in real time on the platform.",
         },
         {
           title: "5. Winner Selection",
-          description: "Once all seeds are sold, a random and transparent selection is made. The winner will be notified by email and contacted within 48 hours.",
+          description:
+            "Once all seeds are sold, a random and transparent selection is made. The winner will be notified by email and contacted within 48 hours.",
         },
       ],
     },
@@ -454,12 +506,17 @@ const I18nContext = createContext<I18nContextType | null>(null);
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(() => {
     const saved = localStorage.getItem("locale");
-    return (saved === "en" || saved === "es") ? saved : "es";
+    return saved === "en" || saved === "es" ? saved : "es";
   });
 
   const [country, setCountry] = useState<AppCountry>(() => {
     const saved = localStorage.getItem("country");
-    return (saved === "VE" || saved === "MX" || saved === "CO" || saved === "OTHER") ? saved : "OTHER";
+    return saved === "VE" ||
+      saved === "MX" ||
+      saved === "CO" ||
+      saved === "OTHER"
+      ? saved
+      : "OTHER";
   });
 
   useEffect(() => {
