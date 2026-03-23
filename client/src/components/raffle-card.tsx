@@ -143,7 +143,7 @@ export function RaffleCard({ raffle, featured = false, badgeLabel }: RaffleCardP
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/80 backdrop-blur-md border-t border-border">
         <Button
           className={`
-            w-full h-[4.5rem] font-bold text-base rounded-xl shadow-lg transition-all duration-300 border border-black
+            w-full h-[80px] font-bold text-base rounded-xl shadow-lg transition-all duration-300 border border-black
             ${isComplete
               ? 'bg-secondary text-secondary-foreground cursor-not-allowed opacity-80'
               : 'bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600'}
