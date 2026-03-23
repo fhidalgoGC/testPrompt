@@ -54,7 +54,9 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<{ name: string; file: File } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [quantity, setQuantity] = useState(environment.seeds.min);
+  const currentSeeds = environment.methodsPayments.find(m => m.id === selectedPaymentMethod)?.seeds
+    ?? environment.methodsPayments[0].seeds;
+  const [quantity, setQuantity] = useState(environment.methodsPayments[0].seeds.min);
   const [phoneCountry, setPhoneCountry] = useState("VE");
   const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const [buyerPhone, setBuyerPhone] = useState("");
@@ -249,7 +251,13 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   coinId={method.coinId}
                   exchangeData={exchange[method.coinId] || null}
                   selected={selectedPaymentMethod === method.methodPaymentId}
-                  onClick={() => { setSelectedPaymentMethod(method.methodPaymentId); setUploadedFile(null); purchase.setProofFile(null); }}
+                  onClick={() => {
+                    const methodSeeds = environment.methodsPayments.find(m => m.id === method.methodPaymentId)?.seeds;
+                    setSelectedPaymentMethod(method.methodPaymentId);
+                    setQuantity(methodSeeds?.min ?? environment.methodsPayments[0].seeds.min);
+                    setUploadedFile(null);
+                    purchase.setProofFile(null);
+                  }}
                   testId={`button-payment-${method.methodPaymentId}`}
                 />
               )))}
@@ -487,10 +495,10 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
             <SelectCantSeeds
               quantity={quantity}
               onChange={setQuantity}
-              min={environment.seeds.min}
-              step={environment.seeds.step}
-              max={environment.seeds.max}
-              quickAmounts={environment.seeds.quickAmounts}
+              min={currentSeeds.min}
+              step={currentSeeds.step}
+              max={currentSeeds.max}
+              quickAmounts={currentSeeds.quickAmounts}
             />
 
 
