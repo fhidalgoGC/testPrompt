@@ -48,7 +48,7 @@ const translations = {
         "Increible",
         "Imperdible",
       ] as readonly string[],
-      viewersWatching: "Personas estan viendo esto",
+      viewersWatching: "Personas estan viendo este item",
       dontMissOut: "No te pierdas la oportunidad",
     },
     progress: {
