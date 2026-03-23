@@ -14,7 +14,7 @@ interface RaffleConfigState {
   error: string | null;
 }
 
-const RaffleConfigContext = createContext<RaffleConfigState | null>(null);
+export const RaffleConfigContext = createContext<RaffleConfigState | null>(null);
 
 export function RaffleConfigProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<RaffleConfigState>({

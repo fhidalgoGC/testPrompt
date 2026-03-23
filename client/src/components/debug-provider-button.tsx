@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Bug, X } from "lucide-react";
-import { useRaffleConfig } from "@/providers/raffle-config-provider";
+import { RaffleConfigContext } from "@/providers/raffle-config-provider";
 
 export function DebugProviderButton() {
   const [open, setOpen] = useState(false);
-  const state = useRaffleConfig();
+  const state = useContext(RaffleConfigContext);
 
   const isDebug = new URLSearchParams(window.location.search).get("debug") === "true";
-  if (!isDebug) return null;
+  if (!isDebug || !state) return null;
 
   return (
     <>
