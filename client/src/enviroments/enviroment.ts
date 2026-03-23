@@ -66,18 +66,28 @@ export const environment = {
       flag: "🇻🇪",
       currency: "USD",
       price: 0.25,
+      paymentMethodIds: ["pagomovil"],
     },
     MX: {
       name: "México",
       flag: "🇲🇽",
       currency: "MXN",
       price: 4.5,
+      paymentMethodIds: ["transferSpei"],
     },
     CO: {
       name: "Colombia",
       flag: "🇨🇴",
       currency: "COP",
       price: 925,
+      paymentMethodIds: ["transferBancolombia"],
+    },
+    GLOBAL: {
+      name: "Global",
+      flag: "🌎",
+      currency: "USD",
+      price: 0.25,
+      paymentMethodIds: ["binancePay", "zelle"],
     },
   },
   phoneCountries: [
