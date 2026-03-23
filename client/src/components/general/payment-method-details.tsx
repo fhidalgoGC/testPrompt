@@ -25,6 +25,9 @@ const PAYMENT_DETAILS: Record<string, PaymentDetail[]> = {
   binancePay: [
     { label: "Binance ID", value: "91914887" },
   ],
+  zelle: [
+    { label: "Email", value: "hifreddytech@gmail.com" },
+  ],
 };
 
 interface PaymentMethodDetailsProps {

@@ -8,6 +8,19 @@ const ALLOWED_METHOD_IDS = [
   "binancePay",
 ];
 
+const STATIC_PAYMENT_METHODS: PaymentMethodData[] = [
+  {
+    id: "zelle",
+    methodPaymentId: "zelle",
+    methodPaymentName: "Zelle",
+    methodPaymentSlug: "zelle",
+    coinId: "usd",
+    coinSlug: "usd",
+    createdAt: "",
+    updatedAt: "",
+  },
+];
+
 export async function fetchFilteredPaymentMethods(): Promise<PaymentMethodData[]> {
   const url = `${environment.apiBaseUrl}/payments-methods?limit=10`;
 
@@ -20,5 +33,6 @@ export async function fetchFilteredPaymentMethods(): Promise<PaymentMethodData[]
   const json: PaymentMethodsApiResponse = await res.json();
   const items = json.data.items;
 
-  return items.filter((item) => ALLOWED_METHOD_IDS.includes(item.methodPaymentId));
+  const filtered = items.filter((item) => ALLOWED_METHOD_IDS.includes(item.methodPaymentId));
+  return [...filtered, ...STATIC_PAYMENT_METHODS];
 }
