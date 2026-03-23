@@ -21,8 +21,8 @@ export const environment = {
       coinId: "usd",
       seeds: {
         min: 40,
-        step: 4,
-        max: 96,
+        step: 8,
+        max: 120,
         quickAmounts: [40, 48, 56, 64, 80, 120],
       },
       details: [{ label: "Email", value: "hifreddytech@gmail.com" }],
@@ -36,7 +36,7 @@ export const environment = {
         min: 12,
         step: 4,
         max: 96,
-        quickAmounts: [8, 12, 16, 24, 48, 96],
+        quickAmounts: [12, 16, 20, 40, 60, 96],
       },
       details: [
         { label: "Banco", value: "MercadoPago" },
@@ -49,10 +49,10 @@ export const environment = {
       logo: new URL("../assets/logos/transferencia.png", import.meta.url).href,
       coinId: "cop",
       seeds: {
-        min: 8,
+        min: 4,
         step: 4,
         max: 96,
-        quickAmounts: [8, 12, 16, 24, 48, 96],
+        quickAmounts: [4, 8, 12, 24, 48, 96],
       },
       details: [
         { label: "Banco", value: "Bancolombia" },
@@ -67,9 +67,9 @@ export const environment = {
       logo: new URL("../assets/logos/binance.png", import.meta.url).href,
       coinId: "usd",
       seeds: {
-        min: 4,
-        step: 4,
-        max: 96,
+        min: 40,
+        step: 8,
+        max: 120,
         quickAmounts: [40, 48, 56, 64, 80, 120],
       },
       details: [{ label: "Binance ID", value: "91914887" }],
