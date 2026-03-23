@@ -6,7 +6,7 @@ export const environment = {
       id: "pagomovil",
       name: "Pago Móvil",
       logo: new URL("../assets/logos/pago-movil.png", import.meta.url).href,
-      coinId: "ves",
+      coinId: "bs",
       seeds: { min: 4, step: 4, max: 96, quickAmounts: [4, 8, 12, 24, 48, 96] },
       details: [
         { label: "Cédula", value: "20242594" },
