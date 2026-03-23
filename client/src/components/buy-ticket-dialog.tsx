@@ -18,19 +18,10 @@ import { PaymentMethodItem } from "@/components/general/payment-method-item";
 import { SelectCantSeeds } from "@/components/general/select-cant-seeds";
 import { PaymentMethodDetails } from "@/components/general/payment-method-details";
 import { environment } from "@/enviroments/enviroment";
-import pagoMovilLogo from "@/assets/logos/pago-movil.png";
-import speiLogo from "@/assets/logos/spei.jpg";
-import transferenciaLogo from "@/assets/logos/transferencia.png";
-import binanceLogo from "@/assets/logos/binance.png";
-import zelleLogo from "@/assets/logos/zelle.png";
 
-const PAYMENT_LOGOS: Record<string, string> = {
-  pagomovil: pagoMovilLogo,
-  transferSpei: speiLogo,
-  transferBancolombia: transferenciaLogo,
-  binancePay: binanceLogo,
-  zelle: zelleLogo,
-};
+const PAYMENT_LOGOS: Record<string, string> = Object.fromEntries(
+  environment.methodsPayments.map((m) => [m.id, m.logo])
+);
 
 interface BuyTicketDialogProps {
   raffleId: number;

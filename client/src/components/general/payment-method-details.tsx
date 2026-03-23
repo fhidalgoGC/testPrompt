@@ -1,34 +1,6 @@
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
-
-interface PaymentDetail {
-  label: string;
-  value: string;
-}
-
-const PAYMENT_DETAILS: Record<string, PaymentDetail[]> = {
-  pagomovil: [
-    { label: "Cédula", value: "20242594" },
-    { label: "Celular", value: "0422-6333703" },
-    { label: "Banco", value: "Banco de Venezuela 0102" },
-  ],
-  transferSpei: [
-    { label: "Banco", value: "MercadoPago" },
-    { label: "CLABE", value: "722969010417786326" },
-  ],
-  transferBancolombia: [
-    { label: "Banco", value: "Bancolombia" },
-    { label: "Cuenta", value: "00981065221" },
-    { label: "Tipo", value: "Cta de ahorros" },
-    { label: "Titular", value: "Aron Hidalgo" },
-  ],
-  binancePay: [
-    { label: "Binance ID", value: "91914887" },
-  ],
-  zelle: [
-    { label: "Email", value: "hifreddytech@gmail.com" },
-  ],
-};
+import { environment } from "@/enviroments/enviroment";
 
 interface PaymentMethodDetailsProps {
   methodPaymentId: string;
@@ -36,9 +8,11 @@ interface PaymentMethodDetailsProps {
 
 export function PaymentMethodDetails({ methodPaymentId }: PaymentMethodDetailsProps) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const details = PAYMENT_DETAILS[methodPaymentId];
 
-  if (!details || details.length === 0) return null;
+  const method = environment.methodsPayments.find((m) => m.id === methodPaymentId);
+  const details = method?.details ?? [];
+
+  if (details.length === 0) return null;
 
   const handleCopy = (value: string, label: string) => {
     navigator.clipboard.writeText(value);
