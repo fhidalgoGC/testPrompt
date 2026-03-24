@@ -196,7 +196,7 @@ const translations = {
         },
         {
           heading: "5. Proceso de Seleccion",
-          body: "Una vez que todas las semillas han sido adquiridas, la seleccion de los numeros ganadores se realizara **1 dia despues**, de **SUPER GANA**, segun el horario establecido de acuerdo a cada premio. El resultado sera comunicado a todos los participantes por los canales oficiales.",
+          body: "Una vez que todas las semillas se han agotado, la seleccion de los numeros ganadores se realizara **1 dia despues** con los resultados de **SUPER GANA** en su pagina oficial, segun el horario establecido de acuerdo a cada premio. El resultado sera comunicado a todos los participantes por los canales oficiales.",
         },
         {
           heading: "6. Entrega del Premio",
@@ -432,7 +432,7 @@ const translations = {
         },
         {
           heading: "5. Draw Process",
-          body: "Once all seeds have been acquired, the winning numbers will be drawn **1 day later**, by **SUPER GANA**, according to the established schedule for each prize. The result will be communicated to all participants through the official channels.",
+          body: "Once all seeds are sold out, the winning numbers will be drawn **1 day later** using the results from **SUPER GANA** on their official website, according to the established schedule for each prize. The result will be communicated to all participants through the official channels.",
         },
         {
           heading: "6. Prize Delivery",
