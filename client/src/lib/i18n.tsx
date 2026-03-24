@@ -183,31 +183,27 @@ const translations = {
           body: "Al acceder y utilizar esta plataforma, usted acepta estos terminos y condiciones en su totalidad. Si no esta de acuerdo con alguna parte de estos terminos, no debera utilizar nuestros servicios.",
         },
         {
-          heading: "2. Descripcion del Servicio",
-          body: "GMare es una plataforma donde puedes cumplir el sueno de tener un vehiculo premium. Cada oportunidad cuenta con una capacidad fija de 9,999 numeros. El proceso se activa unicamente cuando el 100% de las semillas han sido adquiridas.",
-        },
-        {
-          heading: "3. Participacion",
+          heading: "2. Participacion",
           body: "Para participar, el usuario debe seleccionar uno o mas numeros disponibles y completar el proceso de adquisicion. Cada numero adquirido representa una oportunidad igual de ser seleccionado.",
         },
         {
-          heading: "4. Proceso de Seleccion",
+          heading: "3. Proceso de Seleccion",
           body: "La seleccion se realiza de manera aleatoria y transparente una vez que todos los numeros han sido adquiridos. El resultado sera comunicado a todos los participantes por correo electronico.",
         },
         {
-          heading: "5. Entrega del Premio",
-          body: "El ganador sera contactado dentro de las 48 horas siguientes a la seleccion. La entrega del vehiculo se coordinara directamente con el ganador, incluyendo toda la documentacion legal necesaria.",
+          heading: "4. Entrega del Premio",
+          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Los premios son en dolares: primer premio, segundo premio y tercer premio. El monto sera coordinado y entregado directamente con cada ganador.",
         },
         {
-          heading: "6. Politica de Reembolsos",
+          heading: "5. Politica de Reembolsos",
           body: "Una vez adquirido un numero, no se aceptan devoluciones ni reembolsos. Los numeros adquiridos son intransferibles.",
         },
         {
-          heading: "7. Privacidad",
+          heading: "6. Privacidad",
           body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
-          heading: "8. Modificaciones",
+          heading: "7. Modificaciones",
           body: "Nos reservamos el derecho de modificar estos terminos en cualquier momento. Los cambios seran notificados a traves de la plataforma.",
         },
       ],
@@ -411,31 +407,27 @@ const translations = {
           body: "By accessing and using this platform, you agree to these terms and conditions in their entirety. If you do not agree with any part of these terms, you should not use our services.",
         },
         {
-          heading: "2. Service Description",
-          body: "GMare is a premium vehicle draw platform. Each campaign has a fixed capacity of 9,999 numbers. The draw activates only when 100% of the numbers have been acquired.",
-        },
-        {
-          heading: "3. Participation",
+          heading: "2. Participation",
           body: "To participate, users must select one or more available numbers and complete the acquisition process. Each acquired number represents an equal chance of being selected in the draw.",
         },
         {
-          heading: "4. Draw Process",
+          heading: "3. Draw Process",
           body: "The draw is conducted randomly and transparently once all numbers have been acquired. The result will be communicated to all participants via email.",
         },
         {
-          heading: "5. Prize Delivery",
-          body: "The winner will be contacted within 48 hours of the draw. Vehicle delivery will be coordinated directly with the winner, including all necessary legal documentation.",
+          heading: "4. Prize Delivery",
+          body: "Winners will be contacted within 48 hours of the draw. Prizes are in dollars: first prize, second prize, and third prize. The amount will be coordinated and delivered directly with each winner.",
         },
         {
-          heading: "6. Refund Policy",
+          heading: "5. Refund Policy",
           body: "Once a number has been acquired, no returns or refunds are accepted. Acquired numbers are non-transferable.",
         },
         {
-          heading: "7. Privacy",
+          heading: "6. Privacy",
           body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
         },
         {
-          heading: "8. Modifications",
+          heading: "7. Modifications",
           body: "We reserve the right to modify these terms at any time. Changes will be notified through the platform.",
         },
       ],
