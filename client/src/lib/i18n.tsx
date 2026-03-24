@@ -203,7 +203,7 @@ const translations = {
           body: "Los ganadores seran contactados entre **24 y 36 horas** despues de la seleccion. La entrega del premio se realizara entre **12 y 24 horas** despues del contacto inicial. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
         },
         {
-          heading: "7. Transparencia y difusion",
+          heading: "7. Transparencia y Difusión",
           body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
         },
         {
@@ -215,7 +215,7 @@ const translations = {
           body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
-          heading: "10. Medios de comunicacion oficiales",
+          heading: "10. Medios de Comunicación Oficiales",
           body: "Nuestros canales oficiales de contacto son:",
           socials: [
             { platform: "whatsapp", handle: "+58 422-633-3703",       url: "https://wa.me/584226333703" },
