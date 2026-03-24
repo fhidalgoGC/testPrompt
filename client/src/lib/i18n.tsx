@@ -208,7 +208,7 @@ const translations = {
         },
         {
           heading: "8. Politica de Reembolsos",
-          body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
+          body: "Una vez adquiridas las semillas, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
         },
         {
           heading: "9. Privacidad",
@@ -463,7 +463,7 @@ const translations = {
         },
         {
           heading: "8. Refund Policy",
-          body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
+          body: "Once seeds have been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
         },
         {
           heading: "9. Privacy",
