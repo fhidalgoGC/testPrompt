@@ -184,22 +184,22 @@ const translations = {
         },
         {
           heading: "2. Proceso de Seleccion",
-          body: "La seleccion se realiza de manera aleatoria y transparente una vez que todos los numeros han sido adquiridos. El resultado sera comunicado a todos los participantes por correo electronico.",
+          body: "La seleccion se realiza de manera aleatoria y transparente una vez que todas las semillas han sido adquiridas. El resultado sera comunicado a todos los participantes por correo electronico.",
         },
         {
-          heading: "4. Entrega del Premio",
-          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas. Los premios son en dolares: primer premio, segundo premio y tercer premio. El monto sera coordinado y entregado directamente con cada ganador.",
+          heading: "3. Entrega del Premio",
+          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
         },
         {
-          heading: "5. Politica de Reembolsos",
-          body: "Una vez adquirido un numero, no se aceptan devoluciones ni reembolsos. Los numeros adquiridos son intransferibles.",
+          heading: "4. Politica de Reembolsos",
+          body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
         },
         {
-          heading: "6. Privacidad",
+          heading: "5. Privacidad",
           body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
-          heading: "7. Modificaciones",
+          heading: "6. Modificaciones",
           body: "Nos reservamos el derecho de modificar estos terminos en cualquier momento. Los cambios seran notificados a traves de la plataforma.",
         },
       ],
@@ -403,27 +403,23 @@ const translations = {
           body: "By accessing and using this platform, you agree to these terms and conditions in their entirety. If you do not agree with any part of these terms, you should not use our services.",
         },
         {
-          heading: "2. Participation",
-          body: "To participate, users must select one or more available numbers and complete the acquisition process. Each acquired number represents an equal chance of being selected in the draw.",
+          heading: "2. Draw Process",
+          body: "The draw is conducted randomly and transparently once all seeds have been acquired. The result will be communicated to all participants via email.",
         },
         {
-          heading: "3. Draw Process",
-          body: "The draw is conducted randomly and transparently once all numbers have been acquired. The result will be communicated to all participants via email.",
+          heading: "3. Prize Delivery",
+          body: "Winners will be contacted within 48 hours of the draw. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
         },
         {
-          heading: "4. Prize Delivery",
-          body: "Winners will be contacted within 48 hours of the draw. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds. Prizes are in dollars: first prize, second prize, and third prize. The amount will be coordinated and delivered directly with each winner.",
+          heading: "4. Refund Policy",
+          body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
         },
         {
-          heading: "5. Refund Policy",
-          body: "Once a number has been acquired, no returns or refunds are accepted. Acquired numbers are non-transferable.",
-        },
-        {
-          heading: "6. Privacy",
+          heading: "5. Privacy",
           body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
         },
         {
-          heading: "7. Modifications",
+          heading: "6. Modifications",
           body: "We reserve the right to modify these terms at any time. Changes will be notified through the platform.",
         },
       ],
