@@ -22,7 +22,7 @@ export default function Terms() {
             {t.terms.lastUpdated}: {new Date().toLocaleDateString(locale === "es" ? "es-ES" : "en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
 
-          <div className="space-y-8">
+          <div className="space-y-3">
             {t.terms.sections.map((section, index) => (
               <motion.div
                 key={index}
