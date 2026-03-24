@@ -1,7 +1,8 @@
 import { useI18n } from "@/lib/i18n";
 import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
-import { SiInstagram, SiTelegram, SiX } from "react-icons/si";
+import { SiInstagram, SiTelegram, SiX, SiWhatsapp } from "react-icons/si";
+import { Mail } from "lucide-react";
 
 function RichBody({ text, testId }: { text: string; testId: string }) {
   const tokens = text.split(/(\*\*.+?\*\*|__.+?__|%%[^%]+%%)/g);
@@ -39,9 +40,11 @@ function RichBody({ text, testId }: { text: string; testId: string }) {
 }
 
 const platformMeta: Record<string, { icon: React.ReactNode; label: string; color: string }> = {
-  instagram: { icon: <SiInstagram className="h-4 w-4" />, label: "Instagram:", color: "text-pink-500" },
-  telegram:  { icon: <SiTelegram  className="h-4 w-4" />, label: "Telegram:",  color: "text-sky-500"  },
-  x:         { icon: <SiX         className="h-4 w-4" />, label: "Twitter X:", color: "text-foreground" },
+  instagram: { icon: <SiInstagram  className="h-4 w-4" />, label: "Instagram:",           color: "text-pink-500"   },
+  telegram:  { icon: <SiTelegram   className="h-4 w-4" />, label: "Telegram:",            color: "text-sky-500"    },
+  x:         { icon: <SiX          className="h-4 w-4" />, label: "Twitter X:",           color: "text-foreground" },
+  whatsapp:  { icon: <SiWhatsapp   className="h-4 w-4" />, label: "WhatsApp:",            color: "text-green-500"  },
+  email:     { icon: <Mail         className="h-4 w-4" />, label: "Correo electronico:",  color: "text-foreground" },
 };
 
 export default function Terms() {
