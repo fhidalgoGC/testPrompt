@@ -192,7 +192,7 @@ const translations = {
         },
         {
           heading: "4. Verificacion y Confirmacion de compra",
-          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con tus numeros asignados desde nuestros %%correos oficiales · ver punto 11|#section-11%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
+          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con tus semillas asignadas desde nuestros %%correos oficiales · ver punto 11|#section-11%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
           heading: "5. Proceso de Seleccion",
@@ -432,7 +432,7 @@ const translations = {
         },
         {
           heading: "4. Payment Verification and Purchase Confirmation",
-          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your assigned numbers from our %%official emails · see point 11|#section-11%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
+          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your assigned seeds from our %%official emails · see point 11|#section-11%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
           heading: "5. Draw Process",
