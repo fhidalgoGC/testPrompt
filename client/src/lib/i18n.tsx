@@ -187,36 +187,36 @@ const translations = {
           body: "Solo podran participar personas naturales mayores de 18 anos.",
         },
         {
-          heading: "3. Proceso de Seleccion",
-          body: "La seleccion se realiza de manera aleatoria y transparente una vez que todas las semillas han sido adquiridas. El resultado sera comunicado a todos los participantes por correo electronico.",
+          heading: "3. Datos del formulario",
+          body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para enviarte la confirmacion de compra, tus semillas asignadas y cualquier informacion relevante del sorteo.",
         },
         {
-          heading: "4. Entrega del Premio",
-          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
-        },
-        {
-          heading: "5. Politica de Reembolsos",
-          body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
-        },
-        {
-          heading: "6. Transparencia y difusion",
-          body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
-        },
-        {
-          heading: "7. Privacidad",
-          body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
-        },
-        {
-          heading: "8. Entrega de tickets",
-          body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **8/36 Horas**, ya que procesamos un alto volumen de operaciones diariamente.",
-        },
-        {
-          heading: "9. Confirmacion de compra",
+          heading: "4. Confirmacion de compra",
           body: "Una vez validado tu pago, recibiras primero un **correo electronico automatico** de confirmacion con tus numeros asignados, enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
-          heading: "10. Datos del formulario",
-          body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para enviarte la confirmacion de compra, tus semillas asignadas y cualquier informacion relevante del sorteo.",
+          heading: "5. Proceso de Seleccion",
+          body: "La seleccion se realiza de manera aleatoria y transparente una vez que todas las semillas han sido adquiridas. El resultado sera comunicado a todos los participantes por correo electronico.",
+        },
+        {
+          heading: "6. Entrega del Premio",
+          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
+        },
+        {
+          heading: "7. Politica de Reembolsos",
+          body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
+        },
+        {
+          heading: "8. Transparencia y difusion",
+          body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
+        },
+        {
+          heading: "9. Privacidad",
+          body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
+        },
+        {
+          heading: "10. Entrega de tickets",
+          body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **8/36 Horas**, ya que procesamos un alto volumen de operaciones diariamente.",
         },
       ],
     },
@@ -423,36 +423,36 @@ const translations = {
           body: "Only natural persons aged 18 years or older may participate.",
         },
         {
-          heading: "3. Draw Process",
-          body: "The draw is conducted randomly and transparently once all seeds have been acquired. The result will be communicated to all participants via email.",
+          heading: "3. Form Data",
+          body: "It is mandatory to complete the form with **real and accurate information**. Your full name and national ID will be used to **verify the winner's identity** at the time of prize delivery. Your phone number and email must be valid and accessible, as they will be the **official communication channels** for sending your purchase confirmation, your assigned seeds, and any relevant draw updates.",
         },
         {
-          heading: "4. Prize Delivery",
-          body: "Winners will be contacted within 48 hours of the draw. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
-        },
-        {
-          heading: "5. Refund Policy",
-          body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
-        },
-        {
-          heading: "6. Transparency and Dissemination",
-          body: "To guarantee the transparency of each draw, winners agree to appear in audiovisual content related to the prize delivery, which may be published on our social media channels.",
-        },
-        {
-          heading: "7. Privacy",
-          body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
-        },
-        {
-          heading: "8. Ticket Delivery",
-          body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **8/36 Hours**, as we process a high volume of transactions daily.",
-        },
-        {
-          heading: "9. Purchase Confirmation",
+          heading: "4. Purchase Confirmation",
           body: "Once your payment is validated, you will first receive an **automatic confirmation email** with your assigned number(s), sent from __info@maredorazio.com__ or __ganaconmare@gmail.com__. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
-          heading: "10. Form Data",
-          body: "It is mandatory to complete the form with **real and accurate information**. Your full name and national ID will be used to **verify the winner's identity** at the time of prize delivery. Your phone number and email must be valid and accessible, as they will be the **official communication channels** for sending your purchase confirmation, your assigned seeds, and any relevant draw updates.",
+          heading: "5. Draw Process",
+          body: "The draw is conducted randomly and transparently once all seeds have been acquired. The result will be communicated to all participants via email.",
+        },
+        {
+          heading: "6. Prize Delivery",
+          body: "Winners will be contacted within 48 hours of the draw. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
+        },
+        {
+          heading: "7. Refund Policy",
+          body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
+        },
+        {
+          heading: "8. Transparency and Dissemination",
+          body: "To guarantee the transparency of each draw, winners agree to appear in audiovisual content related to the prize delivery, which may be published on our social media channels.",
+        },
+        {
+          heading: "9. Privacy",
+          body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
+        },
+        {
+          heading: "10. Ticket Delivery",
+          body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **8/36 Hours**, as we process a high volume of transactions daily.",
         },
       ],
     },
