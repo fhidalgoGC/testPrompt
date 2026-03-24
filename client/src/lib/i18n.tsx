@@ -203,12 +203,12 @@ const translations = {
           body: "Los ganadores seran contactados entre **24 y 36 horas** despues de la seleccion. La entrega del premio se realizara entre **12 y 24 horas** despues del contacto inicial. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
         },
         {
-          heading: "7. Politica de Reembolsos",
-          body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
+          heading: "7. Transparencia y difusion",
+          body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
         },
         {
-          heading: "8. Transparencia y difusion",
-          body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
+          heading: "8. Politica de Reembolsos",
+          body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
         },
         {
           heading: "9. Privacidad",
@@ -443,12 +443,12 @@ const translations = {
           body: "Winners will be contacted between **24 and 36 hours** after the draw. The prize will be delivered between **12 and 24 hours** after initial contact. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
         },
         {
-          heading: "7. Refund Policy",
-          body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
+          heading: "7. Transparency and Dissemination",
+          body: "To guarantee the transparency of each draw, winners agree to appear in audiovisual content related to the prize delivery, which may be published on our social media channels.",
         },
         {
-          heading: "8. Transparency and Dissemination",
-          body: "To guarantee the transparency of each draw, winners agree to appear in audiovisual content related to the prize delivery, which may be published on our social media channels.",
+          heading: "8. Refund Policy",
+          body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
         },
         {
           heading: "9. Privacy",
