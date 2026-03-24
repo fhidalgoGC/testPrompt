@@ -214,6 +214,10 @@ const translations = {
           heading: "9. Confirmacion de compra",
           body: "Una vez validado tu pago, recibiras un mensaje de confirmacion con tu(s) numero(s) asignado(s). Nuestro **canal principal de comunicacion es WhatsApp**, y de forma secundaria tambien enviamos __confirmacion por correo electronico__.",
         },
+        {
+          heading: "10. Datos del formulario",
+          body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para notificarte en caso de resultar ganador.",
+        },
       ],
     },
     howItWorks: {
@@ -445,6 +449,10 @@ const translations = {
         {
           heading: "9. Purchase Confirmation",
           body: "Once your payment is validated, you will receive a confirmation message with your assigned number(s). Our **main communication channel is WhatsApp**, and secondarily we also send __confirmation by email__.",
+        },
+        {
+          heading: "10. Form Data",
+          body: "It is mandatory to complete the form with **real and accurate information**. Your full name and national ID will be used to **verify the winner's identity** at the time of prize delivery. Your phone number and email must be valid and accessible, as they will be the **official communication channels** used to notify you if you are the winner.",
         },
       ],
     },
