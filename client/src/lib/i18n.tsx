@@ -191,7 +191,7 @@ const translations = {
           body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para enviarte la confirmacion de compra, tus semillas asignadas y cualquier informacion relevante del sorteo.",
         },
         {
-          heading: "4. Confirmacion de compra",
+          heading: "4. Verificacion y Confirmacion de compra",
           body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con tus numeros asignados, enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
@@ -427,7 +427,7 @@ const translations = {
           body: "It is mandatory to complete the form with **real and accurate information**. Your full name and national ID will be used to **verify the winner's identity** at the time of prize delivery. Your phone number and email must be valid and accessible, as they will be the **official communication channels** for sending your purchase confirmation, your assigned seeds, and any relevant draw updates.",
         },
         {
-          heading: "4. Purchase Confirmation",
+          heading: "4. Payment Verification and Purchase Confirmation",
           body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your assigned numbers, sent from __info@maredorazio.com__ or __ganaconmare@gmail.com__. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
