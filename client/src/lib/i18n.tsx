@@ -179,7 +179,7 @@ const translations = {
       lastUpdated: "Ultima actualizacion",
       sections: [
         {
-          heading: "1. Aceptacion de los Terminos",
+          heading: "1. Aceptación de los Términos",
           body: "Al acceder y utilizar esta plataforma, usted acepta estos terminos y condiciones en su totalidad. Si no esta de acuerdo con alguna parte de estos terminos, no debera utilizar nuestros servicios.",
         },
         {
@@ -191,11 +191,11 @@ const translations = {
           body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para enviarte la confirmacion de compra, tus semillas asignadas y cualquier informacion relevante del sorteo.",
         },
         {
-          heading: "4. Verificacion y Confirmacion de compra",
+          heading: "4. Verificación y Confirmación de compra",
           body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con la **confirmacion de compra** y tus **semillas asignadas** en un plazo maximo de **36 horas** debido al alto volumen de transacciones, desde nuestros %%correos oficiales · ver punto 10|#section-10%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
-          heading: "5. Proceso de Seleccion",
+          heading: "5. Proceso de Selección",
           body: "Una vez que todas las semillas se han agotado, la seleccion de los numeros ganadores se realizara **1 dia despues** con los resultados de **SUPER GANA** en su pagina oficial, segun el horario establecido de acuerdo a cada premio. El resultado sera comunicado a todos los participantes por nuestros %%Medios de comunicacion oficiales · ver punto 10|#section-10%%.",
         },
         {
