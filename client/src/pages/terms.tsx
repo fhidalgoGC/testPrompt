@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
 
 function RichBody({ text, testId }: { text: string; testId: string }) {
-  const tokens = text.split(/(\*\*.+?\*\*|__.+?__)/g);
+  const tokens = text.split(/(\*\*.+?\*\*|__.+?__|%%[^%]+%%)/g);
   return (
     <p className="text-sm text-muted-foreground leading-relaxed" data-testid={testId}>
       {tokens.map((token, i) => {
@@ -11,6 +11,23 @@ function RichBody({ text, testId }: { text: string; testId: string }) {
           return <strong key={i} className="font-semibold text-foreground">{token.slice(2, -2)}</strong>;
         if (token.startsWith("__") && token.endsWith("__"))
           return <span key={i} className="underline">{token.slice(2, -2)}</span>;
+        if (token.startsWith("%%") && token.endsWith("%%")) {
+          const inner = token.slice(2, -2);
+          const [label, anchor] = inner.split("|");
+          return (
+            <a
+              key={i}
+              href={anchor}
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="underline text-primary font-medium cursor-pointer"
+            >
+              {label}
+            </a>
+          );
+        }
         return token;
       })}
     </p>
@@ -41,6 +58,7 @@ export default function Terms() {
             {t.terms.sections.map((section, index) => (
               <motion.div
                 key={index}
+                id={`section-${index + 1}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.05 * index }}
