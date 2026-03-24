@@ -111,9 +111,17 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
     toast({ title: t.picker.uploadSuccess });
   };
 
+  const getPhoneMinDigits = (code: string): number => {
+    const c = PHONE_COUNTRIES.find(p => p.code === code);
+    if (!c) return 7;
+    if ("phoneDigits" in c) return (c as { phoneDigits: number }).phoneDigits;
+    if ("minPhoneDigits" in c) return (c as { minPhoneDigits: number }).minPhoneDigits;
+    return 7;
+  };
+
   const handleSendCode = async () => {
     const phoneDigits = buyerPhone.trim().replace(/\D/g, "");
-    const requiredDigits = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.phoneDigits ?? 8;
+    const requiredDigits = getPhoneMinDigits(phoneCountry);
     if (phoneDigits.length < requiredDigits) {
       toast({ variant: "destructive", title: t.picker.invalidPhone, description: t.picker.invalidPhoneDesc });
       return;
@@ -456,15 +464,16 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 </div>
                 {(() => {
                   const currentPhoneCountry = PHONE_COUNTRIES.find(c => c.code === phoneCountry);
-                  const mask = currentPhoneCountry?.phoneMask ?? "";
-                  const maxDigits = currentPhoneCountry?.phoneDigits ?? 12;
-                  const maskPlaceholder = mask.replace(/#/g, "0");
+                  const mask = "phoneMask" in (currentPhoneCountry ?? {}) ? (currentPhoneCountry as { phoneMask: string }).phoneMask : "";
+                  const exactDigits = "phoneDigits" in (currentPhoneCountry ?? {}) ? (currentPhoneCountry as { phoneDigits: number }).phoneDigits : undefined;
+                  const maxDigits = exactDigits ?? ("maxPhoneDigits" in (currentPhoneCountry ?? {}) ? (currentPhoneCountry as { maxPhoneDigits: number }).maxPhoneDigits : 15);
+                  const maskPlaceholder = mask ? mask.replace(/#/g, "0") : t.picker.phonePlaceholder;
                   return (
                     <input
                       type="tel"
                       inputMode="numeric"
-                      maxLength={mask.length || 14}
-                      placeholder={maskPlaceholder || t.picker.phonePlaceholder}
+                      maxLength={mask ? mask.length : maxDigits}
+                      placeholder={maskPlaceholder}
                       value={buyerPhone}
                       onChange={(e) => {
                         const raw = e.target.value.replace(/\D/g, "").slice(0, maxDigits);
@@ -499,7 +508,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 }
                 setStep("payment-details");
               }}
-              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.replace(/\D/g, "").length < (PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.phoneDigits ?? 8) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
+              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.replace(/\D/g, "").length < getPhoneMinDigits(phoneCountry) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
               iconPosition="left"
             />
           </motion.div>
