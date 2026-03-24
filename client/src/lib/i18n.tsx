@@ -218,6 +218,16 @@ const translations = {
           heading: "10. Medios de comunicacion oficiales",
           body: "Nuestros canales oficiales de contacto son: **WhatsApp:** __+58 422-633-3703__ | **Telegram:** __@ganaconmare__ | **Correo electronico:** __info@maredorazio.com__ y __ganaconmare@gmail.com__. Cualquier comunicacion fuera de estos canales no es oficial.",
         },
+        {
+          heading: "11. Redes Sociales Oficiales",
+          body: "Siguenos en nuestras redes sociales oficiales:",
+          socials: [
+            { platform: "instagram", handle: "@ganaconmare", url: "https://www.instagram.com/ganaconmare" },
+            { platform: "instagram", handle: "@maredorazio", url: "https://www.instagram.com/maredorazio" },
+            { platform: "telegram", handle: "@ganaconmare", url: "https://t.me/ganaconmare" },
+            { platform: "x", handle: "@ganaconmare", url: "https://x.com/ganaconmare" },
+          ],
+        },
       ],
     },
     howItWorks: {
@@ -453,6 +463,16 @@ const translations = {
         {
           heading: "10. Official Communication Channels",
           body: "Our official contact channels are: **WhatsApp:** __+58 422-633-3703__ | **Telegram:** __@ganaconmare__ | **Email:** __info@maredorazio.com__ and __ganaconmare@gmail.com__. Any communication outside these channels is not official.",
+        },
+        {
+          heading: "11. Official Social Media",
+          body: "Follow us on our official social media:",
+          socials: [
+            { platform: "instagram", handle: "@ganaconmare", url: "https://www.instagram.com/ganaconmare" },
+            { platform: "instagram", handle: "@maredorazio", url: "https://www.instagram.com/maredorazio" },
+            { platform: "telegram", handle: "@ganaconmare", url: "https://t.me/ganaconmare" },
+            { platform: "x", handle: "@ganaconmare", url: "https://x.com/ganaconmare" },
+          ],
         },
       ],
     },

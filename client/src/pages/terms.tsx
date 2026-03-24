@@ -1,6 +1,7 @@
 import { useI18n } from "@/lib/i18n";
 import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
+import { SiInstagram, SiTelegram, SiX } from "react-icons/si";
 
 function RichBody({ text, testId }: { text: string; testId: string }) {
   const tokens = text.split(/(\*\*.+?\*\*|__.+?__|%%[^%]+%%)/g);
@@ -14,14 +15,17 @@ function RichBody({ text, testId }: { text: string; testId: string }) {
         if (token.startsWith("%%") && token.endsWith("%%")) {
           const inner = token.slice(2, -2);
           const [label, anchor] = inner.split("|");
+          const isExternal = anchor.startsWith("http");
           return (
             <a
               key={i}
               href={anchor}
-              onClick={(e) => {
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              onClick={!isExternal ? (e) => {
                 e.preventDefault();
                 document.querySelector(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
+              } : undefined}
               className="underline text-primary font-medium cursor-pointer"
             >
               {label}
@@ -34,8 +38,14 @@ function RichBody({ text, testId }: { text: string; testId: string }) {
   );
 }
 
+const platformIcon: Record<string, { icon: React.ReactNode; color: string }> = {
+  instagram: { icon: <SiInstagram className="h-5 w-5" />, color: "text-pink-500" },
+  telegram:  { icon: <SiTelegram  className="h-5 w-5" />, color: "text-sky-500"  },
+  x:         { icon: <SiX         className="h-5 w-5" />, color: "text-foreground" },
+};
+
 export default function Terms() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -66,6 +76,26 @@ export default function Terms() {
                   {section.heading}
                 </h2>
                 <RichBody text={section.body} testId={`text-terms-body-${index}`} />
+                {"socials" in section && section.socials && (
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    {(section.socials as { platform: string; handle: string; url: string }[]).map((s, si) => {
+                      const meta = platformIcon[s.platform];
+                      return (
+                        <a
+                          key={si}
+                          href={s.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border text-sm font-medium hover:bg-muted transition-colors ${meta?.color ?? "text-foreground"}`}
+                          data-testid={`link-social-${s.platform}-${si}`}
+                        >
+                          {meta?.icon}
+                          {s.handle}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
