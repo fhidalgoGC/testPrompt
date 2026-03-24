@@ -212,7 +212,7 @@ const translations = {
         },
         {
           heading: "9. Confirmacion de compra",
-          body: "Una vez validado tu pago, recibiras primero un **correo electronico automatico** de confirmacion con tu numero asignado(s), enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
+          body: "Una vez validado tu pago, recibiras primero un **correo electronico automatico** de confirmacion con tus numeros asignados, enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
           heading: "10. Datos del formulario",
