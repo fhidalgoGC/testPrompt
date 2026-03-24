@@ -196,7 +196,7 @@ const translations = {
         },
         {
           heading: "5. Proceso de Seleccion",
-          body: "La seleccion se realiza de manera aleatoria y transparente una vez que todas las semillas han sido adquiridas. El resultado sera comunicado a todos los participantes por correo electronico.",
+          body: "Una vez que todas las semillas han sido adquiridas, la seleccion de los numeros ganadores se realizara **1 dia despues**, a traves del programa **Super Gana**, segun el horario establecido de acuerdo a cada premio. El resultado sera comunicado a todos los participantes por los canales oficiales.",
         },
         {
           heading: "6. Entrega del Premio",
@@ -436,7 +436,7 @@ const translations = {
         },
         {
           heading: "5. Draw Process",
-          body: "The draw is conducted randomly and transparently once all seeds have been acquired. The result will be communicated to all participants via email.",
+          body: "Once all seeds have been acquired, the winning numbers will be drawn **1 day later**, through the **Super Gana** program, according to the established schedule for each prize. The result will be communicated to all participants through the official channels.",
         },
         {
           heading: "6. Prize Delivery",
