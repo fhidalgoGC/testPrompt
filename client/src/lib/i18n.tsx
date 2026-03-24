@@ -212,7 +212,7 @@ const translations = {
         },
         {
           heading: "9. Confirmacion de compra",
-          body: "Una vez validado tu pago, recibiras un mensaje de confirmacion con tu numero asignado(s). Nuestro **canal principal de comunicacion es WhatsApp**, y de forma secundaria tambien enviamos __confirmacion por correo electronico__.",
+          body: "Una vez validado tu pago, recibiras primero un **correo electronico automatico** de confirmacion con tu numero asignado(s), enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
           heading: "10. Datos del formulario",
@@ -448,7 +448,7 @@ const translations = {
         },
         {
           heading: "9. Purchase Confirmation",
-          body: "Once your payment is validated, you will receive a confirmation message with your assigned number(s). Our **main communication channel is WhatsApp**, and secondarily we also send __confirmation by email__.",
+          body: "Once your payment is validated, you will first receive an **automatic confirmation email** with your assigned number(s), sent from __info@maredorazio.com__ or __ganaconmare@gmail.com__. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
           heading: "10. Form Data",
