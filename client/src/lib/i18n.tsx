@@ -183,11 +183,7 @@ const translations = {
           body: "Al acceder y utilizar esta plataforma, usted acepta estos terminos y condiciones en su totalidad. Si no esta de acuerdo con alguna parte de estos terminos, no debera utilizar nuestros servicios.",
         },
         {
-          heading: "2. Participacion",
-          body: "Para participar, el usuario debe seleccionar uno o mas numeros disponibles y completar el proceso de adquisicion. Cada numero adquirido representa una oportunidad igual de ser seleccionado.",
-        },
-        {
-          heading: "3. Proceso de Seleccion",
+          heading: "2. Proceso de Seleccion",
           body: "La seleccion se realiza de manera aleatoria y transparente una vez que todos los numeros han sido adquiridos. El resultado sera comunicado a todos los participantes por correo electronico.",
         },
         {
