@@ -199,15 +199,11 @@ const translations = {
           body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
-          heading: "6. Modificaciones",
-          body: "Nos reservamos el derecho de modificar estos terminos en cualquier momento. Los cambios seran notificados a traves de la plataforma.",
-        },
-        {
-          heading: "7. Transparencia y difusion",
+          heading: "6. Transparencia y difusion",
           body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
         },
         {
-          heading: "8. Quienes pueden participar",
+          heading: "7. Quienes pueden participar",
           body: "Solo podran participar personas naturales mayores de 18 anos.",
         },
       ],
@@ -427,15 +423,11 @@ const translations = {
           body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
         },
         {
-          heading: "6. Modifications",
-          body: "We reserve the right to modify these terms at any time. Changes will be notified through the platform.",
-        },
-        {
-          heading: "7. Transparency and Dissemination",
+          heading: "6. Transparency and Dissemination",
           body: "To guarantee the transparency of each draw, winners agree to appear in audiovisual content related to the prize delivery, which may be published on our social media channels.",
         },
         {
-          heading: "8. Who Can Participate",
+          heading: "7. Who Can Participate",
           body: "Only natural persons aged 18 years or older may participate.",
         },
       ],
