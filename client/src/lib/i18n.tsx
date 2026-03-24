@@ -200,7 +200,7 @@ const translations = {
         },
         {
           heading: "6. Entrega del Premio",
-          body: "Los ganadores seran contactados entre **24 y 36 horas** despues de la seleccion. La entrega del premio se realizara dentro de las **48 horas** siguientes al contacto. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
+          body: "Los ganadores seran contactados entre **24 y 36 horas** despues de la seleccion. La entrega del premio se realizara entre **12 y 24 horas** despues del contacto inicial. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
         },
         {
           heading: "7. Politica de Reembolsos",
@@ -440,7 +440,7 @@ const translations = {
         },
         {
           heading: "6. Prize Delivery",
-          body: "Winners will be contacted between **24 and 36 hours** after the draw. The prize will be delivered within **48 hours** of contact. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
+          body: "Winners will be contacted between **24 and 36 hours** after the draw. The prize will be delivered between **12 and 24 hours** after initial contact. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
         },
         {
           heading: "7. Refund Policy",
