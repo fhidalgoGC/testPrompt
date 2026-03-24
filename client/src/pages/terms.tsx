@@ -50,9 +50,7 @@ export default function Terms() {
           <h1 className="text-3xl sm:text-4xl font-display font-black mb-2" data-testid="text-terms-title">
             {t.terms.title}
           </h1>
-          <p className="text-sm text-muted-foreground mb-10">
-            {t.terms.lastUpdated}: {new Date().toLocaleDateString(locale === "es" ? "es-ES" : "en-US", { year: "numeric", month: "long", day: "numeric" })}
-          </p>
+          <div className="mb-10" />
 
           <div className="space-y-3">
             {t.terms.sections.map((section, index) => (
