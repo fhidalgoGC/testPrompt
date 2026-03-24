@@ -62,7 +62,7 @@ export default function Terms() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.05 * index }}
-                className="space-y-0"
+                className="space-y-0 scroll-mt-28"
               >
                 <h2 className="text-lg font-display font-bold text-foreground" data-testid={`text-terms-heading-${index}`}>
                   {section.heading}
