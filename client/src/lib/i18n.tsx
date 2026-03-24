@@ -183,28 +183,28 @@ const translations = {
           body: "Al acceder y utilizar esta plataforma, usted acepta estos terminos y condiciones en su totalidad. Si no esta de acuerdo con alguna parte de estos terminos, no debera utilizar nuestros servicios.",
         },
         {
-          heading: "2. Proceso de Seleccion",
+          heading: "2. Quienes pueden participar",
+          body: "Solo podran participar personas naturales mayores de 18 anos.",
+        },
+        {
+          heading: "3. Proceso de Seleccion",
           body: "La seleccion se realiza de manera aleatoria y transparente una vez que todas las semillas han sido adquiridas. El resultado sera comunicado a todos los participantes por correo electronico.",
         },
         {
-          heading: "3. Entrega del Premio",
+          heading: "4. Entrega del Premio",
           body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas.",
         },
         {
-          heading: "4. Politica de Reembolsos",
+          heading: "5. Politica de Reembolsos",
           body: "Una vez adquirida una semilla, no se aceptan devoluciones ni reembolsos. Las semillas adquiridas son intransferibles.",
-        },
-        {
-          heading: "5. Privacidad",
-          body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
           heading: "6. Transparencia y difusion",
           body: "Para garantizar la transparencia de cada sorteo, los ganadores aceptan aparecer en los contenidos audiovisuales relacionados con la entrega de premios, los cuales podran ser publicados en nuestras redes sociales.",
         },
         {
-          heading: "7. Quienes pueden participar",
-          body: "Solo podran participar personas naturales mayores de 18 anos.",
+          heading: "7. Privacidad",
+          body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
       ],
     },
@@ -407,28 +407,28 @@ const translations = {
           body: "By accessing and using this platform, you agree to these terms and conditions in their entirety. If you do not agree with any part of these terms, you should not use our services.",
         },
         {
-          heading: "2. Draw Process",
+          heading: "2. Who Can Participate",
+          body: "Only natural persons aged 18 years or older may participate.",
+        },
+        {
+          heading: "3. Draw Process",
           body: "The draw is conducted randomly and transparently once all seeds have been acquired. The result will be communicated to all participants via email.",
         },
         {
-          heading: "3. Prize Delivery",
+          heading: "4. Prize Delivery",
           body: "Winners will be contacted within 48 hours of the draw. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds.",
         },
         {
-          heading: "4. Refund Policy",
+          heading: "5. Refund Policy",
           body: "Once a seed has been acquired, no returns or refunds are accepted. Acquired seeds are non-transferable.",
-        },
-        {
-          heading: "5. Privacy",
-          body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
         },
         {
           heading: "6. Transparency and Dissemination",
           body: "To guarantee the transparency of each draw, winners agree to appear in audiovisual content related to the prize delivery, which may be published on our social media channels.",
         },
         {
-          heading: "7. Who Can Participate",
-          body: "Only natural persons aged 18 years or older may participate.",
+          heading: "7. Privacy",
+          body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
         },
       ],
     },
