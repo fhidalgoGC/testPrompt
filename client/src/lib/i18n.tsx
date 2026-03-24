@@ -219,7 +219,6 @@ const translations = {
           body: "Cualquier comunicacion fuera de estos canales no es oficial.",
           socials: [
             { platform: "whatsapp", handle: "+58 422-633-3703",       url: "https://wa.me/584226333703" },
-            { platform: "telegram", handle: "@ganaconmare",           url: "https://t.me/ganaconmare" },
             { platform: "email",    handle: "info@maredorazio.com",   url: "mailto:info@maredorazio.com" },
             { platform: "email",    handle: "ganaconmare@gmail.com",  url: "mailto:ganaconmare@gmail.com" },
           ],
@@ -474,7 +473,6 @@ const translations = {
           body: "Any communication outside these channels is not official.",
           socials: [
             { platform: "whatsapp", handle: "+58 422-633-3703",       url: "https://wa.me/584226333703" },
-            { platform: "telegram", handle: "@ganaconmare",           url: "https://t.me/ganaconmare" },
             { platform: "email",    handle: "info@maredorazio.com",   url: "mailto:info@maredorazio.com" },
             { platform: "email",    handle: "ganaconmare@gmail.com",  url: "mailto:ganaconmare@gmail.com" },
           ],
