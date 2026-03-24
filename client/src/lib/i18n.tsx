@@ -195,7 +195,7 @@ const translations = {
           body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con la **confirmacion de compra** y tus **semillas asignadas** en un plazo maximo de **36 horas** debido al alto volumen de transacciones, desde nuestros %%correos oficiales · ver punto 10|#section-10%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
-          heading: "5. Proceso de Selección",
+          heading: "5. Proceso de Selección del Ganador",
           body: "Una vez que todas las semillas se han agotado, la seleccion de los numeros ganadores se realizara **1 dia despues** con los resultados de **SUPER GANA** en su pagina oficial, segun el horario establecido de acuerdo a cada premio. El resultado sera comunicado a todos los participantes por nuestros %%Medios de comunicacion oficiales · ver punto 10|#section-10%%.",
         },
         {
@@ -450,7 +450,7 @@ const translations = {
           body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your **purchase confirmation** and your **assigned seeds** within a maximum of **36 hours** due to the high volume of transactions, from our %%official emails · see point 10|#section-10%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
-          heading: "5. Draw Process",
+          heading: "5. Winner Selection Process",
           body: "Once all seeds are sold out, the winning numbers will be drawn **1 day later** using the results from **SUPER GANA** on their official website, according to the established schedule for each prize. The result will be communicated to all participants through our %%Official Communication Channels · see point 10|#section-10%%.",
         },
         {
