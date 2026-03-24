@@ -218,6 +218,10 @@ const translations = {
           heading: "10. Entrega de tickets",
           body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **8/36 Horas**, ya que procesamos un alto volumen de operaciones diariamente.",
         },
+        {
+          heading: "11. Medios de comunicacion oficiales",
+          body: "Nuestros canales oficiales de contacto son: **WhatsApp:** __+58 422-633-3703__ | **Telegram:** __@ganaconmare__ | **Correo electronico:** __info@maredorazio.com__ y __ganaconmare@gmail.com__. Cualquier comunicacion fuera de estos canales no es oficial.",
+        },
       ],
     },
     howItWorks: {
@@ -453,6 +457,10 @@ const translations = {
         {
           heading: "10. Ticket Delivery",
           body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **8/36 Hours**, as we process a high volume of transactions daily.",
+        },
+        {
+          heading: "11. Official Communication Channels",
+          body: "Our official contact channels are: **WhatsApp:** __+58 422-633-3703__ | **Telegram:** __@ganaconmare__ | **Email:** __info@maredorazio.com__ and __ganaconmare@gmail.com__. Any communication outside these channels is not official.",
         },
       ],
     },
