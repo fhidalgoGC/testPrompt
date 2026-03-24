@@ -192,7 +192,7 @@ const translations = {
         },
         {
           heading: "4. Verificacion y Confirmacion de compra",
-          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con tus semillas asignadas desde nuestros %%correos oficiales · ver punto 11|#section-11%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
+          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con tus semillas asignadas desde nuestros %%correos oficiales · ver punto 10|#section-10%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
           heading: "5. Proceso de Seleccion",
@@ -215,11 +215,7 @@ const translations = {
           body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
         {
-          heading: "10. Entrega de tickets",
-          body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **8/36 Horas**, ya que procesamos un alto volumen de operaciones diariamente.",
-        },
-        {
-          heading: "11. Medios de comunicacion oficiales",
+          heading: "10. Medios de comunicacion oficiales",
           body: "Nuestros canales oficiales de contacto son: **WhatsApp:** __+58 422-633-3703__ | **Telegram:** __@ganaconmare__ | **Correo electronico:** __info@maredorazio.com__ y __ganaconmare@gmail.com__. Cualquier comunicacion fuera de estos canales no es oficial.",
         },
       ],
@@ -432,7 +428,7 @@ const translations = {
         },
         {
           heading: "4. Payment Verification and Purchase Confirmation",
-          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your assigned seeds from our %%official emails · see point 11|#section-11%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
+          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your assigned seeds from our %%official emails · see point 10|#section-10%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
           heading: "5. Draw Process",
@@ -455,11 +451,7 @@ const translations = {
           body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
         },
         {
-          heading: "10. Ticket Delivery",
-          body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **8/36 Hours**, as we process a high volume of transactions daily.",
-        },
-        {
-          heading: "11. Official Communication Channels",
+          heading: "10. Official Communication Channels",
           body: "Our official contact channels are: **WhatsApp:** __+58 422-633-3703__ | **Telegram:** __@ganaconmare__ | **Email:** __info@maredorazio.com__ and __ganaconmare@gmail.com__. Any communication outside these channels is not official.",
         },
       ],
