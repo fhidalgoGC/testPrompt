@@ -212,7 +212,7 @@ const translations = {
         },
         {
           heading: "9. Confirmacion de compra",
-          body: "Una vez validado tu pago, recibiras un mensaje de confirmacion con tu(s) numero(s) asignado(s). Nuestro **canal principal de comunicacion es WhatsApp**, y de forma secundaria tambien enviamos __confirmacion por correo electronico__.",
+          body: "Una vez validado tu pago, recibiras un mensaje de confirmacion con tu numero asignado(s). Nuestro **canal principal de comunicacion es WhatsApp**, y de forma secundaria tambien enviamos __confirmacion por correo electronico__.",
         },
         {
           heading: "10. Datos del formulario",
