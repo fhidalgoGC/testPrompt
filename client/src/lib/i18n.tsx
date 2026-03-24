@@ -210,6 +210,10 @@ const translations = {
           heading: "8. Entrega de tickets",
           body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **24/36 horas**, ya que procesamos un alto volumen de operaciones diariamente.",
         },
+        {
+          heading: "9. Confirmacion de compra",
+          body: "Una vez validado tu pago, recibiras un mensaje de confirmacion con tu(s) numero(s) asignado(s). Nuestro **canal principal de comunicacion es WhatsApp**, y de forma secundaria tambien enviamos __confirmacion por correo electronico__.",
+        },
       ],
     },
     howItWorks: {
@@ -437,6 +441,10 @@ const translations = {
         {
           heading: "8. Ticket Delivery",
           body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **24/36 hours**, as we process a high volume of transactions daily.",
+        },
+        {
+          heading: "9. Purchase Confirmation",
+          body: "Once your payment is validated, you will receive a confirmation message with your assigned number(s). Our **main communication channel is WhatsApp**, and secondarily we also send __confirmation by email__.",
         },
       ],
     },

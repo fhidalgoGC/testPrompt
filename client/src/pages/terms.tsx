@@ -3,12 +3,16 @@ import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
 
 function RichBody({ text, testId }: { text: string; testId: string }) {
-  const parts = text.split(/\*\*(.+?)\*\*/g);
+  const tokens = text.split(/(\*\*.+?\*\*|__.+?__)/g);
   return (
     <p className="text-sm text-muted-foreground leading-relaxed" data-testid={testId}>
-      {parts.map((part, i) =>
-        i % 2 === 1 ? <strong key={i} className="font-semibold text-foreground">{part}</strong> : part
-      )}
+      {tokens.map((token, i) => {
+        if (token.startsWith("**") && token.endsWith("**"))
+          return <strong key={i} className="font-semibold text-foreground">{token.slice(2, -2)}</strong>;
+        if (token.startsWith("__") && token.endsWith("__"))
+          return <span key={i} className="underline">{token.slice(2, -2)}</span>;
+        return token;
+      })}
     </p>
   );
 }
