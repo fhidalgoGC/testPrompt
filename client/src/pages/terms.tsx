@@ -38,10 +38,10 @@ function RichBody({ text, testId }: { text: string; testId: string }) {
   );
 }
 
-const platformIcon: Record<string, { icon: React.ReactNode; color: string }> = {
-  instagram: { icon: <SiInstagram className="h-5 w-5" />, color: "text-pink-500" },
-  telegram:  { icon: <SiTelegram  className="h-5 w-5" />, color: "text-sky-500"  },
-  x:         { icon: <SiX         className="h-5 w-5" />, color: "text-foreground" },
+const platformMeta: Record<string, { icon: React.ReactNode; label: string; color: string }> = {
+  instagram: { icon: <SiInstagram className="h-4 w-4" />, label: "Instagram:", color: "text-pink-500" },
+  telegram:  { icon: <SiTelegram  className="h-4 w-4" />, label: "Telegram:",  color: "text-sky-500"  },
+  x:         { icon: <SiX         className="h-4 w-4" />, label: "Twitter X:", color: "text-foreground" },
 };
 
 export default function Terms() {
@@ -76,26 +76,31 @@ export default function Terms() {
                   {section.heading}
                 </h2>
                 <RichBody text={section.body} testId={`text-terms-body-${index}`} />
-                {"socials" in section && section.socials && (
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    {(section.socials as { platform: string; handle: string; url: string }[]).map((s, si) => {
-                      const meta = platformIcon[s.platform];
-                      return (
-                        <a
-                          key={si}
-                          href={s.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border text-sm font-medium hover:bg-muted transition-colors ${meta?.color ?? "text-foreground"}`}
-                          data-testid={`link-social-${s.platform}-${si}`}
-                        >
-                          {meta?.icon}
-                          {s.handle}
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
+                {"socials" in section && section.socials && (() => {
+                  const socials = section.socials as { platform: string; handle: string; url: string }[];
+                  const grouped: Record<string, typeof socials> = {};
+                  socials.forEach(s => { (grouped[s.platform] ??= []).push(s); });
+                  return (
+                    <div className="pt-2 space-y-2">
+                      {Object.entries(grouped).map(([platform, items]) => {
+                        const meta = platformMeta[platform];
+                        return (
+                          <div key={platform} className="text-sm text-muted-foreground">
+                            <span className={`inline-flex items-center gap-1.5 font-semibold text-foreground`}>
+                              <span className={meta?.color}>{meta?.icon}</span>
+                              {meta?.label}
+                            </span>
+                            <div className="ml-6 mt-0.5 space-y-0.5">
+                              {items.map((s, si) => (
+                                <div key={si}>{s.handle}</div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </motion.div>
             ))}
           </div>
