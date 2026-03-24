@@ -192,7 +192,7 @@ const translations = {
         },
         {
           heading: "4. Verificacion y Confirmacion de compra",
-          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con la **confirmacion de compra** y tus **semillas asignadas** desde nuestros %%correos oficiales · ver punto 10|#section-10%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
+          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con la **confirmacion de compra** y tus **semillas asignadas** en un plazo maximo de **36 horas** debido al alto volumen de transacciones, desde nuestros %%correos oficiales · ver punto 10|#section-10%%. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
           heading: "5. Proceso de Seleccion",
@@ -428,7 +428,7 @@ const translations = {
         },
         {
           heading: "4. Payment Verification and Purchase Confirmation",
-          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your **purchase confirmation** and your **assigned seeds** from our %%official emails · see point 10|#section-10%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
+          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your **purchase confirmation** and your **assigned seeds** within a maximum of **36 hours** due to the high volume of transactions, from our %%official emails · see point 10|#section-10%%. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
           heading: "5. Draw Process",
