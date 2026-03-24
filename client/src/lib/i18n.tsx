@@ -216,7 +216,7 @@ const translations = {
         },
         {
           heading: "10. Datos del formulario",
-          body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para notificarte en caso de resultar ganador.",
+          body: "Es obligatorio completar el formulario con **datos reales y verídicos**. El nombre completo y la cedula de identidad seran utilizados para **validar la identidad del ganador** al momento de hacer entrega del premio. El telefono y el correo electronico deben ser validos y accesibles, ya que seran los **medios de comunicacion oficiales** para enviarte la confirmacion de compra, tus semillas asignadas y cualquier informacion relevante del sorteo.",
         },
       ],
     },
@@ -452,7 +452,7 @@ const translations = {
         },
         {
           heading: "10. Form Data",
-          body: "It is mandatory to complete the form with **real and accurate information**. Your full name and national ID will be used to **verify the winner's identity** at the time of prize delivery. Your phone number and email must be valid and accessible, as they will be the **official communication channels** used to notify you if you are the winner.",
+          body: "It is mandatory to complete the form with **real and accurate information**. Your full name and national ID will be used to **verify the winner's identity** at the time of prize delivery. Your phone number and email must be valid and accessible, as they will be the **official communication channels** for sending your purchase confirmation, your assigned seeds, and any relevant draw updates.",
         },
       ],
     },
