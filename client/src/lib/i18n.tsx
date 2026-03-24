@@ -192,7 +192,7 @@ const translations = {
         },
         {
           heading: "4. Confirmacion de compra",
-          body: "Una vez validado tu pago, recibiras primero un **correo electronico automatico** de confirmacion con tus numeros asignados, enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
+          body: "Al enviar el formulario junto con tu comprobante de pago, recibiras un **correo electronico automatico** indicando que tu pago esta siendo validado. Una vez que nuestro equipo valide tu pago, recibiras un segundo correo con tus numeros asignados, enviado desde __info@maredorazio.com__ o __ganaconmare@gmail.com__. Posteriormente, nuestro **canal principal de comunicacion es WhatsApp**, a traves del cual tambien te contactaremos.",
         },
         {
           heading: "5. Proceso de Seleccion",
@@ -428,7 +428,7 @@ const translations = {
         },
         {
           heading: "4. Purchase Confirmation",
-          body: "Once your payment is validated, you will first receive an **automatic confirmation email** with your assigned number(s), sent from __info@maredorazio.com__ or __ganaconmare@gmail.com__. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
+          body: "When you submit the form along with your proof of payment, you will receive an **automatic email** indicating that your payment is being validated. Once our team validates your payment, you will receive a second email with your assigned numbers, sent from __info@maredorazio.com__ or __ganaconmare@gmail.com__. Afterwards, our **main communication channel is WhatsApp**, through which we will also contact you.",
         },
         {
           heading: "5. Draw Process",
