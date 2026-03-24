@@ -192,7 +192,7 @@ const translations = {
         },
         {
           heading: "4. Entrega del Premio",
-          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Los premios son en dolares: primer premio, segundo premio y tercer premio. El monto sera coordinado y entregado directamente con cada ganador.",
+          body: "Los ganadores seran contactados dentro de las 48 horas siguientes a la seleccion. Para verificar el premio es necesario contar con la cedula de identidad que se registro en el momento de comprar las semillas. Los premios son en dolares: primer premio, segundo premio y tercer premio. El monto sera coordinado y entregado directamente con cada ganador.",
         },
         {
           heading: "5. Politica de Reembolsos",
@@ -416,7 +416,7 @@ const translations = {
         },
         {
           heading: "4. Prize Delivery",
-          body: "Winners will be contacted within 48 hours of the draw. Prizes are in dollars: first prize, second prize, and third prize. The amount will be coordinated and delivered directly with each winner.",
+          body: "Winners will be contacted within 48 hours of the draw. To verify the prize, winners must provide the national ID that was registered at the time of purchasing their seeds. Prizes are in dollars: first prize, second prize, and third prize. The amount will be coordinated and delivered directly with each winner.",
         },
         {
           heading: "5. Refund Policy",
