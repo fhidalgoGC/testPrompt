@@ -39,6 +39,19 @@ type Country = "VE" | "MX" | "CO";
 
 const PHONE_COUNTRIES = environment.phoneCountries;
 
+function applyPhoneMask(digits: string, mask: string): string {
+  let result = "";
+  let digitIndex = 0;
+  for (let i = 0; i < mask.length && digitIndex < digits.length; i++) {
+    if (mask[i] === "#") {
+      result += digits[digitIndex++];
+    } else {
+      result += mask[i];
+    }
+  }
+  return result;
+}
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -100,7 +113,8 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
 
   const handleSendCode = async () => {
     const phoneDigits = buyerPhone.trim().replace(/\D/g, "");
-    if (phoneDigits.length < 8) {
+    const requiredDigits = PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.phoneDigits ?? 8;
+    if (phoneDigits.length < requiredDigits) {
       toast({ variant: "destructive", title: t.picker.invalidPhone, description: t.picker.invalidPhoneDesc });
       return;
     }
@@ -428,7 +442,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                       {PHONE_COUNTRIES.map((c) => (
                         <button
                           key={c.code}
-                          onClick={() => { setPhoneCountry(c.code); setPhoneDropdownOpen(false); }}
+                          onClick={() => { setPhoneCountry(c.code); setBuyerPhone(""); setPhoneDropdownOpen(false); }}
                           className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-white/10 transition-colors ${phoneCountry === c.code ? "text-primary font-bold bg-primary/5" : "text-foreground"}`}
                           data-testid={`button-phone-country-${c.code}`}
                         >
@@ -440,7 +454,27 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                     </div>
                   )}
                 </div>
-                <input type="tel" inputMode="numeric" maxLength={12} placeholder={t.picker.phonePlaceholder} value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value.replace(/\D/g, "").slice(0, 12))} className="flex-1 bg-transparent h-10 px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none" data-testid="input-buyer-phone" />
+                {(() => {
+                  const currentPhoneCountry = PHONE_COUNTRIES.find(c => c.code === phoneCountry);
+                  const mask = currentPhoneCountry?.phoneMask ?? "";
+                  const maxDigits = currentPhoneCountry?.phoneDigits ?? 12;
+                  const maskPlaceholder = mask.replace(/#/g, "0");
+                  return (
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      maxLength={mask.length || 14}
+                      placeholder={maskPlaceholder || t.picker.phonePlaceholder}
+                      value={buyerPhone}
+                      onChange={(e) => {
+                        const raw = e.target.value.replace(/\D/g, "").slice(0, maxDigits);
+                        setBuyerPhone(mask ? applyPhoneMask(raw, mask) : raw);
+                      }}
+                      className="flex-1 bg-transparent h-10 px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none"
+                      data-testid="input-buyer-phone"
+                    />
+                  );
+                })()}
               </div>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -465,7 +499,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                 }
                 setStep("payment-details");
               }}
-              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.length < 7 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
+              disabled={!buyerName.trim() || !/^V-\d{5,8}$/.test(buyerIdNumber) || buyerPhone.replace(/\D/g, "").length < (PHONE_COUNTRIES.find(c => c.code === phoneCountry)?.phoneDigits ?? 8) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim())}
               iconPosition="left"
             />
           </motion.div>
