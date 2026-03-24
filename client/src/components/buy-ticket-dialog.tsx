@@ -467,7 +467,7 @@ function TicketPickerContent({ raffleId, title, totalTickets, onClose }: Omit<Bu
                   const mask = "phoneMask" in (currentPhoneCountry ?? {}) ? (currentPhoneCountry as { phoneMask: string }).phoneMask : "";
                   const exactDigits = "phoneDigits" in (currentPhoneCountry ?? {}) ? (currentPhoneCountry as { phoneDigits: number }).phoneDigits : undefined;
                   const maxDigits = exactDigits ?? ("maxPhoneDigits" in (currentPhoneCountry ?? {}) ? (currentPhoneCountry as { maxPhoneDigits: number }).maxPhoneDigits : 15);
-                  const maskPlaceholder = mask ? mask.replace(/#/g, "0") : t.picker.phonePlaceholder;
+                  const maskPlaceholder = mask ? mask.replace(/#/g, "_") : t.picker.phonePlaceholder;
                   return (
                     <input
                       type="tel"
