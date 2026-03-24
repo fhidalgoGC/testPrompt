@@ -206,6 +206,10 @@ const translations = {
           heading: "7. Privacidad",
           body: "La informacion personal proporcionada sera utilizada unicamente para la gestion del proceso y la comunicacion con los participantes. No compartimos informacion con terceros.",
         },
+        {
+          heading: "8. Entrega de tickets",
+          body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **24/36 horas**, ya que procesamos un alto volumen de operaciones diariamente.",
+        },
       ],
     },
     howItWorks: {
@@ -429,6 +433,10 @@ const translations = {
         {
           heading: "7. Privacy",
           body: "Personal information provided will be used solely for campaign management and participant communication. We do not share information with third parties.",
+        },
+        {
+          heading: "8. Ticket Delivery",
+          body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **24/36 hours**, as we process a high volume of transactions daily.",
         },
       ],
     },

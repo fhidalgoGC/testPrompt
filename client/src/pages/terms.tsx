@@ -2,6 +2,17 @@ import { useI18n } from "@/lib/i18n";
 import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
 
+function RichBody({ text, testId }: { text: string; testId: string }) {
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return (
+    <p className="text-sm text-muted-foreground leading-relaxed" data-testid={testId}>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? <strong key={i} className="font-semibold text-foreground">{part}</strong> : part
+      )}
+    </p>
+  );
+}
+
 export default function Terms() {
   const { t, locale } = useI18n();
 
@@ -29,14 +40,12 @@ export default function Terms() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.05 * index }}
-                className="space-y-2"
+                className="space-y-1"
               >
                 <h2 className="text-lg font-display font-bold text-foreground" data-testid={`text-terms-heading-${index}`}>
                   {section.heading}
                 </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-terms-body-${index}`}>
-                  {section.body}
-                </p>
+                <RichBody text={section.body} testId={`text-terms-body-${index}`} />
               </motion.div>
             ))}
           </div>
