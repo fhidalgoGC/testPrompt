@@ -216,12 +216,13 @@ const translations = {
         },
         {
           heading: "10. Medios de comunicacion oficiales",
-          body: "Cualquier comunicacion fuera de estos canales no es oficial.",
+          body: "Nuestros canales oficiales de contacto son:",
           socials: [
             { platform: "whatsapp", handle: "+58 422-633-3703",       url: "https://wa.me/584226333703" },
             { platform: "email",    handle: "info@maredorazio.com",   url: "mailto:info@maredorazio.com" },
             { platform: "email",    handle: "ganaconmare@gmail.com",  url: "mailto:ganaconmare@gmail.com" },
           ],
+          footer: "Cualquier comunicacion fuera de estos canales no es oficial.",
         },
         {
           heading: "11. Redes Sociales Oficiales",
@@ -470,12 +471,13 @@ const translations = {
         },
         {
           heading: "10. Official Communication Channels",
-          body: "Any communication outside these channels is not official.",
+          body: "Our official contact channels are:",
           socials: [
             { platform: "whatsapp", handle: "+58 422-633-3703",       url: "https://wa.me/584226333703" },
             { platform: "email",    handle: "info@maredorazio.com",   url: "mailto:info@maredorazio.com" },
             { platform: "email",    handle: "ganaconmare@gmail.com",  url: "mailto:ganaconmare@gmail.com" },
           ],
+          footer: "Any communication outside these channels is not official.",
         },
         {
           heading: "11. Official Social Media",

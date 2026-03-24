@@ -104,6 +104,9 @@ export default function Terms() {
                     </div>
                   );
                 })()}
+                {"footer" in section && section.footer && (
+                  <p className="text-sm text-muted-foreground leading-relaxed pt-1">{section.footer as string}</p>
+                )}
               </motion.div>
             ))}
           </div>
