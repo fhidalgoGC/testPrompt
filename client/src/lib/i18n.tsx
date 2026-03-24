@@ -208,7 +208,7 @@ const translations = {
         },
         {
           heading: "8. Entrega de tickets",
-          body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **24/36 horas**, ya que procesamos un alto volumen de operaciones diariamente.",
+          body: "Una vez confirmado tu pago, recibiras tus tickets de manera **aleatoria** en un plazo maximo de **8/36 Horas**, ya que procesamos un alto volumen de operaciones diariamente.",
         },
         {
           heading: "9. Confirmacion de compra",
@@ -440,7 +440,7 @@ const translations = {
         },
         {
           heading: "8. Ticket Delivery",
-          body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **24/36 hours**, as we process a high volume of transactions daily.",
+          body: "Once your payment is confirmed, you will receive your tickets **randomly** within a maximum of **8/36 Hours**, as we process a high volume of transactions daily.",
         },
         {
           heading: "9. Purchase Confirmation",
