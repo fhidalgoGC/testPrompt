@@ -70,13 +70,14 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
     setFingerprintData(result);
 
     if (isFirstTime || isChanged) {
-      registerDevice(result, isChanged ? currentVisitorId : null);
+      const lastTs = isChanged ? (localStorage.getItem(LAST_VISITOR_ID_TIMESTAMP_KEY) || null) : null;
+      registerDevice(result, isChanged ? currentVisitorId : null, now, lastTs);
       visitCalledRef.current = true;
     } else if (isInitialLoad && !visitCalledRef.current) {
       const count = parseInt(localStorage.getItem(VISIT_COUNT_KEY) || "0", 10) + 1;
       localStorage.setItem(VISIT_COUNT_KEY, String(count));
       setVisitCount(count);
-      registerVisit(newVisitorId);
+      registerVisit(newVisitorId, now);
       visitCalledRef.current = true;
     }
   }, []);
