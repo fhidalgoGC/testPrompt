@@ -117,18 +117,31 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
   }, [handleFingerprintResult]);
 
   useEffect(() => {
-    const handler = () => debouncedRefresh();
+    const handleResize = () => {
+      console.log(`[fingerprint] resize detected -> ${window.innerWidth}x${window.innerHeight}`);
+      debouncedRefresh();
+    };
 
-    window.addEventListener("resize", handler);
-    window.addEventListener("orientationchange", handler);
+    const handleOrientation = () => {
+      const orientation = screen.orientation?.type || "unknown";
+      console.log(`[fingerprint] orientation change detected -> ${orientation}`);
+      debouncedRefresh();
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleOrientation);
 
     const mql = window.matchMedia("(orientation: portrait)");
-    mql.addEventListener("change", handler);
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      console.log(`[fingerprint] media orientation change -> ${e.matches ? "portrait" : "landscape"}`);
+      debouncedRefresh();
+    };
+    mql.addEventListener("change", handleMediaChange);
 
     return () => {
-      window.removeEventListener("resize", handler);
-      window.removeEventListener("orientationchange", handler);
-      mql.removeEventListener("change", handler);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleOrientation);
+      mql.removeEventListener("change", handleMediaChange);
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [debouncedRefresh]);
