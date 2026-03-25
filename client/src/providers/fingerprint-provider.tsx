@@ -21,7 +21,7 @@ const FingerprintContext = createContext<FingerprintContextType>({
   isLoading: true,
 });
 
-function processResult(result: GetResult) {
+function processResult(result: GetResult, callVisit: boolean) {
   const currentVisitorId = localStorage.getItem(VISITOR_ID_KEY);
   const newVisitorId = result.visitorId;
   const isChanged = currentVisitorId && currentVisitorId !== newVisitorId;
@@ -39,7 +39,7 @@ function processResult(result: GetResult) {
 
   if (isFirstTime || isChanged) {
     registerDevice(result, prevId);
-  } else {
+  } else if (callVisit) {
     registerVisit(newVisitorId);
   }
 
@@ -59,7 +59,7 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
     if (!agentRef.current) return;
     try {
       const result = await agentRef.current.get();
-      const { newVisitorId, prevId, isChanged } = processResult(result);
+      const { newVisitorId, prevId, isChanged } = processResult(result, false);
 
       setVisitorId(newVisitorId);
       setFingerprintData(result);
@@ -100,7 +100,7 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
       agentRef.current = agent;
       try {
         const result = await agent.get();
-        const { newVisitorId, prevId, isChanged } = processResult(result);
+        const { newVisitorId, prevId, isChanged } = processResult(result, true);
 
         setVisitorId(newVisitorId);
         setFingerprintData(result);
