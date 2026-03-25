@@ -40,8 +40,6 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
     const isChanged = !!currentVisitorId && currentVisitorId !== newVisitorId;
     const isFirstTime = !currentVisitorId;
 
-    console.log(`[fingerprint] check -> current: ${currentVisitorId} | new: ${newVisitorId} | changed: ${isChanged}`);
-
     if (isChanged) {
       localStorage.setItem(LAST_VISITOR_ID_KEY, currentVisitorId);
       setLastVisitorId(currentVisitorId);
@@ -67,7 +65,6 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const refreshFingerprint = useCallback(async () => {
-    console.log("[fingerprint] screen change detected, recalculating...");
     try {
       const agent = await FingerprintJS.load();
       const result = await agent.get();
@@ -117,31 +114,18 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
   }, [handleFingerprintResult]);
 
   useEffect(() => {
-    const handleResize = () => {
-      console.log(`[fingerprint] resize detected -> ${window.innerWidth}x${window.innerHeight}`);
-      debouncedRefresh();
-    };
+    const handler = () => debouncedRefresh();
 
-    const handleOrientation = () => {
-      const orientation = screen.orientation?.type || "unknown";
-      console.log(`[fingerprint] orientation change detected -> ${orientation}`);
-      debouncedRefresh();
-    };
-
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleOrientation);
+    window.addEventListener("resize", handler);
+    window.addEventListener("orientationchange", handler);
 
     const mql = window.matchMedia("(orientation: portrait)");
-    const handleMediaChange = (e: MediaQueryListEvent) => {
-      console.log(`[fingerprint] media orientation change -> ${e.matches ? "portrait" : "landscape"}`);
-      debouncedRefresh();
-    };
-    mql.addEventListener("change", handleMediaChange);
+    mql.addEventListener("change", handler);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleOrientation);
-      mql.removeEventListener("change", handleMediaChange);
+      window.removeEventListener("resize", handler);
+      window.removeEventListener("orientationchange", handler);
+      mql.removeEventListener("change", handler);
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [debouncedRefresh]);
