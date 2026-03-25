@@ -4,13 +4,17 @@ import { registerDevice, registerVisit } from "@/services/fingerprint.service";
 
 const STORAGE_KEY = "device_fingerprint";
 const VISITOR_ID_KEY = "visitorId";
+const VISITOR_ID_TIMESTAMP_KEY = "visitorIdTimestamp";
 const LAST_VISITOR_ID_KEY = "lastVisitorId";
+const LAST_VISITOR_ID_TIMESTAMP_KEY = "lastVisitorIdTimestamp";
 const VISIT_COUNT_KEY = "visitCount";
 const DEBOUNCE_MS = 1000;
 
 interface FingerprintContextType {
   visitorId: string | null;
+  visitorIdTimestamp: string | null;
   lastVisitorId: string | null;
+  lastVisitorIdTimestamp: string | null;
   fingerprintData: GetResult | null;
   visitCount: number;
   isLoading: boolean;
@@ -18,7 +22,9 @@ interface FingerprintContextType {
 
 const FingerprintContext = createContext<FingerprintContextType>({
   visitorId: null,
+  visitorIdTimestamp: null,
   lastVisitorId: null,
+  lastVisitorIdTimestamp: null,
   fingerprintData: null,
   visitCount: 0,
   isLoading: true,
@@ -26,7 +32,9 @@ const FingerprintContext = createContext<FingerprintContextType>({
 
 export function FingerprintProvider({ children }: { children: ReactNode }) {
   const [visitorId, setVisitorId] = useState<string | null>(null);
+  const [visitorIdTimestamp, setVisitorIdTimestamp] = useState<string | null>(null);
   const [lastVisitorId, setLastVisitorId] = useState<string | null>(null);
+  const [lastVisitorIdTimestamp, setLastVisitorIdTimestamp] = useState<string | null>(null);
   const [fingerprintData, setFingerprintData] = useState<GetResult | null>(null);
   const [visitCount, setVisitCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,12 +47,21 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
     const newVisitorId = result.visitorId;
     const isChanged = !!currentVisitorId && currentVisitorId !== newVisitorId;
     const isFirstTime = !currentVisitorId;
+    const now = new Date().toISOString();
 
     if (isChanged) {
+      const currentTimestamp = localStorage.getItem(VISITOR_ID_TIMESTAMP_KEY);
       localStorage.setItem(LAST_VISITOR_ID_KEY, currentVisitorId);
+      localStorage.setItem(LAST_VISITOR_ID_TIMESTAMP_KEY, currentTimestamp || now);
       setLastVisitorId(currentVisitorId);
+      setLastVisitorIdTimestamp(currentTimestamp || now);
       localStorage.setItem(VISIT_COUNT_KEY, "1");
       setVisitCount(1);
+    }
+
+    if (isFirstTime || isChanged) {
+      localStorage.setItem(VISITOR_ID_TIMESTAMP_KEY, now);
+      setVisitorIdTimestamp(now);
     }
 
     localStorage.setItem(VISITOR_ID_KEY, newVisitorId);
@@ -87,6 +104,12 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
 
     const storedLastVisitorId = localStorage.getItem(LAST_VISITOR_ID_KEY);
     if (storedLastVisitorId) setLastVisitorId(storedLastVisitorId);
+
+    const storedVisitorIdTimestamp = localStorage.getItem(VISITOR_ID_TIMESTAMP_KEY);
+    if (storedVisitorIdTimestamp) setVisitorIdTimestamp(storedVisitorIdTimestamp);
+
+    const storedLastVisitorIdTimestamp = localStorage.getItem(LAST_VISITOR_ID_TIMESTAMP_KEY);
+    if (storedLastVisitorIdTimestamp) setLastVisitorIdTimestamp(storedLastVisitorIdTimestamp);
 
     const storedCount = parseInt(localStorage.getItem(VISIT_COUNT_KEY) || "0", 10);
     setVisitCount(storedCount);
@@ -131,7 +154,7 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
   }, [debouncedRefresh]);
 
   return (
-    <FingerprintContext.Provider value={{ visitorId, lastVisitorId, fingerprintData, visitCount, isLoading }}>
+    <FingerprintContext.Provider value={{ visitorId, visitorIdTimestamp, lastVisitorId, lastVisitorIdTimestamp, fingerprintData, visitCount, isLoading }}>
       {children}
     </FingerprintContext.Provider>
   );
