@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, useRef, useCallback, type ReactNode } from "react";
-import FingerprintJS, { type GetResult, type Agent } from "@fingerprintjs/fingerprintjs";
+import FingerprintJS, { type GetResult } from "@fingerprintjs/fingerprintjs";
 import { registerDevice, registerVisit } from "@/services/fingerprint.service";
 
 const STORAGE_KEY = "device_fingerprint";
@@ -30,7 +30,6 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
   const [fingerprintData, setFingerprintData] = useState<GetResult | null>(null);
   const [visitCount, setVisitCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const agentRef = useRef<Agent | null>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const initRef = useRef(false);
   const visitCalledRef = useRef(false);
@@ -40,6 +39,8 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
     const newVisitorId = result.visitorId;
     const isChanged = !!currentVisitorId && currentVisitorId !== newVisitorId;
     const isFirstTime = !currentVisitorId;
+
+    console.log(`[fingerprint] check -> current: ${currentVisitorId} | new: ${newVisitorId} | changed: ${isChanged}`);
 
     if (isChanged) {
       localStorage.setItem(LAST_VISITOR_ID_KEY, currentVisitorId);
@@ -66,9 +67,10 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const refreshFingerprint = useCallback(async () => {
-    if (!agentRef.current) return;
+    console.log("[fingerprint] screen change detected, recalculating...");
     try {
-      const result = await agentRef.current.get();
+      const agent = await FingerprintJS.load();
+      const result = await agent.get();
       handleFingerprintResult(result, false);
     } catch (err) {
       console.error("Fingerprint refresh error:", err);
@@ -104,7 +106,6 @@ export function FingerprintProvider({ children }: { children: ReactNode }) {
     }
 
     FingerprintJS.load().then(async (agent) => {
-      agentRef.current = agent;
       try {
         const result = await agent.get();
         handleFingerprintResult(result, true);
