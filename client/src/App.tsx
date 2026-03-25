@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/lib/i18n";
 import { ThemeProvider } from "@/lib/theme-context";
+import { FingerprintProvider } from "@/providers/fingerprint-provider";
 import { PurchaseProvider } from "@/providers/purchase-provider";
 import { RaffleConfigProvider } from "@/providers/raffle-config-provider";
 import NotFound from "@/pages/not-found";
@@ -31,10 +32,11 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <I18nProvider>
-        <ThemeProvider>
-          <RaffleConfigProvider>
-            <PurchaseProvider>
+      <FingerprintProvider>
+        <I18nProvider>
+          <ThemeProvider>
+            <RaffleConfigProvider>
+              <PurchaseProvider>
               <TooltipProvider>
               <div className="min-h-screen bg-background text-foreground">
                 <Router />
@@ -42,10 +44,11 @@ function App() {
               <Toaster />
               <DebugProviderButton />
               </TooltipProvider>
-            </PurchaseProvider>
-          </RaffleConfigProvider>
-        </ThemeProvider>
-      </I18nProvider>
+              </PurchaseProvider>
+            </RaffleConfigProvider>
+          </ThemeProvider>
+        </I18nProvider>
+      </FingerprintProvider>
     </QueryClientProvider>
   );
 }
